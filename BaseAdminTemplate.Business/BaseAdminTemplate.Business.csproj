@@ -1,0 +1,18 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Folder Include="Contracts\" />
+    <Folder Include="Services\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\BaseAdminTemplate.Common\BaseAdminTemplate.Common\BaseAdminTemplate.Common.csproj" />
+    <ProjectReference Include="..\BaseAdminTemplate.DataAccess\BaseAdminTemplate.DataAccess\BaseAdminTemplate.DataAccess.csproj" />
+    <ProjectReference Include="..\BaseAdminTemplate.Domain\BaseAdminTemplate.Domain\BaseAdminTemplate.Domain.csproj" />
+  </ItemGroup>
+
+</Project>
