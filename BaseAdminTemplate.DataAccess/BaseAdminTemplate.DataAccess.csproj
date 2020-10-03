@@ -5,6 +5,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <FrameworkReference Include="Microsoft.AspNetCore.App" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="5.0.0-rc.1.20451.13">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
@@ -21,7 +25,6 @@
   <ItemGroup>
     <ProjectReference Include="..\BaseAdminTemplate.Common\BaseAdminTemplate.Common.csproj" />
     <ProjectReference Include="..\BaseAdminTemplate.Domain\BaseAdminTemplate.Domain.csproj" />
-    <ProjectReference Include="..\BaseAdminTemplate.Web\BaseAdminTemplate.Web.csproj" />
   </ItemGroup>
 
 </Project>

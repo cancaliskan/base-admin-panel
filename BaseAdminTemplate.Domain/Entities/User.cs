@@ -10,6 +10,5 @@ namespace BaseAdminTemplate.Domain.Entities
         public string Password { get; set; }
         public string Phone { get; set; }
         public DateTime? LastLoginDateTime { get; set; }
-        public Role Role { get; set; }
     }
 }

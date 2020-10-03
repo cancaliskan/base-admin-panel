@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
 using System.Linq;
@@ -10,6 +11,7 @@ using Microsoft.EntityFrameworkCore;
 using BaseAdminTemplate.Domain.Entities;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.Extensions.Configuration;
 
 namespace BaseAdminTemplate.DataAccess.Context
 {
@@ -20,68 +22,150 @@ namespace BaseAdminTemplate.DataAccess.Context
         public DbSet<Menu> Menus { get; set; }
         public DbSet<Permission> Permissions { get; set; }
 
+        public DbSet<LinkMenuPermission> LinkMenusPermissions { get; set; }
+        public DbSet<LinkRolePermission> LinkRolesPermissions { get; set; }
+        public DbSet<LinkUserRole> LinkUsersRoles { get; set; }
+
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
         {
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<Role>()
-                        .HasMany(role => role.Users)
-                        .WithOne(user => user.Role);
+            var webProjectPath = GetWebProjectPath();
+            var controllers = GetWebProjectControllers(webProjectPath).ToList();
 
-            modelBuilder.Entity<Role>()
-                        .HasMany(role => role.Permissions)
-                        .WithOne(permission => permission.Role);
+            #region Seed Admin Role
 
-            modelBuilder.Entity<Menu>()
-                        .HasMany(menu => menu.Permissions)
-                        .WithOne(permission => permission.Menu);
+            var adminRole = new Role()
+            {
+                Id = Guid.NewGuid(),
+                Name = "Admin",
+                CreatedDate = DateTime.Now,
+                IsActive = true,
+                Description = "It has all permissions"
+            };
 
-            SeedData(modelBuilder);
+            modelBuilder.Entity<Role>().HasData(adminRole);
+
+            #endregion
+
+            #region Seed Admin User
+
+            var adminUser = new User()
+            {
+                Id = Guid.NewGuid(),
+                Email = "admin",
+                Password = CryptoHelper.Encrypt("Admin+-2020*"),
+                Name = "Admin",
+                Surname = "Admin",
+                DeletedDate = DateTime.Now,
+                IsActive = true
+            };
+
+            modelBuilder.Entity<User>().HasData(adminUser);
+
+            #endregion
+
+            foreach (var controller in controllers)
+            {
+                #region Seed Menu Item
+
+                var controllerDisplayName = controller.GetCustomAttributes(typeof(DisplayNameAttribute), true)
+                    .Cast<DisplayNameAttribute>().SingleOrDefault()?.DisplayName;
+
+                if (!controllerDisplayName.IsNotEmpty()) continue;
+
+                var menu = new Menu
+                {
+                    Id = Guid.NewGuid(),
+                    Name = controllerDisplayName,
+                    CreatedDate = DateTime.Now,
+                    IsActive = true
+                };
+
+                modelBuilder.Entity<Menu>().HasData(menu);
+
+                #endregion
+
+                var methods = controller.GetMethods().Where(method => method.IsPublic && !method.IsDefined(typeof(NonActionAttribute)) && method.ReturnType == typeof(IActionResult));
+                foreach (var method in methods)
+                {
+                    #region Seed Permission Item
+
+                    var methodDisplayName = method.GetCustomAttributes(typeof(DisplayNameAttribute), true)
+                        .Cast<DisplayNameAttribute>().SingleOrDefault()?.DisplayName;
+
+                    if (!methodDisplayName.IsNotEmpty()) continue;
+
+                    var permission = new Permission()
+                    {
+                        Id = Guid.NewGuid(),
+                        Name = methodDisplayName,
+                        CreatedDate = DateTime.Now,
+                        IsActive = true
+                    };
+
+                    modelBuilder.Entity<Permission>().HasData(permission);
+
+                    #endregion
+
+                    #region Seed Link Menu and Permission Item
+
+                    var linkMenuPermission = new LinkMenuPermission()
+                    {
+                        Id = Guid.NewGuid(),
+                        MenuId = menu.Id,
+                        PermissionId = permission.Id,
+                        CreatedDate = DateTime.Now,
+                        IsActive = true
+                    };
+
+                    modelBuilder.Entity<LinkMenuPermission>().HasData(linkMenuPermission);
+
+                    #endregion
+
+                    #region Seed Link Role and Permissions Item
+
+                    var linkRolePermission = new LinkRolePermission()
+                    {
+                        Id = Guid.NewGuid(),
+                        RoleId = adminRole.Id,
+                        PermissionId = permission.Id,
+                        CreatedDate = DateTime.Now,
+                        IsActive = true
+                    };
+
+                    modelBuilder.Entity<LinkRolePermission>().HasData(linkRolePermission);
+
+                    #endregion
+                }
+            }
 
             base.OnModelCreating(modelBuilder);
         }
 
-        private static void SeedData(ModelBuilder modelBuilder)
+        private static IEnumerable<Type> GetWebProjectControllers(string webProjectPath)
         {
-            Assembly.LoadFile(Directory.GetParent(Directory.GetCurrentDirectory()) + "\\BaseAdminTemplate.Web\\bin\\Debug\\netcoreapp3.1\\BaseAdminTemplate.Web.dll");
-            var assembly = AppDomain.CurrentDomain.GetAssemblies().FirstOrDefault(x => x.FullName != null && x.FullName.Contains("BaseAdminTemplate.Web"));
-            if (assembly == null) return;
-            
+            Assembly.LoadFile(webProjectPath);
+            var assembly = AppDomain.CurrentDomain.GetAssemblies()
+                                                  .FirstOrDefault(x => x.FullName != null
+                                                                       && x.FullName.Contains("BaseAdminTemplate.Web"));
+            if (assembly == null) return null;
+
             var controllers = assembly.GetTypes().Where(type => typeof(Controller).IsAssignableFrom(type));
+            return controllers;
+        }
 
-            Menu menu;
-            foreach (var controller in controllers)
-            {
-                var controllerDisplayName = controller.GetCustomAttributes(typeof(DisplayNameAttribute), true)
-                                                           .Cast<DisplayNameAttribute>().SingleOrDefault()?.DisplayName;
+        private static string GetWebProjectPath()
+        {
+            var configuration = new ConfigurationBuilder()
+                .SetBasePath(Directory.GetParent(Directory.GetCurrentDirectory()) + "\\BaseAdminTemplate.Web")
+                .AddJsonFile("appsettings.json")
+                .Build();
 
-                if (!controllerDisplayName.IsNotEmpty()) continue;
-                menu = new Menu
-                {
-                    Id = Guid.NewGuid(),
-                    Name = controllerDisplayName
-                };
-
-                modelBuilder.Entity<Menu>().HasData(menu);
-            };
-
-            var methods = controllers.SelectMany(type => type.GetMethods()).Where(method => method.IsPublic && !method.IsDefined(typeof(NonActionAttribute)) && method.ReturnType == typeof(IActionResult));
-            foreach (var method in methods)
-            {
-                var methodDisplayName = method.GetCustomAttributes(typeof(DisplayNameAttribute), true)
-                                                    .Cast<DisplayNameAttribute>().SingleOrDefault()?.DisplayName;
-                    
-                if (!methodDisplayName.IsNotEmpty()) continue;
-                menu = new Menu()
-                {
-                    Id = Guid.NewGuid(),
-                    Name = methodDisplayName
-                };
-
-                modelBuilder.Entity<Menu>().HasData(menu);
-            }
+            var webProjectPath = configuration.GetConnectionString("WebProjectPath");
+            return webProjectPath;
         }
     }
 }

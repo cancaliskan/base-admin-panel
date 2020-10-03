@@ -1,8 +1,13 @@
-﻿namespace BaseAdminTemplate.Domain.Entities
+﻿using System;
+using System.ComponentModel.DataAnnotations.Schema;
+
+namespace BaseAdminTemplate.Domain.Entities
 {
     public sealed class Permission : BaseEntity
     {
-        public Role Role { get; set; }
-        public Menu Menu { get; set; }
+        public string Name { get; set; }
+
+        //public Guid RoleId { get; set; }
+        //public Role Role { get; set; }
     }
 }
