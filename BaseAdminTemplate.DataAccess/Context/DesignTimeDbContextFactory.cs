@@ -9,10 +9,9 @@ namespace BaseAdminTemplate.DataAccess.Context
     {
         public ApplicationDbContext CreateDbContext(string[] args)
         {
-            IConfigurationRoot configuration = new ConfigurationBuilder()
-                .SetBasePath(Directory.GetParent(Directory.GetCurrentDirectory().ToString()).ToString() + "\\BaseAdminTemplate.Web")
-                .AddJsonFile("appsettings.json")
-                .Build();
+            var configuration = new ConfigurationBuilder().SetBasePath(Directory.GetParent(Directory.GetCurrentDirectory()) + "\\BaseAdminTemplate.Web")
+                                                          .AddJsonFile("appsettings.json")
+                                                          .Build();
             var builder = new DbContextOptionsBuilder<ApplicationDbContext>();
 
             var connectionString = configuration.GetConnectionString("DefaultConnection");

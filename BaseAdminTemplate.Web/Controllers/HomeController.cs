@@ -1,14 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.ComponentModel;
 using System.Diagnostics;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using BaseAdminTemplate.Web.Models;
 
 namespace BaseAdminTemplate.Web.Controllers
 {
+    [DisplayName("Role Management")]
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
@@ -18,6 +16,7 @@ namespace BaseAdminTemplate.Web.Controllers
             _logger = logger;
         }
 
+        [DisplayName("Create Role")]
         public IActionResult Index()
         {
             return View();
