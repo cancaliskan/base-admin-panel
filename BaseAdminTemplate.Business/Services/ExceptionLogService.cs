@@ -16,12 +16,14 @@ namespace BaseAdminTemplate.Business.Services
         private readonly IUnitOfWork _unitOfWork;
 
         private readonly ResponseHelper<IQueryable<ExceptionLog>> _listResponseHelper;
+        private readonly ResponseHelper<bool> _booleanResponseHelper;
 
         public ExceptionLogService(IUnitOfWork unitOfWork)
         {
             _unitOfWork = unitOfWork;
 
             _listResponseHelper = new ResponseHelper<IQueryable<ExceptionLog>>();
+            _booleanResponseHelper = new ResponseHelper<bool>();
         }
 
         public Response<IQueryable<ExceptionLog>> GetAll()
@@ -35,6 +37,20 @@ namespace BaseAdminTemplate.Business.Services
             {
                 LogHelper.AddLog(_unitOfWork, e, GetType().Name, MethodBase.GetCurrentMethod()?.Name);
                 return _listResponseHelper.FailResponse(e.ToString());
+            }
+        }
+
+        public Response<bool> DeleteAll()
+        {
+            try
+            {
+                _unitOfWork.ExceptionLogRepository.HardDeleteAll();
+                return _booleanResponseHelper.SuccessResponse("deleted all");
+            }
+            catch (Exception e)
+            {
+                LogHelper.AddLog(_unitOfWork, e, GetType().Name, MethodBase.GetCurrentMethod()?.Name);
+                return _booleanResponseHelper.FailResponse(e.ToString());
             }
         }
     }

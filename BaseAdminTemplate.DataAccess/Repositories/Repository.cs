@@ -85,6 +85,11 @@ namespace BaseAdminTemplate.DataAccess.Repositories
             _dbSet.Remove(entity);
         }
 
+        public void HardDeleteAll()
+        {
+            _dbSet.RemoveRange(GetAll());
+        }
+
         public void Restore(Guid id)
         {
             var entity = GetById(id);

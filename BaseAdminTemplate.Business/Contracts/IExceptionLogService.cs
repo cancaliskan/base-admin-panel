@@ -8,5 +8,6 @@ namespace BaseAdminTemplate.Business.Contracts
     public interface IExceptionLogService
     {
         Response<IQueryable<ExceptionLog>> GetAll();
+        Response<bool> DeleteAll();
     }
 }

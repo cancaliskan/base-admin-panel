@@ -17,6 +17,7 @@ namespace BaseAdminTemplate.DataAccess.Contracts
         T Update(T entity);
         void SoftDelete(Guid id);
         void HardDelete(Guid id);
+        void HardDeleteAll();
         void Restore(Guid id);
     }
 }
