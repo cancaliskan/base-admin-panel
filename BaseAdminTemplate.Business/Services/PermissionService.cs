@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Reflection;
 
 using BaseAdminTemplate.Business.Contracts;
+using BaseAdminTemplate.Business.Helpers;
 using BaseAdminTemplate.Common.Contracts;
 using BaseAdminTemplate.Common.Helpers;
 using BaseAdminTemplate.DataAccess.UnitOfWork;
@@ -46,7 +48,7 @@ namespace BaseAdminTemplate.Business.Services
             }
             catch (Exception e)
             {
-                //todo: add log to database
+                LogHelper.AddLog(_unitOfWork, e, GetType().Name, MethodBase.GetCurrentMethod()?.Name);
                 return _responseHelper.FailResponse(e.ToString());
             }
         }
@@ -65,7 +67,7 @@ namespace BaseAdminTemplate.Business.Services
             }
             catch (Exception e)
             {
-                //todo: add log to database
+                LogHelper.AddLog(_unitOfWork, e, GetType().Name, MethodBase.GetCurrentMethod()?.Name);
                 return _listResponseHelper.FailResponse(e.ToString());
             }
         }
@@ -79,7 +81,7 @@ namespace BaseAdminTemplate.Business.Services
             }
             catch (Exception e)
             {
-                //todo: add log to database
+                LogHelper.AddLog(_unitOfWork, e, GetType().Name, MethodBase.GetCurrentMethod()?.Name);
                 return _listResponseHelper.FailResponse(e.ToString());
             }
         }
@@ -93,7 +95,7 @@ namespace BaseAdminTemplate.Business.Services
             }
             catch (Exception e)
             {
-                //todo: add log to database
+                LogHelper.AddLog(_unitOfWork, e, GetType().Name, MethodBase.GetCurrentMethod()?.Name);
                 return _listResponseHelper.FailResponse(e.ToString());
             }
         }
@@ -107,7 +109,7 @@ namespace BaseAdminTemplate.Business.Services
             }
             catch (Exception e)
             {
-                //todo: add log to database
+                LogHelper.AddLog(_unitOfWork, e, GetType().Name, MethodBase.GetCurrentMethod()?.Name);
                 return _listResponseHelper.FailResponse(e.ToString());
             }
         }

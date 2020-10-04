@@ -18,6 +18,7 @@ namespace BaseAdminTemplate.DataAccess.Context
         public DbSet<Role> Roles { get; set; }
         public DbSet<Menu> Menus { get; set; }
         public DbSet<Permission> Permissions { get; set; }
+        public DbSet<ExceptionLog> ExceptionLogs { get; set; }
 
         public DbSet<LinkMenuPermission> LinkMenusPermissions { get; set; }
         public DbSet<LinkRolePermission> LinkRolesPermissions { get; set; }
