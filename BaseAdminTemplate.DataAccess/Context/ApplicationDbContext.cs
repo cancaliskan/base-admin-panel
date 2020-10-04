@@ -1,17 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.IO;
 using System.Linq;
 using System.Reflection;
-using System.Threading.Tasks;
-using BaseAdminTemplate.Common.Helpers;
 using Microsoft.EntityFrameworkCore;
-
-using BaseAdminTemplate.Domain.Entities;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore.Infrastructure;
-using Microsoft.Extensions.Configuration;
+
+using BaseAdminTemplate.Common.Helpers;
+using BaseAdminTemplate.DataAccess.Helpers;
+using BaseAdminTemplate.Domain.Entities;
 
 namespace BaseAdminTemplate.DataAccess.Context
 {
@@ -32,7 +29,7 @@ namespace BaseAdminTemplate.DataAccess.Context
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            var webProjectPath = GetWebProjectPath();
+            var webProjectPath = ConfigurationParameterHelper.GetConfigurationParameter("WebProjectPath");
             var controllers = GetWebProjectControllers(webProjectPath).ToList();
 
             #region Seed Admin Role
@@ -55,10 +52,10 @@ namespace BaseAdminTemplate.DataAccess.Context
             var adminUser = new User()
             {
                 Id = Guid.NewGuid(),
-                Email = "admin",
-                Password = CryptoHelper.Encrypt("Admin+-2020*"),
-                Name = "Admin",
-                Surname = "Admin",
+                Email = ConfigurationParameterHelper.GetConfigurationParameter("AdminUserEmail"),
+                Password = CryptoHelper.Encrypt(ConfigurationParameterHelper.GetConfigurationParameter("AdminUserPassword")),
+                Name = ConfigurationParameterHelper.GetConfigurationParameter("AdminUserName"),
+                Surname = ConfigurationParameterHelper.GetConfigurationParameter("AdminUserSurname"),
                 DeletedDate = DateTime.Now,
                 IsActive = true
             };
@@ -155,17 +152,6 @@ namespace BaseAdminTemplate.DataAccess.Context
 
             var controllers = assembly.GetTypes().Where(type => typeof(Controller).IsAssignableFrom(type));
             return controllers;
-        }
-
-        private static string GetWebProjectPath()
-        {
-            var configuration = new ConfigurationBuilder()
-                .SetBasePath(Directory.GetParent(Directory.GetCurrentDirectory()) + "\\BaseAdminTemplate.Web")
-                .AddJsonFile("appsettings.json")
-                .Build();
-
-            var webProjectPath = configuration.GetConnectionString("WebProjectPath");
-            return webProjectPath;
         }
     }
 }
