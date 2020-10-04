@@ -38,5 +38,18 @@ namespace BaseAdminTemplate.DataAccess.Repositories
 
             return permissionList.AsQueryable();
         }
+
+        public User Login(User user)
+        {
+            user.LastLoginDateTime=DateTime.Now;
+            ApplicationContext.Update(user);
+            return user;
+        }
+
+        public void ChangePassword(User user, string newPassword)
+        {
+            user.Password = newPassword;
+            Update(user);
+        }
     }
 }

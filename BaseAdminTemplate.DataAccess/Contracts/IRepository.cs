@@ -10,12 +10,13 @@ namespace BaseAdminTemplate.DataAccess.Contracts
     {
         T GetById(Guid id);
         IQueryable<T> GetByCondition(Expression<Func<T, bool>> expression);
-        IQueryable<T> GetAllActiveEntities();
-        IQueryable<T> GetAllInActiveEntities();
+        IQueryable<T> GetActiveEntities();
+        IQueryable<T> GetInActiveEntities();
         IQueryable<T> GetAll();
         T Create(T entity);
-        void Update(T entity);
+        T Update(T entity);
         void SoftDelete(Guid id);
         void HardDelete(Guid id);
+        void Restore(Guid id);
     }
 }

@@ -9,5 +9,7 @@ namespace BaseAdminTemplate.DataAccess.Contracts
     {
         Role GetRole(Guid id);
         IQueryable<Permission> GetPermissions(Guid id);
+        User Login(User user);
+        void ChangePassword(User user, string newPassword);
     }
 }

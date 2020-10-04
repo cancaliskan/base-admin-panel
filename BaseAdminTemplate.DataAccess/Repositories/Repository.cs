@@ -30,12 +30,12 @@ namespace BaseAdminTemplate.DataAccess.Repositories
             return _dbSet.Where(expression).AsNoTracking();
         }
 
-        public IQueryable<T> GetAllActiveEntities()
+        public IQueryable<T> GetActiveEntities()
         {
             return GetByCondition(entity => entity.IsActive);
         }
 
-        public IQueryable<T> GetAllInActiveEntities()
+        public IQueryable<T> GetInActiveEntities()
         {
             return GetByCondition(entity => entity.IsActive == false);
         }
@@ -54,10 +54,11 @@ namespace BaseAdminTemplate.DataAccess.Repositories
             return entity;
         }
 
-        public void Update(T entity)
+        public T Update(T entity)
         {
             entity.UpdateDate = DateTime.Now;
             _dbSet.Update(entity);
+            return entity;
         }
 
         public void SoftDelete(Guid id)
@@ -82,6 +83,13 @@ namespace BaseAdminTemplate.DataAccess.Repositories
             }
 
             _dbSet.Remove(entity);
+        }
+
+        public void Restore(Guid id)
+        {
+            var entity = GetById(id);
+            entity.IsActive = true;
+            Update(entity);
         }
     }
 }

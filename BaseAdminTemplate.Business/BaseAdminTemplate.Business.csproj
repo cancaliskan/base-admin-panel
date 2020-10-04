@@ -5,10 +5,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Services\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\BaseAdminTemplate.Common\BaseAdminTemplate.Common.csproj" />
     <ProjectReference Include="..\BaseAdminTemplate.DataAccess\BaseAdminTemplate.DataAccess.csproj" />
     <ProjectReference Include="..\BaseAdminTemplate.Domain\BaseAdminTemplate.Domain.csproj" />
