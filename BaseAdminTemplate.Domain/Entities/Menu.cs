@@ -2,6 +2,7 @@
 {
     public sealed class Menu : BaseEntity
     {
-        public string Name { get; set; }
+        public string DisplayName { get; set; }
+        public string ControllerName { get; set; }
     }
 }

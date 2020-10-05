@@ -69,15 +69,17 @@ namespace BaseAdminTemplate.DataAccess.Context
             {
                 #region Seed Menu Item
 
+                var controllerName = controller.Name;
                 var controllerDisplayName = controller.GetCustomAttributes(typeof(DisplayNameAttribute), true)
-                    .Cast<DisplayNameAttribute>().SingleOrDefault()?.DisplayName;
+                                                            .Cast<DisplayNameAttribute>().SingleOrDefault()?.DisplayName;
 
                 if (!controllerDisplayName.IsNotEmpty()) continue;
 
                 var menu = new Menu
                 {
                     Id = Guid.NewGuid(),
-                    Name = controllerDisplayName,
+                    DisplayName = controllerDisplayName,
+                    ControllerName = controllerName,
                     CreatedDate = DateTime.Now,
                     IsActive = true
                 };
@@ -91,15 +93,17 @@ namespace BaseAdminTemplate.DataAccess.Context
                 {
                     #region Seed Permission Item
 
+                    var methodName = method.Name;
                     var methodDisplayName = method.GetCustomAttributes(typeof(DisplayNameAttribute), true)
-                        .Cast<DisplayNameAttribute>().SingleOrDefault()?.DisplayName;
+                                                        .Cast<DisplayNameAttribute>().SingleOrDefault()?.DisplayName;
 
                     if (!methodDisplayName.IsNotEmpty()) continue;
 
                     var permission = new Permission()
                     {
                         Id = Guid.NewGuid(),
-                        Name = methodDisplayName,
+                        DisplayName = methodDisplayName,
+                        MethodName = methodName,
                         CreatedDate = DateTime.Now,
                         IsActive = true
                     };
