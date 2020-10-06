@@ -4,4 +4,18 @@
     <TargetFramework>netcoreapp3.1</TargetFramework>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Content Remove="configurationParameters.json" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="configurationParameters.json" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\BaseAdminTemplate.Business\BaseAdminTemplate.Business.csproj" />
+    <ProjectReference Include="..\BaseAdminTemplate.Common\BaseAdminTemplate.Common.csproj" />
+    <ProjectReference Include="..\BaseAdminTemplate.DataAccess\BaseAdminTemplate.DataAccess.csproj" />
+  </ItemGroup>
+
 </Project>
