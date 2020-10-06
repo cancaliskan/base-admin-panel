@@ -2,9 +2,15 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using BaseAdminTemplate.Business.Contracts;
+using BaseAdminTemplate.Business.Services;
+using BaseAdminTemplate.DataAccess.Context;
+using BaseAdminTemplate.DataAccess.UnitOfWork;
+using BaseAdminTemplate.Web.Helpers;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -24,6 +30,22 @@ namespace BaseAdminTemplate.Web
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews();
+
+            services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+
+            services.AddMvc().AddMvcOptions(option => option.Filters.Add(new ActionFilter()));
+
+            #region Services
+            services.AddTransient<IUserService, UserService>();
+            services.AddTransient<IExceptionLogService, ExceptionLogService>();
+            services.AddTransient<IMenuService, MenuService>();
+            services.AddTransient<IPermissionService, PermissionService>();
+            services.AddTransient<IRoleService, RoleService>();
+            #endregion
+
+            #region UnitOfWork
+            services.AddTransient<IUnitOfWork, UnitOfWork>();
+            #endregion
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

@@ -1,16 +1,22 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.ComponentModel;
+using BaseAdminTemplate.Business.Contracts;
+using BaseAdminTemplate.Common.Helpers;
+using BaseAdminTemplate.DataAccess.Helpers;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BaseAdminTemplate.Web.Controllers
 {
-    [DisplayName("Test Controller")]
-    public class TestController : Controller
+    [DisplayName(Constants.DisplayInMenu + "Parent Menu 2")]
+    public class TestController : BaseController
     {
-        [DisplayName("Test Controller Method")]
+        public TestController(IUserService userService, IPermissionService permissionService,
+                              IRoleService roleService, IMenuService menuService, IExceptionLogService exceptionLogService)
+                              : base(userService, permissionService, roleService, menuService, exceptionLogService)
+        {
+        }
+
+        // GET
+        [DisplayName(Constants.DisplayInMenu + "Sub Menu 2")]
         public IActionResult Index()
         {
             return View();

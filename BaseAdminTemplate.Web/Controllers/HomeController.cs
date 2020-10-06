@@ -1,27 +1,29 @@
 ﻿using System.ComponentModel;
 using System.Diagnostics;
+using BaseAdminTemplate.Business.Contracts;
+using BaseAdminTemplate.Common.Helpers;
+using BaseAdminTemplate.DataAccess.Helpers;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
 using BaseAdminTemplate.Web.Models;
 
 namespace BaseAdminTemplate.Web.Controllers
 {
-    [DisplayName("Role Management")]
-    public class HomeController : Controller
+    [DisplayName(Constants.DisplayInMenu + "Parent Menu")]
+    public class HomeController : BaseController
     {
-        private readonly ILogger<HomeController> _logger;
-
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(IUserService userService, IPermissionService permissionService,
+                              IRoleService roleService, IMenuService menuService, IExceptionLogService exceptionLogService) 
+                            : base(userService, permissionService, roleService, menuService, exceptionLogService)
         {
-            _logger = logger;
         }
 
-        [DisplayName("Create Role")]
+        [DisplayName(Constants.DisplayInMenu + "Sub Menu Display")]
         public IActionResult Index()
         {
             return View();
         }
 
+        [DisplayName("Sub Menu Display")]
         public IActionResult Privacy()
         {
             return View();

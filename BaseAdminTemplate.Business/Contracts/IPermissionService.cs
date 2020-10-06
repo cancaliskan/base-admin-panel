@@ -14,5 +14,6 @@ namespace BaseAdminTemplate.Business.Contracts
         Response<IQueryable<Permission>> GetAll();
         Response<IQueryable<Permission>> GetActivePermissions();
         Response<IQueryable<Permission>> GetInActivePermissions();
+        Response<Menu> GetParent(Guid id);
     }
 }

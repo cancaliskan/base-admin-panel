@@ -1,0 +1,23 @@
+﻿@using BaseAdminTemplate.Web.Controllers
+
+@{
+    var menuItems = (MenuItemsModel)ViewBag.MenuItems;
+}
+
+<h3>Menu</h3>
+<ul class="nav side-menu">
+    @foreach (var parent in menuItems.MenuItems)
+    {
+        <li>
+            <a><i class="fa fa-desktop"></i> @parent.DisplayName <span class="fa fa-chevron-down"></span></a>
+            <ul class="nav child_menu">
+                @foreach (var child in parent.Methods)
+                {
+                <li>
+                    <a href="/@parent.ControllerName/@child.MethodName">@child.DisplayName</a>
+                </li>
+                }
+            </ul>
+        </li>
+    }
+</ul>

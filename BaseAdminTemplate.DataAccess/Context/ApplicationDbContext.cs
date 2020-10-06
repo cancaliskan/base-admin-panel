@@ -69,11 +69,11 @@ namespace BaseAdminTemplate.DataAccess.Context
             {
                 #region Seed Menu Item
 
-                var controllerName = controller.Name;
+                var controllerName = controller.Name.Replace(Constants.Controller,string.Empty);
                 var controllerDisplayName = controller.GetCustomAttributes(typeof(DisplayNameAttribute), true)
                                                             .Cast<DisplayNameAttribute>().SingleOrDefault()?.DisplayName;
 
-                if (!controllerDisplayName.IsNotEmpty()) continue;
+                if (controllerDisplayName.IsEmpty()) continue;
 
                 var menu = new Menu
                 {
@@ -83,6 +83,12 @@ namespace BaseAdminTemplate.DataAccess.Context
                     CreatedDate = DateTime.Now,
                     IsActive = true
                 };
+
+                if (controllerDisplayName.Contains(Constants.DisplayInMenu))
+                {
+                    menu.DisplayName = menu.DisplayName.Replace(Constants.DisplayInMenu, string.Empty);
+                    menu.DisplayInMenu = true;
+                }
 
                 modelBuilder.Entity<Menu>().HasData(menu);
 
@@ -97,7 +103,7 @@ namespace BaseAdminTemplate.DataAccess.Context
                     var methodDisplayName = method.GetCustomAttributes(typeof(DisplayNameAttribute), true)
                                                         .Cast<DisplayNameAttribute>().SingleOrDefault()?.DisplayName;
 
-                    if (!methodDisplayName.IsNotEmpty()) continue;
+                    if (methodDisplayName.IsEmpty()) continue;
 
                     var permission = new Permission()
                     {
@@ -107,6 +113,12 @@ namespace BaseAdminTemplate.DataAccess.Context
                         CreatedDate = DateTime.Now,
                         IsActive = true
                     };
+
+                    if (methodDisplayName.Contains(Constants.DisplayInMenu))
+                    {
+                        permission.DisplayName = permission.DisplayName.Replace(Constants.DisplayInMenu, string.Empty);
+                        permission.DisplayInMenu = true;
+                    }
 
                     modelBuilder.Entity<Permission>().HasData(permission);
 

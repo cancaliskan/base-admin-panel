@@ -17,6 +17,7 @@ namespace BaseAdminTemplate.Business.Services
         private readonly IUnitOfWork _unitOfWork;
 
         private readonly ResponseHelper<Permission> _responseHelper;
+        private readonly ResponseHelper<Menu> _menuResponseHelper;
         private readonly ResponseHelper<IQueryable<Permission>> _listResponseHelper;
         private readonly ResponseHelper<bool> _booleanResponseHelper;
 
@@ -25,6 +26,7 @@ namespace BaseAdminTemplate.Business.Services
             _unitOfWork = unitOfWork;
 
             _responseHelper = new ResponseHelper<Permission>();
+            _menuResponseHelper = new ResponseHelper<Menu>();
             _listResponseHelper = new ResponseHelper<IQueryable<Permission>>();
             _booleanResponseHelper = new ResponseHelper<bool>();
         }
@@ -111,6 +113,20 @@ namespace BaseAdminTemplate.Business.Services
             {
                 LogHelper.AddLog(_unitOfWork, e, GetType().Name, MethodBase.GetCurrentMethod()?.Name);
                 return _listResponseHelper.FailResponse(e.ToString());
+            }
+        }
+
+        public Response<Menu> GetParent(Guid id)
+        {
+            try
+            {
+                var parent= _unitOfWork.LinkMenuPermissionRepository.GetParent(id);
+                return _menuResponseHelper.SuccessResponse(parent, "returned successfully");
+            }
+            catch (Exception e)
+            {
+                LogHelper.AddLog(_unitOfWork, e, GetType().Name, MethodBase.GetCurrentMethod()?.Name);
+                return _menuResponseHelper.FailResponse(e.ToString());
             }
         }
     }
