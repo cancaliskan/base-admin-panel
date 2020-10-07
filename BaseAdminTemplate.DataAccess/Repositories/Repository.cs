@@ -32,17 +32,17 @@ namespace BaseAdminTemplate.DataAccess.Repositories
 
         public IQueryable<T> GetActiveEntities()
         {
-            return GetByCondition(entity => entity.IsActive);
+            return GetByCondition(entity => entity.IsActive).OrderByDescending(entity => entity.CreatedDate);
         }
 
         public IQueryable<T> GetInActiveEntities()
         {
-            return GetByCondition(entity => entity.IsActive == false);
+            return GetByCondition(entity => entity.IsActive == false).OrderByDescending(entity => entity.CreatedDate);
         }
 
         public IQueryable<T> GetAll()
         {
-            return _dbSet.AsNoTracking();
+            return _dbSet.AsNoTracking().OrderByDescending(entity => entity.CreatedDate);
         }
 
         public T Create(T entity)

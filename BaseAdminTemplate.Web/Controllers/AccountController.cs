@@ -5,6 +5,8 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authentication;
 
+using AutoMapper;
+
 using BaseAdminTemplate.Business.Contracts;
 using BaseAdminTemplate.Web.Models;
 
@@ -14,8 +16,8 @@ namespace BaseAdminTemplate.Web.Controllers
     public class AccountController : BaseController
     {
         public AccountController(IUserService userService, IPermissionService permissionService, IRoleService roleService,
-                                 IMenuService menuService, IExceptionLogService exceptionLogService)
-                               : base(userService, permissionService, roleService, menuService, exceptionLogService)
+                                 IMenuService menuService, IExceptionLogService exceptionLogService, IMapper mapper)
+                                 : base(userService, permissionService, roleService, menuService, exceptionLogService, mapper)
         {
         }
 

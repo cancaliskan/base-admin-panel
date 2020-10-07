@@ -1,19 +1,19 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
+
+using AutoMapper;
+
 using BaseAdminTemplate.Business.Contracts;
 using BaseAdminTemplate.Business.Services;
 using BaseAdminTemplate.DataAccess.Context;
 using BaseAdminTemplate.DataAccess.UnitOfWork;
 using BaseAdminTemplate.Web.Helpers;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
+using BaseAdminTemplate.Web.Hubs;
 
 namespace BaseAdminTemplate.Web
 {
@@ -29,6 +29,16 @@ namespace BaseAdminTemplate.Web
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddControllersWithViews();
+
+            services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+
+            services.AddMvc().AddMvcOptions(option => option.Filters.Add(new ActionFilter()));
+
+            services.AddSignalR();
+
+            #region Authentication
+
             services.AddAuthentication("CookieAuthentication")
                 .AddCookie("CookieAuthentication", config =>
                 {
@@ -36,11 +46,7 @@ namespace BaseAdminTemplate.Web
                     config.LoginPath = "/Account/Login";
                 });
 
-            services.AddControllersWithViews();
-
-            services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
-
-            services.AddMvc().AddMvcOptions(option => option.Filters.Add(new ActionFilter()));
+            #endregion
 
             #region Services
             services.AddTransient<IUserService, UserService>();
@@ -52,6 +58,12 @@ namespace BaseAdminTemplate.Web
 
             #region UnitOfWork
             services.AddTransient<IUnitOfWork, UnitOfWork>();
+            #endregion
+
+            #region AutoMapper
+
+            services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+
             #endregion
         }
 
@@ -82,6 +94,8 @@ namespace BaseAdminTemplate.Web
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
+
+                endpoints.MapHub<RoleHub>("/roleHub");
             });
         }
     }

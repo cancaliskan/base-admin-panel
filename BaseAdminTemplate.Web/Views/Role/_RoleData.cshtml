@@ -1,0 +1,30 @@
+﻿@model IEnumerable<BaseAdminTemplate.Web.Models.RoleViewModel>
+@{
+    Layout = "~/Views/Shared/_TableLayout.cshtml";
+}
+
+<div class="tableStyle">
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="table-responsive">
+                <table class="display" style="width:100%">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var role in Model)
+                        {
+                            <tr>
+                                <td>@role.Name</td>
+                                @*<td style="text-align: center; width: 10%"> @Html.ActionLink("Düzenle", "Edit", new { userUID = role.}, new { @class = "btn btn-round btn-dark" })</td>*@
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

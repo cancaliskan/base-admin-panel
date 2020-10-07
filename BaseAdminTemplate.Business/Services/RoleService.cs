@@ -88,7 +88,7 @@ namespace BaseAdminTemplate.Business.Services
             }
         }
 
-        public Response<IQueryable<Role>> GetActivePermissions()
+        public Response<IQueryable<Role>> GetActiveRoles()
         {
             try
             {
@@ -102,7 +102,7 @@ namespace BaseAdminTemplate.Business.Services
             }
         }
 
-        public Response<IQueryable<Role>> GetInActivePermissions()
+        public Response<IQueryable<Role>> GetInActiveRoles()
         {
             try
             {

@@ -2,8 +2,9 @@
 using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
 
+using AutoMapper;
+
 using BaseAdminTemplate.Business.Contracts;
-using BaseAdminTemplate.Domain.Entities;
 using BaseAdminTemplate.Web.Models;
 
 namespace BaseAdminTemplate.Web.Controllers
@@ -16,26 +17,30 @@ namespace BaseAdminTemplate.Web.Controllers
         protected readonly IExceptionLogService ExceptionLogService;
         protected readonly IMenuService MenuService;
 
+        protected readonly IMapper Mapper;
+
         public BaseController(IUserService userService, IPermissionService permissionService, IRoleService roleService,
-                              IMenuService menuService, IExceptionLogService exceptionLogService)
+                              IMenuService menuService, IExceptionLogService exceptionLogService, IMapper mapper)
         {
             UserService = userService;
             PermissionService = permissionService;
             RoleService = roleService;
             ExceptionLogService = exceptionLogService;
             MenuService = menuService;
+            Mapper = mapper;
         }
 
         public MenuItemsModel GetMenuItems()
         {
-            var parentMenuList = new List<Menu>();
+            var parentMenuList = new List<MenuViewModel>();
             var subMenuList = PermissionService.GetAll().Result;
             foreach (var subMenu in subMenuList)
             {
                 var parentMenu = PermissionService.GetParent(subMenu.Id).Result;
                 if (parentMenuList.FirstOrDefault(x => x.Id == parentMenu.Id) == null)
                 {
-                    parentMenuList.Add(parentMenu);
+                    var menuViewModel = Mapper.Map<MenuViewModel>(parentMenu);
+                    parentMenuList.Add(menuViewModel);
                 }
             }
 
@@ -48,11 +53,11 @@ namespace BaseAdminTemplate.Web.Controllers
                 {
                     methods.Add(new MethodsItemsModel()
                     {
-                        MethodName =child.MethodName,
+                        MethodName = child.MethodName,
                         DisplayName = child.DisplayName
                     });
                 }
-                
+
                 parentItemList.Add(new ControllerItemsModel()
                 {
                     ControllerName = parentMenu.ControllerName,
