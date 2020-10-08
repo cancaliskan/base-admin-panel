@@ -14,6 +14,7 @@ using BaseAdminTemplate.Domain.Entities;
 using BaseAdminTemplate.Web.Hubs;
 using BaseAdminTemplate.Web.Models;
 using BaseAdminTemplate.Web.Models.ViewModels;
+using Newtonsoft.Json.Linq;
 
 namespace BaseAdminTemplate.Web.Controllers
 {
@@ -155,7 +156,7 @@ namespace BaseAdminTemplate.Web.Controllers
                 ViewBag.RolePermissions = Mapper.Map<List<PermissionViewModel>>(rolePermissions);
                 return View(role);
             }
-           
+
             return RedirectToAction("List");
         }
 
@@ -180,6 +181,31 @@ namespace BaseAdminTemplate.Web.Controllers
 
             ViewBag.Permissions = GetPermissions();
             return View(model);
+        }
+
+        [HttpPost]
+        public ActionResult UpdateField(string id, string propertyName, string value)
+        {
+            var status = false;
+            var message = "";
+
+            var role = RoleService.GetById(id.ToGuid());
+            if (role.IsSucceed)
+            {
+                object instance = role.Result;
+                role.Result.GetType().GetProperty(propertyName)?.SetValue(instance, value);
+                RoleService.Update(role.Result);
+                _context.Clients.All.SendAsync("refresh");
+                status = true;
+            }
+            else
+            {
+                message = "Error!";
+            }
+
+            var response = new { value = value, status = status, message = message };
+            var o = JObject.FromObject(response);
+            return Content(o.ToString());
         }
     }
 }
