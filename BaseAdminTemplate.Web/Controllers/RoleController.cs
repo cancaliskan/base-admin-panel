@@ -5,6 +5,7 @@ using System.Linq;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SignalR;
+using Newtonsoft.Json.Linq;
 
 using AutoMapper;
 
@@ -14,7 +15,6 @@ using BaseAdminTemplate.Domain.Entities;
 using BaseAdminTemplate.Web.Hubs;
 using BaseAdminTemplate.Web.Models;
 using BaseAdminTemplate.Web.Models.ViewModels;
-using Newtonsoft.Json.Linq;
 
 namespace BaseAdminTemplate.Web.Controllers
 {
