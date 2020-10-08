@@ -21,20 +21,25 @@ namespace BaseAdminTemplate.Web.Controllers
     [DisplayName(Constants.DisplayInMenu + "Role Management")]
     public class RoleController : BaseController
     {
-        private readonly IHubContext<RoleHub> context;
+        private readonly IHubContext<RoleHub> _context;
 
         public RoleController(IUserService userService, IPermissionService permissionService, IRoleService roleService,
                               IMenuService menuService, IExceptionLogService exceptionLogService, IMapper mapper,
                               IHubContext<RoleHub> context)
                               : base(userService, permissionService, roleService, menuService, exceptionLogService, mapper)
         {
-            this.context = context;
+            _context = context;
         }
 
         [HttpGet]
         [DisplayName(Constants.DisplayInMenu + "List")]
         public IActionResult List()
         {
+            if (!HasPermission("Role", "List"))
+            {
+                return RedirectToAction("PermissionError", "Home");
+            }
+
             var roles = GetRoles();
             return View(roles);
         }
@@ -50,6 +55,10 @@ namespace BaseAdminTemplate.Web.Controllers
         [DisplayName(Constants.DisplayInMenu + "New")]
         public IActionResult Create()
         {
+            if (!HasPermission("Role", "Create"))
+            {
+                return RedirectToAction("PermissionError", "Home");
+            }
             ViewBag.Permissions = GetPermissions();
             return View();
         }
@@ -66,7 +75,7 @@ namespace BaseAdminTemplate.Web.Controllers
                     RoleService.AddPermissionToRole(response.Result.Id, new Guid(permissionId));
                 }
 
-                context.Clients.All.SendAsync("refresh");
+                _context.Clients.All.SendAsync("refresh");
                 return RedirectToAction("List");
             }
 
@@ -107,5 +116,26 @@ namespace BaseAdminTemplate.Web.Controllers
 
             return permissions;
         }
+
+        [HttpPost]
+        [DisplayName("Delete")]
+        public IActionResult Delete(string roleId)
+        {
+            if (!HasPermission("Role", "Delete"))
+            {
+                return RedirectToAction("PermissionError", "Home");
+            }
+
+            var id = roleId.ToGuid();
+            var response = RoleService.HardDelete(id);
+            if (response.IsSucceed)
+            {
+                _context.Clients.All.SendAsync("refresh");
+                return RedirectToAction("List");
+            }
+
+            return RedirectToAction("List");
+        }
+
     }
 }

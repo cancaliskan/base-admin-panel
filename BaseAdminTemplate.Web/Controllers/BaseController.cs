@@ -1,15 +1,20 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using System.Collections.Generic;
+using System.Security.Claims;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authorization;
 
 using AutoMapper;
 
 using BaseAdminTemplate.Business.Contracts;
+using BaseAdminTemplate.Common.Helpers;
 using BaseAdminTemplate.Web.Models;
 using BaseAdminTemplate.Web.Models.ViewModels;
 
 namespace BaseAdminTemplate.Web.Controllers
 {
+    [Authorize]
     public class BaseController : Controller
     {
         protected readonly IUserService UserService;
@@ -33,8 +38,15 @@ namespace BaseAdminTemplate.Web.Controllers
 
         public MenuItemsModel GetMenuItems()
         {
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            if (userId.IsEmpty())
+            {
+                return null;
+            }
+
+            var role = UserService.GetRole(new Guid(userId)).Result;
             var parentMenuList = new List<MenuViewModel>();
-            var subMenuList = PermissionService.GetAll().Result;
+            var subMenuList = RoleService.GetPermissions(role.Id).Result;
             foreach (var subMenu in subMenuList)
             {
                 var parentMenu = PermissionService.GetParent(subMenu.Id).Result;
@@ -52,11 +64,14 @@ namespace BaseAdminTemplate.Web.Controllers
                 var childList = MenuService.GetChildList(parentMenu.Id).Result;
                 foreach (var child in childList)
                 {
-                    methods.Add(new MethodsItemsModel()
+                    if (subMenuList.Any(x => x.Id == child.Id))
                     {
-                        MethodName = child.MethodName,
-                        DisplayName = child.DisplayName
-                    });
+                        methods.Add(new MethodsItemsModel()
+                        {
+                            MethodName = child.MethodName,
+                            DisplayName = child.DisplayName
+                        });
+                    }
                 }
 
                 parentItemList.Add(new ControllerItemsModel()
@@ -73,6 +88,30 @@ namespace BaseAdminTemplate.Web.Controllers
             };
 
             return menu;
+        }
+
+        public bool HasPermission(string controllerName, string methodName)
+        {
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            if (userId.IsEmpty())
+            {
+                return true;
+            }
+
+            var role = UserService.GetRole(new Guid(userId)).Result;
+            var permissions = RoleService.GetPermissions(role.Id).Result;
+            var hasPermission = false;
+            foreach (var permission in permissions)
+            {
+                var parent = PermissionService.GetParent(permission.Id).Result;
+                if (parent.ControllerName == controllerName
+                    && permission.MethodName == methodName)
+                {
+                    hasPermission = true;
+                }
+            }
+
+            return hasPermission;
         }
     }
 }

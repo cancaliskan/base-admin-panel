@@ -37,6 +37,7 @@ namespace BaseAdminTemplate.Web.Controllers
             if (response.IsSucceed)
             {
                 var userClaims = new List<Claim>() {
+                    new Claim(ClaimTypes.NameIdentifier, response.Result.Id.ToString()),
                     new Claim(ClaimTypes.Name, response.Result.Name),
                     new Claim(ClaimTypes.Email, response.Result.Email)
                 };

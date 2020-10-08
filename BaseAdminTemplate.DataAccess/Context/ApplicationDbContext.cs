@@ -65,11 +65,26 @@ namespace BaseAdminTemplate.DataAccess.Context
 
             #endregion
 
+            #region Seed User Role
+
+            var linkUserRole = new LinkUserRole()
+            {
+                Id = Guid.NewGuid(),
+                CreatedDate = DateTime.Now,
+                IsActive = true,
+                UserId = adminUser.Id,
+                RoleId = adminRole.Id,
+            };
+
+            modelBuilder.Entity<LinkUserRole>().HasData(linkUserRole);
+
+            #endregion
+
             foreach (var controller in controllers)
             {
                 #region Seed Menu Item
 
-                var controllerName = controller.Name.Replace(Constants.Controller,string.Empty);
+                var controllerName = controller.Name.Replace(Constants.Controller, string.Empty);
                 var controllerDisplayName = controller.GetCustomAttributes(typeof(DisplayNameAttribute), true)
                                                             .Cast<DisplayNameAttribute>().SingleOrDefault()?.DisplayName;
 
