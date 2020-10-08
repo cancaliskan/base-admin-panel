@@ -9,6 +9,7 @@ using AutoMapper;
 
 using BaseAdminTemplate.Business.Contracts;
 using BaseAdminTemplate.Common.Helpers;
+using BaseAdminTemplate.Domain.Entities;
 using BaseAdminTemplate.Web.Models;
 using BaseAdminTemplate.Web.Models.ViewModels;
 
@@ -45,8 +46,8 @@ namespace BaseAdminTemplate.Web.Controllers
             }
 
             var role = UserService.GetRole(new Guid(userId)).Result;
-            var parentMenuList = new List<MenuViewModel>();
             var subMenuList = RoleService.GetPermissions(role.Id).Result;
+            var parentMenuList = new List<MenuViewModel>();
             foreach (var subMenu in subMenuList)
             {
                 var parentMenu = PermissionService.GetParent(subMenu.Id).Result;
@@ -90,7 +91,7 @@ namespace BaseAdminTemplate.Web.Controllers
             return menu;
         }
 
-        public bool HasPermission(string controllerName, string methodName)
+        protected bool HasPermission(string controllerName, string methodName)
         {
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
             if (userId.IsEmpty())
@@ -112,6 +113,23 @@ namespace BaseAdminTemplate.Web.Controllers
             }
 
             return hasPermission;
+        }
+
+        protected List<Permission> GetCurrentUserPermissions()
+        {
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            if (userId.IsEmpty())
+            {
+                return null;
+            }
+
+            var role = UserService.GetRole(new Guid(userId)).Result;
+            return RoleService.GetPermissions(role.Id).Result.AsEnumerable().ToList();
+        }
+
+        protected List<Permission> GetRolePermissions(Guid roleId)
+        {
+            return RoleService.GetPermissions(roleId).Result.AsEnumerable().ToList();
         }
     }
 }

@@ -45,6 +45,7 @@ namespace BaseAdminTemplate.Business.Services
             try
             {
                 _unitOfWork.ExceptionLogRepository.HardDeleteAll();
+                _unitOfWork.Complete();
                 return _booleanResponseHelper.SuccessResponse("deleted all");
             }
             catch (Exception e)

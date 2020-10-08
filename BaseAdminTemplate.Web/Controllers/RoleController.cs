@@ -137,5 +137,49 @@ namespace BaseAdminTemplate.Web.Controllers
             return RedirectToAction("List");
         }
 
+        [HttpGet]
+        [DisplayName("Edit")]
+        public IActionResult Edit(string roleId)
+        {
+            if (!HasPermission("Role", "Edit"))
+            {
+                return RedirectToAction("PermissionError", "Home");
+            }
+
+            var response = RoleService.GetById(roleId.ToGuid());
+            if (response.IsSucceed)
+            {
+                var role = Mapper.Map<RoleViewModel>(response.Result);
+                ViewBag.AllPermissions = GetPermissions();
+                var rolePermissions = GetRolePermissions(roleId.ToGuid());
+                ViewBag.RolePermissions = Mapper.Map<List<PermissionViewModel>>(rolePermissions);
+                return View(role);
+            }
+           
+            return RedirectToAction("List");
+        }
+
+        [HttpPost]
+        public IActionResult Edit(RoleViewModel model, List<string> permissions)
+        {
+            var role = Mapper.Map<Role>(model);
+            var response = RoleService.Update(role);
+            if (response.IsSucceed)
+            {
+                RoleService.RemoveAllPermissionFromRole(model.Id);
+                foreach (var permissionId in permissions)
+                {
+                    RoleService.AddPermissionToRole(model.Id, permissionId.ToGuid());
+                }
+
+                _context.Clients.All.SendAsync("refresh");
+                return RedirectToAction("List");
+            }
+
+            ViewBag.ErrorMessage = response.ErrorMessage;
+
+            ViewBag.Permissions = GetPermissions();
+            return View(model);
+        }
     }
 }

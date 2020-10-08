@@ -11,6 +11,7 @@
                     <thead>
                         <tr>
                             <th>Name</th>
+                            <th>Description</th>
                             <th></th>
                         </tr>
                     </thead>
@@ -19,9 +20,9 @@
                         {
                             <tr>
                                 <td>@role.Name</td>
-                                <td style="text-align: center; width: 20%">
-                                    @Html.ActionLink("Edit", "Edit", new { id = role.Id }, new { @class = "btn btn-round btn-dark" })
-                                    @Html.ActionLink("Detail", "Detail", new { id = role.Id }, new { @class = "btn btn-round btn-default" })
+                                <td>@role.Description</td>
+                                <td style="text-align: center; width: 10%">
+                                    @Html.ActionLink("Edit", "Edit", new { roleId = role.Id }, new { @class = "btn btn-round btn-dark" })
                                     <a data-id=@role.Id class="open-AddBookDialog btn btn-round btn-danger" href="#addBookDialog">Delete</a>
                                 </td>
                             </tr>

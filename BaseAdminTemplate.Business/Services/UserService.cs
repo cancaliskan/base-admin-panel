@@ -253,6 +253,7 @@ namespace BaseAdminTemplate.Business.Services
                 }
 
                 _unitOfWork.UserRepository.Login(user);
+                _unitOfWork.Complete();
 
                 return _responseHelper.SuccessResponse(user, "returned successfully");
             }
@@ -284,6 +285,8 @@ namespace BaseAdminTemplate.Business.Services
                 }
 
                 _unitOfWork.UserRepository.ChangePassword(user, newPassword);
+                _unitOfWork.Complete();
+
                 return _responseHelper.SuccessResponse(user, "password changed successfully");
             }
             catch (Exception e)
@@ -350,6 +353,7 @@ namespace BaseAdminTemplate.Business.Services
                 var isSuccess = _unitOfWork.LinkUserRoleRepository.AddRoleToUser(userId, roleId);
                 if (isSuccess)
                 {
+                    _unitOfWork.Complete();
                     return _booleanResponseHelper.SuccessResponse("role added to user");
                 }
 
@@ -380,6 +384,7 @@ namespace BaseAdminTemplate.Business.Services
                 var isSuccess = _unitOfWork.LinkUserRoleRepository.RemoveRoleFromUser(userId, roleId);
                 if (isSuccess)
                 {
+                    _unitOfWork.Complete();
                     return _booleanResponseHelper.SuccessResponse("role added to user");
                 }
 

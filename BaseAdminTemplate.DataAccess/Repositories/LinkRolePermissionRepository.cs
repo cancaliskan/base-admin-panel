@@ -50,6 +50,19 @@ namespace BaseAdminTemplate.DataAccess.Repositories
             return true;
         }
 
+        public bool RemoveAllPermissionFromRole(Guid roleId)
+        {
+            var isExist = ApplicationContext.Roles.Any(x => x.Id == roleId && x.IsActive);
+            if (isExist)
+            {
+                var permissions = GetByCondition(x => x.RoleId == roleId);
+                ApplicationContext.LinkRolesPermissions.RemoveRange(permissions);
+                return true;
+            }
+
+            return false;
+        }
+
         private bool IsNotExistRoleAndPermission(Guid roleId, Guid permissionId)
         {
             return ApplicationContext.Roles.Any(x => x.Id == roleId && x.IsActive)

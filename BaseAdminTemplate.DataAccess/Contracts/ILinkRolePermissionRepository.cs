@@ -8,5 +8,6 @@ namespace BaseAdminTemplate.DataAccess.Contracts
     {
         bool AddPermissionToRole(Guid roleId, Guid permissionId);
         bool RemovePermissionToRole(Guid roleId, Guid permissionId);
+        bool RemoveAllPermissionFromRole(Guid roleId);
     }
 }

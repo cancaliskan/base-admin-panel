@@ -269,6 +269,7 @@ namespace BaseAdminTemplate.Business.Services
                 var isSuccess = _unitOfWork.LinkRolePermissionRepository.AddPermissionToRole(roleId, permissionId);
                 if (isSuccess)
                 {
+                    _unitOfWork.Complete();
                     return _booleanResponseHelper.SuccessResponse("permission added to role");
                 }
 
@@ -299,10 +300,36 @@ namespace BaseAdminTemplate.Business.Services
                 var isSuccess = _unitOfWork.LinkRolePermissionRepository.RemovePermissionToRole(roleId, permissionId);
                 if (isSuccess)
                 {
+                    _unitOfWork.Complete();
                     return _booleanResponseHelper.SuccessResponse("permission removed from role");
                 }
 
                 return _booleanResponseHelper.FailResponse("permission can not removed from role");
+            }
+            catch (Exception e)
+            {
+                LogHelper.AddLog(_unitOfWork, e, GetType().Name, MethodBase.GetCurrentMethod()?.Name);
+                return _booleanResponseHelper.FailResponse(e.ToString());
+            }
+        }
+
+        public Response<bool> RemoveAllPermissionFromRole(Guid roleId)
+        {
+            try
+            {
+                if (IsNotExistRole(roleId))
+                {
+                    return _booleanResponseHelper.FailResponse("role could not found");
+                }
+
+                var isSuccess = _unitOfWork.LinkRolePermissionRepository.RemoveAllPermissionFromRole(roleId);
+                if (isSuccess)
+                {
+                    _unitOfWork.Complete();
+                    return _booleanResponseHelper.SuccessResponse("all permission removed from role");
+                }
+
+                return _booleanResponseHelper.FailResponse("all permission can not removed from role");
             }
             catch (Exception e)
             {
