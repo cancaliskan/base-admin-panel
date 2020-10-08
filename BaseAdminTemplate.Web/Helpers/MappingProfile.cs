@@ -4,6 +4,7 @@ using AutoMapper;
 
 using BaseAdminTemplate.Domain.Entities;
 using BaseAdminTemplate.Web.Models;
+using BaseAdminTemplate.Web.Models.ViewModels;
 
 namespace BaseAdminTemplate.Web.Helpers
 {

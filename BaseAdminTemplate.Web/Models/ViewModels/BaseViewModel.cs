@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace BaseAdminTemplate.Web.Models
+namespace BaseAdminTemplate.Web.Models.ViewModels
 {
     public class BaseViewModel
     {

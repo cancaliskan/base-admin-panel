@@ -9,6 +9,7 @@ using AutoMapper;
 
 using BaseAdminTemplate.Business.Contracts;
 using BaseAdminTemplate.Web.Models;
+using BaseAdminTemplate.Web.Models.ViewModels;
 
 namespace BaseAdminTemplate.Web.Controllers
 {

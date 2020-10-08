@@ -13,6 +13,7 @@ namespace BaseAdminTemplate.DataAccess.UnitOfWork
         IUserRepository UserRepository { get; }
         IExceptionLogRepository ExceptionLogRepository { get; }
         ILinkMenuPermissionRepository LinkMenuPermissionRepository { get; }
+        IMenuRepository MenuRepository{ get; }
 
         int Complete();
     }
