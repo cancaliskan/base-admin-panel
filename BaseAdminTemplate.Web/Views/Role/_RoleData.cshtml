@@ -19,7 +19,11 @@
                         {
                             <tr>
                                 <td>@role.Name</td>
-                                @*<td style="text-align: center; width: 10%"> @Html.ActionLink("Düzenle", "Edit", new { userUID = role.}, new { @class = "btn btn-round btn-dark" })</td>*@
+                                <td style="text-align: center; width: 20%">
+                                    @Html.ActionLink("Edit", "Edit", new { id = role.Id }, new { @class = "btn btn-round btn-dark" })
+                                    @Html.ActionLink("Detail", "Detail", new { id = role.Id }, new { @class = "btn btn-round btn-default" })
+                                    <a data-id=@role.Id class="open-AddBookDialog btn btn-round btn-danger" href="#addBookDialog">Delete</a>
+                                </td>
                             </tr>
                         }
                     </tbody>
@@ -28,3 +32,32 @@
         </div>
     </div>
 </div>
+
+<div class="modal fade" id="addBookDialog" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title" id="myModalLabel">Confirm to delete</h4>
+            </div>
+            @using (Html.BeginForm("Delete", "Role", FormMethod.Post))
+            {
+                <input type="hidden" name="roleId" id="roleId" value="" />
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-danger">Delete</button>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+
+<script>
+    $(document).on("click", ".open-AddBookDialog", function (e) {
+        e.preventDefault();
+        var _self = $(this);
+        var roleId = _self.data('id');
+        $("#roleId").val(roleId);
+        $(_self.attr('href')).modal('show');
+    });
+</script>
