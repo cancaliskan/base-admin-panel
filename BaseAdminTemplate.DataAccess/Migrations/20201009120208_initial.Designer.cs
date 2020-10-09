@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BaseAdminTemplate.DataAccess.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20201009112213_initial")]
+    [Migration("20201009120208_initial")]
     partial class initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -90,35 +90,43 @@ namespace BaseAdminTemplate.DataAccess.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("2716bd0e-8def-44f6-80d3-ab90bf605f30"),
-                            CreatedDate = new DateTime(2020, 10, 9, 14, 22, 12, 784, DateTimeKind.Local).AddTicks(7972),
+                            Id = new Guid("324d41a5-9c02-4b07-8e13-6dfcbd492609"),
+                            CreatedDate = new DateTime(2020, 10, 9, 15, 2, 7, 454, DateTimeKind.Local).AddTicks(3276),
                             IsActive = true,
-                            MenuId = new Guid("bd2090f9-d3c9-438c-b3ad-7ae9acd119ff"),
-                            PermissionId = new Guid("0c3f85c8-1a31-47be-b8be-9a5c2dea62c9")
+                            MenuId = new Guid("2bb7e44c-4cd0-4761-8f56-24d7e3893295"),
+                            PermissionId = new Guid("2f9c5c9d-393d-4138-9ad2-58718e50c5cd")
                         },
                         new
                         {
-                            Id = new Guid("1949a59b-18c6-4339-a728-ec4387ee9294"),
-                            CreatedDate = new DateTime(2020, 10, 9, 14, 22, 12, 785, DateTimeKind.Local).AddTicks(2521),
+                            Id = new Guid("b8f63668-0c4f-418f-b0b4-d5b2e27bedfc"),
+                            CreatedDate = new DateTime(2020, 10, 9, 15, 2, 7, 454, DateTimeKind.Local).AddTicks(9292),
                             IsActive = true,
-                            MenuId = new Guid("bd2090f9-d3c9-438c-b3ad-7ae9acd119ff"),
-                            PermissionId = new Guid("76e64889-ece8-4523-90ce-f48dc7b72c68")
+                            MenuId = new Guid("2bb7e44c-4cd0-4761-8f56-24d7e3893295"),
+                            PermissionId = new Guid("bb118689-efd1-431a-a8ba-5453ebcf07d4")
                         },
                         new
                         {
-                            Id = new Guid("299f9cbd-157f-49a0-aee5-637e6e5aab54"),
-                            CreatedDate = new DateTime(2020, 10, 9, 14, 22, 12, 786, DateTimeKind.Local).AddTicks(684),
+                            Id = new Guid("070f36b7-7cda-42c4-9080-13e8546c0a6a"),
+                            CreatedDate = new DateTime(2020, 10, 9, 15, 2, 7, 455, DateTimeKind.Local).AddTicks(2289),
                             IsActive = true,
-                            MenuId = new Guid("bd2090f9-d3c9-438c-b3ad-7ae9acd119ff"),
-                            PermissionId = new Guid("d525ac88-a2b0-4dc9-8097-0d0c08ad17ef")
+                            MenuId = new Guid("2bb7e44c-4cd0-4761-8f56-24d7e3893295"),
+                            PermissionId = new Guid("b490a309-a261-4852-aadf-40cdf3c86b11")
                         },
                         new
                         {
-                            Id = new Guid("7d3c1819-d093-40dd-9b90-8e8a45170600"),
-                            CreatedDate = new DateTime(2020, 10, 9, 14, 22, 12, 786, DateTimeKind.Local).AddTicks(1206),
+                            Id = new Guid("9f49ffc9-7456-42d2-baa7-a6e4d4df8668"),
+                            CreatedDate = new DateTime(2020, 10, 9, 15, 2, 7, 455, DateTimeKind.Local).AddTicks(2669),
                             IsActive = true,
-                            MenuId = new Guid("bd2090f9-d3c9-438c-b3ad-7ae9acd119ff"),
-                            PermissionId = new Guid("89b2ba41-9acf-42bf-a3bf-f2249be72f69")
+                            MenuId = new Guid("2bb7e44c-4cd0-4761-8f56-24d7e3893295"),
+                            PermissionId = new Guid("5a967e8a-f359-4ff7-9f1f-7002ce5a5e87")
+                        },
+                        new
+                        {
+                            Id = new Guid("c381cb9c-5c8d-407e-9212-ac13c1cf61dd"),
+                            CreatedDate = new DateTime(2020, 10, 9, 15, 2, 7, 460, DateTimeKind.Local).AddTicks(4858),
+                            IsActive = true,
+                            MenuId = new Guid("af33d2d7-6188-476a-87f3-8426d605833a"),
+                            PermissionId = new Guid("e21b015f-52a6-4988-a0d6-187f9b0e4655")
                         });
                 });
 
@@ -153,35 +161,43 @@ namespace BaseAdminTemplate.DataAccess.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("c202cb51-e7d1-4dd4-959e-47614dd8c9d8"),
-                            CreatedDate = new DateTime(2020, 10, 9, 14, 22, 12, 785, DateTimeKind.Local).AddTicks(1252),
+                            Id = new Guid("d762f33a-efc4-4ee4-b76e-110086c31cd4"),
+                            CreatedDate = new DateTime(2020, 10, 9, 15, 2, 7, 454, DateTimeKind.Local).AddTicks(7809),
                             IsActive = true,
-                            PermissionId = new Guid("0c3f85c8-1a31-47be-b8be-9a5c2dea62c9"),
-                            RoleId = new Guid("f512ab28-fddc-4a7c-8e5f-aebf156e9182")
+                            PermissionId = new Guid("2f9c5c9d-393d-4138-9ad2-58718e50c5cd"),
+                            RoleId = new Guid("1fcae457-b4c7-4833-9ab0-af88610018df")
                         },
                         new
                         {
-                            Id = new Guid("0e6e3a72-493a-4095-ab47-01d626906276"),
-                            CreatedDate = new DateTime(2020, 10, 9, 14, 22, 12, 785, DateTimeKind.Local).AddTicks(2816),
+                            Id = new Guid("0d7d4ab1-9278-4af6-bfed-8dec673358eb"),
+                            CreatedDate = new DateTime(2020, 10, 9, 15, 2, 7, 454, DateTimeKind.Local).AddTicks(9389),
                             IsActive = true,
-                            PermissionId = new Guid("76e64889-ece8-4523-90ce-f48dc7b72c68"),
-                            RoleId = new Guid("f512ab28-fddc-4a7c-8e5f-aebf156e9182")
+                            PermissionId = new Guid("bb118689-efd1-431a-a8ba-5453ebcf07d4"),
+                            RoleId = new Guid("1fcae457-b4c7-4833-9ab0-af88610018df")
                         },
                         new
                         {
-                            Id = new Guid("f164315d-96e9-4d42-9504-e46a4377c81d"),
-                            CreatedDate = new DateTime(2020, 10, 9, 14, 22, 12, 786, DateTimeKind.Local).AddTicks(746),
+                            Id = new Guid("66a8e680-85a9-416f-9eca-56b42320b6fe"),
+                            CreatedDate = new DateTime(2020, 10, 9, 15, 2, 7, 455, DateTimeKind.Local).AddTicks(2332),
                             IsActive = true,
-                            PermissionId = new Guid("d525ac88-a2b0-4dc9-8097-0d0c08ad17ef"),
-                            RoleId = new Guid("f512ab28-fddc-4a7c-8e5f-aebf156e9182")
+                            PermissionId = new Guid("b490a309-a261-4852-aadf-40cdf3c86b11"),
+                            RoleId = new Guid("1fcae457-b4c7-4833-9ab0-af88610018df")
                         },
                         new
                         {
-                            Id = new Guid("7bfe7924-4f9c-4f24-a22f-87dafc9c2017"),
-                            CreatedDate = new DateTime(2020, 10, 9, 14, 22, 12, 786, DateTimeKind.Local).AddTicks(1258),
+                            Id = new Guid("e15f75df-1e26-4907-aeb2-2c28478033cb"),
+                            CreatedDate = new DateTime(2020, 10, 9, 15, 2, 7, 455, DateTimeKind.Local).AddTicks(2705),
                             IsActive = true,
-                            PermissionId = new Guid("89b2ba41-9acf-42bf-a3bf-f2249be72f69"),
-                            RoleId = new Guid("f512ab28-fddc-4a7c-8e5f-aebf156e9182")
+                            PermissionId = new Guid("5a967e8a-f359-4ff7-9f1f-7002ce5a5e87"),
+                            RoleId = new Guid("1fcae457-b4c7-4833-9ab0-af88610018df")
+                        },
+                        new
+                        {
+                            Id = new Guid("07849aec-cfa4-4789-96c9-b37a2a412e1f"),
+                            CreatedDate = new DateTime(2020, 10, 9, 15, 2, 7, 460, DateTimeKind.Local).AddTicks(4919),
+                            IsActive = true,
+                            PermissionId = new Guid("e21b015f-52a6-4988-a0d6-187f9b0e4655"),
+                            RoleId = new Guid("1fcae457-b4c7-4833-9ab0-af88610018df")
                         });
                 });
 
@@ -216,11 +232,11 @@ namespace BaseAdminTemplate.DataAccess.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("61bc689e-41c2-4622-b82e-9655f80fe3f8"),
-                            CreatedDate = new DateTime(2020, 10, 9, 14, 22, 12, 780, DateTimeKind.Local).AddTicks(5573),
+                            Id = new Guid("5a73323a-8da1-476b-9d05-a37621994b56"),
+                            CreatedDate = new DateTime(2020, 10, 9, 15, 2, 7, 448, DateTimeKind.Local).AddTicks(7513),
                             IsActive = true,
-                            RoleId = new Guid("f512ab28-fddc-4a7c-8e5f-aebf156e9182"),
-                            UserId = new Guid("909d3b29-3e2a-42f4-b4ef-1e27658af9db")
+                            RoleId = new Guid("1fcae457-b4c7-4833-9ab0-af88610018df"),
+                            UserId = new Guid("1a199235-9590-4bc3-9503-0d539a51d106")
                         });
                 });
 
@@ -258,11 +274,20 @@ namespace BaseAdminTemplate.DataAccess.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("bd2090f9-d3c9-438c-b3ad-7ae9acd119ff"),
+                            Id = new Guid("2bb7e44c-4cd0-4761-8f56-24d7e3893295"),
                             ControllerName = "Role",
-                            CreatedDate = new DateTime(2020, 10, 9, 14, 22, 12, 783, DateTimeKind.Local).AddTicks(589),
+                            CreatedDate = new DateTime(2020, 10, 9, 15, 2, 7, 451, DateTimeKind.Local).AddTicks(9191),
                             DisplayInMenu = true,
                             DisplayName = "Role Management",
+                            IsActive = true
+                        },
+                        new
+                        {
+                            Id = new Guid("af33d2d7-6188-476a-87f3-8426d605833a"),
+                            ControllerName = "User",
+                            CreatedDate = new DateTime(2020, 10, 9, 15, 2, 7, 460, DateTimeKind.Local).AddTicks(2671),
+                            DisplayInMenu = true,
+                            DisplayName = "User Management",
                             IsActive = true
                         });
                 });
@@ -304,8 +329,8 @@ namespace BaseAdminTemplate.DataAccess.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("0c3f85c8-1a31-47be-b8be-9a5c2dea62c9"),
-                            CreatedDate = new DateTime(2020, 10, 9, 14, 22, 12, 784, DateTimeKind.Local).AddTicks(2111),
+                            Id = new Guid("2f9c5c9d-393d-4138-9ad2-58718e50c5cd"),
+                            CreatedDate = new DateTime(2020, 10, 9, 15, 2, 7, 453, DateTimeKind.Local).AddTicks(5701),
                             DisplayInMenu = true,
                             DisplayInPermissionTree = true,
                             DisplayName = "List",
@@ -314,8 +339,8 @@ namespace BaseAdminTemplate.DataAccess.Migrations
                         },
                         new
                         {
-                            Id = new Guid("76e64889-ece8-4523-90ce-f48dc7b72c68"),
-                            CreatedDate = new DateTime(2020, 10, 9, 14, 22, 12, 785, DateTimeKind.Local).AddTicks(2222),
+                            Id = new Guid("bb118689-efd1-431a-a8ba-5453ebcf07d4"),
+                            CreatedDate = new DateTime(2020, 10, 9, 15, 2, 7, 454, DateTimeKind.Local).AddTicks(8980),
                             DisplayInMenu = true,
                             DisplayInPermissionTree = true,
                             DisplayName = "New",
@@ -324,8 +349,8 @@ namespace BaseAdminTemplate.DataAccess.Migrations
                         },
                         new
                         {
-                            Id = new Guid("d525ac88-a2b0-4dc9-8097-0d0c08ad17ef"),
-                            CreatedDate = new DateTime(2020, 10, 9, 14, 22, 12, 786, DateTimeKind.Local).AddTicks(362),
+                            Id = new Guid("b490a309-a261-4852-aadf-40cdf3c86b11"),
+                            CreatedDate = new DateTime(2020, 10, 9, 15, 2, 7, 455, DateTimeKind.Local).AddTicks(2160),
                             DisplayInMenu = false,
                             DisplayInPermissionTree = false,
                             DisplayName = "Delete",
@@ -334,13 +359,23 @@ namespace BaseAdminTemplate.DataAccess.Migrations
                         },
                         new
                         {
-                            Id = new Guid("89b2ba41-9acf-42bf-a3bf-f2249be72f69"),
-                            CreatedDate = new DateTime(2020, 10, 9, 14, 22, 12, 786, DateTimeKind.Local).AddTicks(1057),
+                            Id = new Guid("5a967e8a-f359-4ff7-9f1f-7002ce5a5e87"),
+                            CreatedDate = new DateTime(2020, 10, 9, 15, 2, 7, 455, DateTimeKind.Local).AddTicks(2480),
                             DisplayInMenu = false,
                             DisplayInPermissionTree = true,
                             DisplayName = "Edit",
                             IsActive = true,
                             MethodName = "Edit"
+                        },
+                        new
+                        {
+                            Id = new Guid("e21b015f-52a6-4988-a0d6-187f9b0e4655"),
+                            CreatedDate = new DateTime(2020, 10, 9, 15, 2, 7, 460, DateTimeKind.Local).AddTicks(4510),
+                            DisplayInMenu = true,
+                            DisplayInPermissionTree = true,
+                            DisplayName = "List",
+                            IsActive = true,
+                            MethodName = "List"
                         });
                 });
 
@@ -375,8 +410,8 @@ namespace BaseAdminTemplate.DataAccess.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("f512ab28-fddc-4a7c-8e5f-aebf156e9182"),
-                            CreatedDate = new DateTime(2020, 10, 9, 14, 22, 12, 763, DateTimeKind.Local).AddTicks(4060),
+                            Id = new Guid("1fcae457-b4c7-4833-9ab0-af88610018df"),
+                            CreatedDate = new DateTime(2020, 10, 9, 15, 2, 7, 429, DateTimeKind.Local).AddTicks(418),
                             Description = "It has all permissions",
                             IsActive = true,
                             Name = "Admin"
@@ -426,13 +461,13 @@ namespace BaseAdminTemplate.DataAccess.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("909d3b29-3e2a-42f4-b4ef-1e27658af9db"),
+                            Id = new Guid("1a199235-9590-4bc3-9503-0d539a51d106"),
                             CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            DeletedDate = new DateTime(2020, 10, 9, 14, 22, 12, 780, DateTimeKind.Local).AddTicks(2563),
+                            DeletedDate = new DateTime(2020, 10, 9, 15, 2, 7, 448, DateTimeKind.Local).AddTicks(4401),
                             Email = "admin",
                             IsActive = true,
                             Name = "admin",
-                            Password = "Zqp5ANxfZWm7EnLxFWg/9RuIWU8ZFy2TYVdVRTXw1Yo=",
+                            Password = "VGLAdIqpnS7UQrjEYXwuKvz/r3MqrlpxNgGo6vbDw3M=",
                             Surname = "admin"
                         });
                 });

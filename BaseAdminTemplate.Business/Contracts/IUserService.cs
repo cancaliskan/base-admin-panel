@@ -12,8 +12,8 @@ namespace BaseAdminTemplate.Business.Contracts
         Response<User> GetById(Guid id);
         Response<IQueryable<User>> GetAll();
         Response<IQueryable<User>> GetByCondition(Expression<Func<User, bool>> expression);
-        Response<IQueryable<User>> GetActivePermissions();
-        Response<IQueryable<User>> GetInActivePermissions();
+        Response<IQueryable<User>> GetActiveUsers();
+        Response<IQueryable<User>> GetInActiveUsers();
         Response<User> Create(User entity);
         Response<User> Update(User entity);
         Response<bool> SoftDelete(Guid id);

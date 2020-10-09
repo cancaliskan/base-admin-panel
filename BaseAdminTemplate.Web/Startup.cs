@@ -96,6 +96,7 @@ namespace BaseAdminTemplate.Web
                     pattern: "{controller=Home}/{action=Index}/{id?}");
 
                 endpoints.MapHub<RoleHub>("/roleHub");
+                endpoints.MapHub<UserHub>("/userHub");
             });
         }
     }

@@ -14,6 +14,9 @@ namespace BaseAdminTemplate.Web.Helpers
             
             CreateMap<Role, RoleViewModel>();
             CreateMap<RoleViewModel, Role>();
+            
+            CreateMap<User, UserViewModel>();
+            CreateMap<UserViewModel, User>();
 
             CreateMap<Permission, PermissionViewModel>();
             CreateMap<PermissionViewModel, Permission>();

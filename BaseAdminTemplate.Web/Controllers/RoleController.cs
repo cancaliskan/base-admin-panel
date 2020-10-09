@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
+using System.Text;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SignalR;
@@ -46,7 +47,7 @@ namespace BaseAdminTemplate.Web.Controllers
         }
 
         [HttpGet]
-        public IActionResult RefreshRoles()
+        public IActionResult RefreshData()
         {
             var roles = GetRoles();
             return PartialView("_RoleData", roles);
@@ -91,6 +92,21 @@ namespace BaseAdminTemplate.Web.Controllers
             var response = RoleService.GetActiveRoles().Result;
             var roles = Mapper.Map<IEnumerable<RoleViewModel>>(response.AsEnumerable().ToList());
             return roles;
+        }
+
+        public IActionResult GetRolesWithUserId(string id)
+        {
+            var sb = new StringBuilder();
+            var roles = RoleService.GetActiveRoles().Result;
+            foreach (var role in roles)
+            {
+                sb.Append($"'{role.Id}':'{role.Name}',");
+            }
+
+            var selectedRoleId = UserService.GetRole(id.ToGuid()).Result.Id;
+
+            sb.Append($"'selected': '{selectedRoleId}'");
+            return Content("{" + sb.ToString() + "}");
         }
 
         public List<PermissionsModel> GetPermissions()
