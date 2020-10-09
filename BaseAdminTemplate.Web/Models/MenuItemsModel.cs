@@ -5,6 +5,7 @@ namespace BaseAdminTemplate.Web.Models
     public sealed class MenuItemsModel
     {
         public List<ControllerItemsModel> MenuItems { get; set; }
+        public string UserName { get; set; }
     }
 
     public sealed class ControllerItemsModel

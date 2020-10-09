@@ -1,5 +1,7 @@
 ﻿@using BaseAdminTemplate.Web.Controllers
-
+@{
+    var menuItems = (MenuItemsModel)ViewBag.MenuItems;
+}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -59,7 +61,7 @@
                         <ul class="nav navbar-nav navbar-right">
                             <li>
                                 <a href="javascript:;" class="user-profile dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-                                    <i class="fa fa-user"></i> Account
+                                    <i class="fa fa-user"></i> @menuItems.UserName
                                     <span class=" fa fa-angle-down"></span>
                                 </a>
                                 <ul class="dropdown-menu dropdown-usermenu pull-right">

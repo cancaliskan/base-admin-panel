@@ -104,6 +104,7 @@ namespace BaseAdminTemplate.DataAccess.Migrations
                     DisplayName = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     MethodName = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     DisplayInMenu = table.Column<bool>(type: "bit", nullable: false),
+                    DisplayInPermissionTree = table.Column<bool>(type: "bit", nullable: false),
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     UpdateDate = table.Column<DateTime>(type: "datetime2", nullable: true),
                     DeletedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
@@ -157,10 +158,10 @@ namespace BaseAdminTemplate.DataAccess.Migrations
                 columns: new[] { "Id", "CreatedDate", "DeletedDate", "IsActive", "MenuId", "PermissionId", "UpdateDate" },
                 values: new object[,]
                 {
-                    { new Guid("7f7c994f-2e44-4b80-8a90-6d67dbb9c547"), new DateTime(2020, 10, 8, 21, 10, 24, 415, DateTimeKind.Local).AddTicks(2858), null, true, new Guid("2460c8db-d314-4641-af03-967be6f30d90"), new Guid("7dda5e32-be88-4518-b6f7-06acb3a1d19e"), null },
-                    { new Guid("4f392ad0-edde-4042-b928-22a73600563f"), new DateTime(2020, 10, 8, 21, 10, 24, 415, DateTimeKind.Local).AddTicks(5493), null, true, new Guid("2460c8db-d314-4641-af03-967be6f30d90"), new Guid("e077db56-7019-4565-a4c9-b0162d186edb"), null },
-                    { new Guid("d77fe8e2-d45c-4e1b-83ed-6efa7982cda0"), new DateTime(2020, 10, 8, 21, 10, 24, 415, DateTimeKind.Local).AddTicks(6992), null, true, new Guid("2460c8db-d314-4641-af03-967be6f30d90"), new Guid("519f1ec5-4345-4688-8a30-65238bd71787"), null },
-                    { new Guid("b2e33423-f04f-4415-aa20-11e67cbdd4d7"), new DateTime(2020, 10, 8, 21, 10, 24, 415, DateTimeKind.Local).AddTicks(7149), null, true, new Guid("2460c8db-d314-4641-af03-967be6f30d90"), new Guid("4a19587e-e893-48c2-ae4e-47e1e7fa18b7"), null }
+                    { new Guid("2716bd0e-8def-44f6-80d3-ab90bf605f30"), new DateTime(2020, 10, 9, 14, 22, 12, 784, DateTimeKind.Local).AddTicks(7972), null, true, new Guid("bd2090f9-d3c9-438c-b3ad-7ae9acd119ff"), new Guid("0c3f85c8-1a31-47be-b8be-9a5c2dea62c9"), null },
+                    { new Guid("1949a59b-18c6-4339-a728-ec4387ee9294"), new DateTime(2020, 10, 9, 14, 22, 12, 785, DateTimeKind.Local).AddTicks(2521), null, true, new Guid("bd2090f9-d3c9-438c-b3ad-7ae9acd119ff"), new Guid("76e64889-ece8-4523-90ce-f48dc7b72c68"), null },
+                    { new Guid("299f9cbd-157f-49a0-aee5-637e6e5aab54"), new DateTime(2020, 10, 9, 14, 22, 12, 786, DateTimeKind.Local).AddTicks(684), null, true, new Guid("bd2090f9-d3c9-438c-b3ad-7ae9acd119ff"), new Guid("d525ac88-a2b0-4dc9-8097-0d0c08ad17ef"), null },
+                    { new Guid("7d3c1819-d093-40dd-9b90-8e8a45170600"), new DateTime(2020, 10, 9, 14, 22, 12, 786, DateTimeKind.Local).AddTicks(1206), null, true, new Guid("bd2090f9-d3c9-438c-b3ad-7ae9acd119ff"), new Guid("89b2ba41-9acf-42bf-a3bf-f2249be72f69"), null }
                 });
 
             migrationBuilder.InsertData(
@@ -168,42 +169,42 @@ namespace BaseAdminTemplate.DataAccess.Migrations
                 columns: new[] { "Id", "CreatedDate", "DeletedDate", "IsActive", "PermissionId", "RoleId", "UpdateDate" },
                 values: new object[,]
                 {
-                    { new Guid("4db9e1c2-a4c0-4077-b59c-357c089fba7c"), new DateTime(2020, 10, 8, 21, 10, 24, 415, DateTimeKind.Local).AddTicks(4946), null, true, new Guid("7dda5e32-be88-4518-b6f7-06acb3a1d19e"), new Guid("5b4a4f18-a8e3-4b61-838e-0107447ec2e2"), null },
-                    { new Guid("cca5ba4b-6dc1-44fb-b63b-7401f63affc0"), new DateTime(2020, 10, 8, 21, 10, 24, 415, DateTimeKind.Local).AddTicks(5549), null, true, new Guid("e077db56-7019-4565-a4c9-b0162d186edb"), new Guid("5b4a4f18-a8e3-4b61-838e-0107447ec2e2"), null },
-                    { new Guid("dc93eb59-35ca-43c2-a117-79b3cad70e97"), new DateTime(2020, 10, 8, 21, 10, 24, 415, DateTimeKind.Local).AddTicks(7029), null, true, new Guid("519f1ec5-4345-4688-8a30-65238bd71787"), new Guid("5b4a4f18-a8e3-4b61-838e-0107447ec2e2"), null },
-                    { new Guid("3bdce0a1-a4a3-4270-a38f-fdf9d945cd5f"), new DateTime(2020, 10, 8, 21, 10, 24, 415, DateTimeKind.Local).AddTicks(7171), null, true, new Guid("4a19587e-e893-48c2-ae4e-47e1e7fa18b7"), new Guid("5b4a4f18-a8e3-4b61-838e-0107447ec2e2"), null }
+                    { new Guid("c202cb51-e7d1-4dd4-959e-47614dd8c9d8"), new DateTime(2020, 10, 9, 14, 22, 12, 785, DateTimeKind.Local).AddTicks(1252), null, true, new Guid("0c3f85c8-1a31-47be-b8be-9a5c2dea62c9"), new Guid("f512ab28-fddc-4a7c-8e5f-aebf156e9182"), null },
+                    { new Guid("0e6e3a72-493a-4095-ab47-01d626906276"), new DateTime(2020, 10, 9, 14, 22, 12, 785, DateTimeKind.Local).AddTicks(2816), null, true, new Guid("76e64889-ece8-4523-90ce-f48dc7b72c68"), new Guid("f512ab28-fddc-4a7c-8e5f-aebf156e9182"), null },
+                    { new Guid("f164315d-96e9-4d42-9504-e46a4377c81d"), new DateTime(2020, 10, 9, 14, 22, 12, 786, DateTimeKind.Local).AddTicks(746), null, true, new Guid("d525ac88-a2b0-4dc9-8097-0d0c08ad17ef"), new Guid("f512ab28-fddc-4a7c-8e5f-aebf156e9182"), null },
+                    { new Guid("7bfe7924-4f9c-4f24-a22f-87dafc9c2017"), new DateTime(2020, 10, 9, 14, 22, 12, 786, DateTimeKind.Local).AddTicks(1258), null, true, new Guid("89b2ba41-9acf-42bf-a3bf-f2249be72f69"), new Guid("f512ab28-fddc-4a7c-8e5f-aebf156e9182"), null }
                 });
 
             migrationBuilder.InsertData(
                 table: "LinkUsersRoles",
                 columns: new[] { "Id", "CreatedDate", "DeletedDate", "IsActive", "RoleId", "UpdateDate", "UserId" },
-                values: new object[] { new Guid("3638aee2-494e-42e7-9e48-368abd0e8a5a"), new DateTime(2020, 10, 8, 21, 10, 24, 412, DateTimeKind.Local).AddTicks(5511), null, true, new Guid("5b4a4f18-a8e3-4b61-838e-0107447ec2e2"), null, new Guid("a6b46686-e4cb-47cc-b991-65e133c62e98") });
+                values: new object[] { new Guid("61bc689e-41c2-4622-b82e-9655f80fe3f8"), new DateTime(2020, 10, 9, 14, 22, 12, 780, DateTimeKind.Local).AddTicks(5573), null, true, new Guid("f512ab28-fddc-4a7c-8e5f-aebf156e9182"), null, new Guid("909d3b29-3e2a-42f4-b4ef-1e27658af9db") });
 
             migrationBuilder.InsertData(
                 table: "Menus",
                 columns: new[] { "Id", "ControllerName", "CreatedDate", "DeletedDate", "DisplayInMenu", "DisplayName", "IsActive", "UpdateDate" },
-                values: new object[] { new Guid("2460c8db-d314-4641-af03-967be6f30d90"), "Role", new DateTime(2020, 10, 8, 21, 10, 24, 414, DateTimeKind.Local).AddTicks(1859), null, true, "Role Management", true, null });
+                values: new object[] { new Guid("bd2090f9-d3c9-438c-b3ad-7ae9acd119ff"), "Role", new DateTime(2020, 10, 9, 14, 22, 12, 783, DateTimeKind.Local).AddTicks(589), null, true, "Role Management", true, null });
 
             migrationBuilder.InsertData(
                 table: "Permissions",
-                columns: new[] { "Id", "CreatedDate", "DeletedDate", "DisplayInMenu", "DisplayName", "IsActive", "MethodName", "UpdateDate" },
+                columns: new[] { "Id", "CreatedDate", "DeletedDate", "DisplayInMenu", "DisplayInPermissionTree", "DisplayName", "IsActive", "MethodName", "UpdateDate" },
                 values: new object[,]
                 {
-                    { new Guid("7dda5e32-be88-4518-b6f7-06acb3a1d19e"), new DateTime(2020, 10, 8, 21, 10, 24, 414, DateTimeKind.Local).AddTicks(9633), null, true, "List", true, "List", null },
-                    { new Guid("e077db56-7019-4565-a4c9-b0162d186edb"), new DateTime(2020, 10, 8, 21, 10, 24, 415, DateTimeKind.Local).AddTicks(5369), null, true, "New", true, "Create", null },
-                    { new Guid("519f1ec5-4345-4688-8a30-65238bd71787"), new DateTime(2020, 10, 8, 21, 10, 24, 415, DateTimeKind.Local).AddTicks(6907), null, false, "Delete", true, "Delete", null },
-                    { new Guid("4a19587e-e893-48c2-ae4e-47e1e7fa18b7"), new DateTime(2020, 10, 8, 21, 10, 24, 415, DateTimeKind.Local).AddTicks(7116), null, false, "Edit", true, "Edit", null }
+                    { new Guid("0c3f85c8-1a31-47be-b8be-9a5c2dea62c9"), new DateTime(2020, 10, 9, 14, 22, 12, 784, DateTimeKind.Local).AddTicks(2111), null, true, true, "List", true, "List", null },
+                    { new Guid("76e64889-ece8-4523-90ce-f48dc7b72c68"), new DateTime(2020, 10, 9, 14, 22, 12, 785, DateTimeKind.Local).AddTicks(2222), null, true, true, "New", true, "Create", null },
+                    { new Guid("d525ac88-a2b0-4dc9-8097-0d0c08ad17ef"), new DateTime(2020, 10, 9, 14, 22, 12, 786, DateTimeKind.Local).AddTicks(362), null, false, false, "Delete", true, "Delete", null },
+                    { new Guid("89b2ba41-9acf-42bf-a3bf-f2249be72f69"), new DateTime(2020, 10, 9, 14, 22, 12, 786, DateTimeKind.Local).AddTicks(1057), null, false, true, "Edit", true, "Edit", null }
                 });
 
             migrationBuilder.InsertData(
                 table: "Roles",
                 columns: new[] { "Id", "CreatedDate", "DeletedDate", "Description", "IsActive", "Name", "UpdateDate" },
-                values: new object[] { new Guid("5b4a4f18-a8e3-4b61-838e-0107447ec2e2"), new DateTime(2020, 10, 8, 21, 10, 24, 401, DateTimeKind.Local).AddTicks(7031), null, "It has all permissions", true, "Admin", null });
+                values: new object[] { new Guid("f512ab28-fddc-4a7c-8e5f-aebf156e9182"), new DateTime(2020, 10, 9, 14, 22, 12, 763, DateTimeKind.Local).AddTicks(4060), null, "It has all permissions", true, "Admin", null });
 
             migrationBuilder.InsertData(
                 table: "Users",
                 columns: new[] { "Id", "CreatedDate", "DeletedDate", "Email", "IsActive", "LastLoginDateTime", "Name", "Password", "Phone", "Surname", "UpdateDate" },
-                values: new object[] { new Guid("a6b46686-e4cb-47cc-b991-65e133c62e98"), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(2020, 10, 8, 21, 10, 24, 412, DateTimeKind.Local).AddTicks(3523), "admin", true, null, "admin", "pKJA6M0zGMBm7Mv56CTAnL1HALnjgx3DgFEI/1VSBg0=", null, "admin", null });
+                values: new object[] { new Guid("909d3b29-3e2a-42f4-b4ef-1e27658af9db"), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(2020, 10, 9, 14, 22, 12, 780, DateTimeKind.Local).AddTicks(2563), "admin", true, null, "admin", "Zqp5ANxfZWm7EnLxFWg/9RuIWU8ZFy2TYVdVRTXw1Yo=", null, "admin", null });
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)

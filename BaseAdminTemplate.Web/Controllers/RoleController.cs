@@ -33,7 +33,7 @@ namespace BaseAdminTemplate.Web.Controllers
         }
 
         [HttpGet]
-        [DisplayName(Constants.DisplayInMenu + "List")]
+        [DisplayName(Constants.DisplayInMenu + Constants.DisplayInPermissionTree + "List")]
         public IActionResult List()
         {
             if (!HasPermission("Role", "List"))
@@ -53,7 +53,7 @@ namespace BaseAdminTemplate.Web.Controllers
         }
 
         [HttpGet]
-        [DisplayName(Constants.DisplayInMenu + "New")]
+        [DisplayName(Constants.DisplayInMenu + Constants.DisplayInPermissionTree + "New")]
         public IActionResult Create()
         {
             if (!HasPermission("Role", "Create"))
@@ -99,14 +99,16 @@ namespace BaseAdminTemplate.Web.Controllers
             var parentList = MenuService.GetActiveMenus().Result;
             foreach (var parent in parentList)
             {
-                var childResult = MenuService.GetChildList(parent.Id).Result;
+                var childResult = MenuService.GetTreeChildList(parent.Id).Result;
                 var permission = new PermissionsModel()
                 {
                     Id = parent.Id,
                     Name = parent.DisplayName,
                     ChildList = new List<Child>()
                 };
-                foreach (var child in childResult)
+
+                var treeChild = childResult.Where(x => x.DisplayInPermissionTree);
+                foreach (var child in treeChild)
                 {
                     var childItem = new Child() { Id = child.Id, Name = child.DisplayName, ParentId = parent.Id };
                     permission.ChildList.Add(childItem);
@@ -139,7 +141,7 @@ namespace BaseAdminTemplate.Web.Controllers
         }
 
         [HttpGet]
-        [DisplayName("Edit")]
+        [DisplayName(Constants.DisplayInPermissionTree + "Edit")]
         public IActionResult Edit(string roleId)
         {
             if (!HasPermission("Role", "Edit"))

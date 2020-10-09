@@ -27,7 +27,7 @@ namespace BaseAdminTemplate.Business.Services
             _listResponseHelper = new ResponseHelper<IQueryable<Menu>>();
         }
 
-        public Response<IQueryable<Permission>> GetChildList(Guid parentId)
+        public Response<IQueryable<Permission>> GetMenuChildList(Guid parentId)
         {
             try
             {
@@ -38,6 +38,32 @@ namespace BaseAdminTemplate.Business.Services
                 foreach (var id in childIdList)
                 {
                     var child = _unitOfWork.PermissionRepository.GetByCondition(x => x.Id == id && x.DisplayInMenu).FirstOrDefault();
+                    if (child != null)
+                    {
+                        childList.Add(child);
+                    }
+                }
+
+                return _childListResponseHelper.SuccessResponse(childList.AsQueryable(), "returned successfully");
+            }
+            catch (Exception e)
+            {
+                LogHelper.AddLog(_unitOfWork, e, GetType().Name, MethodBase.GetCurrentMethod()?.Name);
+                return _childListResponseHelper.FailResponse(e.ToString());
+            }
+        }
+        
+        public Response<IQueryable<Permission>> GetTreeChildList(Guid parentId)
+        {
+            try
+            {
+                var childIdList = _unitOfWork.LinkMenuPermissionRepository
+                                                          .GetByCondition(x => x.MenuId == parentId)
+                                                          .Select(x => x.PermissionId);
+                var childList = new List<Permission>();
+                foreach (var id in childIdList)
+                {
+                    var child = _unitOfWork.PermissionRepository.GetByCondition(x => x.Id == id && x.DisplayInPermissionTree).FirstOrDefault();
                     if (child != null)
                     {
                         childList.Add(child);

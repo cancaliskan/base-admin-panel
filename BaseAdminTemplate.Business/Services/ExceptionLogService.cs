@@ -11,7 +11,7 @@ using BaseAdminTemplate.Domain.Entities;
 
 namespace BaseAdminTemplate.Business.Services
 {
-    public class ExceptionLogService : IExceptionLogService
+    public sealed class ExceptionLogService : IExceptionLogService
     {
         private readonly IUnitOfWork _unitOfWork;
 

@@ -8,7 +8,7 @@ using BaseAdminTemplate.Domain.Entities;
 
 namespace BaseAdminTemplate.DataAccess.Repositories
 {
-    public class LinkRolePermissionRepository : Repository<LinkRolePermission>, ILinkRolePermissionRepository
+    public sealed class LinkRolePermissionRepository : Repository<LinkRolePermission>, ILinkRolePermissionRepository
     {
         public ApplicationDbContext ApplicationContext => Context as ApplicationDbContext;
 

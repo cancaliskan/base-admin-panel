@@ -12,7 +12,7 @@ using BaseAdminTemplate.Domain.Entities;
 
 namespace BaseAdminTemplate.Business.Services
 {
-    public class UserService : IUserService
+    public sealed class UserService : IUserService
     {
         private readonly IUnitOfWork _unitOfWork;
 

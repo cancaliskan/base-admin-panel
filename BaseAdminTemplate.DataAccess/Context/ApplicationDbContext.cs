@@ -134,6 +134,12 @@ namespace BaseAdminTemplate.DataAccess.Context
                         permission.DisplayName = permission.DisplayName.Replace(Constants.DisplayInMenu, string.Empty);
                         permission.DisplayInMenu = true;
                     }
+                    
+                    if (methodDisplayName.Contains(Constants.DisplayInPermissionTree))
+                    {
+                        permission.DisplayName = permission.DisplayName.Replace(Constants.DisplayInPermissionTree, string.Empty);
+                        permission.DisplayInPermissionTree = true;
+                    }
 
                     modelBuilder.Entity<Permission>().HasData(permission);
 

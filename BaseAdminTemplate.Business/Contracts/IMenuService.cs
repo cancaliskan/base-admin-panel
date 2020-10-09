@@ -8,7 +8,8 @@ namespace BaseAdminTemplate.Business.Contracts
 {
     public interface IMenuService
     {
-        Response<IQueryable<Permission>> GetChildList(Guid parentId);
+        Response<IQueryable<Permission>> GetMenuChildList(Guid parentId);
+        Response<IQueryable<Permission>> GetTreeChildList(Guid parentId);
         Response<IQueryable<Menu>> GetActiveMenus();
     }
 }

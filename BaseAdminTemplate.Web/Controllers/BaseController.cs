@@ -62,7 +62,7 @@ namespace BaseAdminTemplate.Web.Controllers
             foreach (var parentMenu in parentMenuList)
             {
                 var methods = new List<MethodsItemsModel>();
-                var childList = MenuService.GetChildList(parentMenu.Id).Result;
+                var childList = MenuService.GetMenuChildList(parentMenu.Id).Result;
                 foreach (var child in childList)
                 {
                     if (subMenuList.Any(x => x.Id == child.Id))
@@ -87,6 +87,9 @@ namespace BaseAdminTemplate.Web.Controllers
             {
                 MenuItems = parentItemList
             };
+
+            var userName = User.FindFirstValue(ClaimTypes.Name);
+            menu.UserName = userName;
 
             return menu;
         }
