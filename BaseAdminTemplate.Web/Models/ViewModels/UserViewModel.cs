@@ -2,7 +2,7 @@
 
 namespace BaseAdminTemplate.Web.Models.ViewModels
 {
-    public sealed class UserViewModel:BaseViewModel
+    public sealed class UserViewModel : BaseViewModel
     {
         public string Name { get; set; }
         public string Surname { get; set; }

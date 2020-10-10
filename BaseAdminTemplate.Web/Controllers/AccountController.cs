@@ -9,6 +9,7 @@ using AutoMapper;
 
 using BaseAdminTemplate.Business.Contracts;
 using BaseAdminTemplate.Common.Helpers;
+using BaseAdminTemplate.Domain.Entities;
 using BaseAdminTemplate.Web.Models.ViewModels;
 
 namespace BaseAdminTemplate.Web.Controllers
@@ -62,13 +63,13 @@ namespace BaseAdminTemplate.Web.Controllers
         }
 
         [HttpGet]
-        public IActionResult? ChangePassword()
+        public IActionResult ChangePassword()
         {
             return View();
         }
 
         [HttpPost]
-        public IActionResult? ChangePassword(ChangePasswordViewModel model)
+        public IActionResult ChangePassword(ChangePasswordViewModel model)
         {
             if (model.NewPassword != model.NewPasswordConfirm)
             {
@@ -86,6 +87,36 @@ namespace BaseAdminTemplate.Web.Controllers
 
             ViewBag.ErrorMessage = response.ErrorMessage;
             return View();
+        }
+
+        [HttpGet]
+        public IActionResult Edit()
+        {
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var response = UserService.GetById(userId.ToGuid());
+            if (response.IsSucceed)
+            {
+                var user = response.Result;
+                var userViewModel = Mapper.Map<UserViewModel>(user);
+                return View(userViewModel);
+            }
+
+            return RedirectToAction("Index","Home");
+        }
+
+        [HttpPost]
+        public IActionResult Edit(UserViewModel model)
+        {
+            var user = Mapper.Map<User>(model);
+            var response = UserService.Update(user);
+            if (response.IsSucceed)
+            {
+                ViewBag.SuccessMessage = response.SuccessMessage;
+                return View(model);
+            }
+
+            ViewBag.ErrorMessage = response.ErrorMessage;
+            return View(model);
         }
     }
 }
