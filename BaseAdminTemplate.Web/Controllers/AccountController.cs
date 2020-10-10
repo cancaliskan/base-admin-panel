@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Authentication;
 using AutoMapper;
 
 using BaseAdminTemplate.Business.Contracts;
-using BaseAdminTemplate.Web.Models;
+using BaseAdminTemplate.Common.Helpers;
 using BaseAdminTemplate.Web.Models.ViewModels;
 
 namespace BaseAdminTemplate.Web.Controllers
@@ -59,6 +59,33 @@ namespace BaseAdminTemplate.Web.Controllers
         {
             await HttpContext.SignOutAsync();
             return RedirectToAction("Login");
+        }
+
+        [HttpGet]
+        public IActionResult? ChangePassword()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult? ChangePassword(ChangePasswordViewModel model)
+        {
+            if (model.NewPassword != model.NewPasswordConfirm)
+            {
+                ViewBag.ErrorMessage = "new password and new password confirm are not equal";
+                return View();
+            }
+
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var response = UserService.ChangePassword(userId.ToGuid(), model.OldPassword, model.NewPassword);
+            if (response.IsSucceed)
+            {
+                ViewBag.SuccessMessage = response.SuccessMessage;
+                return View();
+            }
+
+            ViewBag.ErrorMessage = response.ErrorMessage;
+            return View();
         }
     }
 }

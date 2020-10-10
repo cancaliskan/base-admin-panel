@@ -269,7 +269,7 @@ namespace BaseAdminTemplate.Business.Services
                     return _responseHelper.FailResponse("could not found");
                 }
 
-                if (oldPassword != CryptoHelper.Encrypt(user.Password))
+                if (oldPassword != CryptoHelper.Decrypt(user.Password))
                 {
                     return _responseHelper.FailResponse("invalid old password. ");
                 }
@@ -279,7 +279,7 @@ namespace BaseAdminTemplate.Business.Services
                     return _responseHelper.FailResponse("new password is not valid. Password must have 1 big, 1 small, 1 number and be minimum 8 character");
                 }
 
-                _unitOfWork.UserRepository.ChangePassword(user, newPassword);
+                _unitOfWork.UserRepository.ChangePassword(user,newPassword);
                 _unitOfWork.Complete();
 
                 return _responseHelper.SuccessResponse(user, "password changed successfully");

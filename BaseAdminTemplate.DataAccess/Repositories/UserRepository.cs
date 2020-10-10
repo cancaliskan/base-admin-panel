@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
 
+using BaseAdminTemplate.Common.Helpers;
 using BaseAdminTemplate.DataAccess.Context;
 using BaseAdminTemplate.DataAccess.Contracts;
 using BaseAdminTemplate.Domain.Entities;
@@ -48,7 +49,7 @@ namespace BaseAdminTemplate.DataAccess.Repositories
 
         public void ChangePassword(User user, string newPassword)
         {
-            user.Password = newPassword;
+            user.Password = CryptoHelper.Encrypt(newPassword);
             Update(user);
         }
     }
