@@ -12,6 +12,7 @@ using BaseAdminTemplate.Business.Contracts;
 using BaseAdminTemplate.Common.Helpers;
 using BaseAdminTemplate.Domain.Entities;
 using BaseAdminTemplate.Web.Hubs;
+using BaseAdminTemplate.Web.Models;
 using BaseAdminTemplate.Web.Models.ViewModels;
 
 namespace BaseAdminTemplate.Web.Controllers
@@ -32,15 +33,12 @@ namespace BaseAdminTemplate.Web.Controllers
 
         [HttpGet]
         [DisplayName(Constants.DisplayInMenu + Constants.DisplayInPermissionTree + "Active User List")]
-        public IActionResult ActiveList(string errorMessage, string successMassage)
+        public IActionResult ActiveList()
         {
             if (!HasPermission("User", "ActiveList"))
             {
                 return RedirectToAction("PermissionError", "Home");
             }
-
-            ViewBag.ErrorMessage = errorMessage;
-            ViewBag.SuccessMessage = successMassage;
 
             var users = GetActiveUsers();
             return View(users);
@@ -48,15 +46,12 @@ namespace BaseAdminTemplate.Web.Controllers
 
         [HttpGet]
         [DisplayName(Constants.DisplayInMenu + Constants.DisplayInPermissionTree + "Deactivated User List")]
-        public IActionResult DeactivatedList(string errorMessage, string successMassage)
+        public IActionResult DeactivatedList()
         {
             if (!HasPermission("User", "DeactivatedList"))
             {
                 return RedirectToAction("PermissionError", "Home");
             }
-
-            ViewBag.ErrorMessage = errorMessage;
-            ViewBag.SuccessMessage = successMassage;
 
             var users = GetDeactivatedUsers();
             return View(users);
@@ -68,7 +63,11 @@ namespace BaseAdminTemplate.Web.Controllers
             var users = Mapper.Map<IEnumerable<UserViewModel>>(response.AsEnumerable().ToList());
             foreach (var user in users)
             {
-                user.Role = Mapper.Map<RoleViewModel>(UserService.GetRole(user.Id).Result);
+                var result = UserService.GetRole(user.Id);
+                if (result.IsSucceed)
+                {
+                    user.Role = Mapper.Map<RoleViewModel>(result.Result);
+                }
             }
 
             return users;
@@ -80,7 +79,11 @@ namespace BaseAdminTemplate.Web.Controllers
             var users = Mapper.Map<IEnumerable<UserViewModel>>(response.AsEnumerable().ToList());
             foreach (var user in users)
             {
-                user.Role = Mapper.Map<RoleViewModel>(UserService.GetRole(user.Id).Result);
+                var result = UserService.GetRole(user.Id);
+                if (result.IsSucceed)
+                {
+                    user.Role = Mapper.Map<RoleViewModel>(result.Result);
+                }
             }
 
             return users;
@@ -159,10 +162,10 @@ namespace BaseAdminTemplate.Web.Controllers
             if (response.IsSucceed)
             {
                 _context.Clients.All.SendAsync("refresh");
-                return RedirectToAction("ActiveList", new { successMassage = response.SuccessMessage });
+                return RedirectToAction("ActiveList");
             }
 
-            return RedirectToAction("ActiveList", new { errorMessage = response.ErrorMessage });
+            return RedirectToAction("ActiveList");
         }
 
         [HttpPost]
@@ -178,10 +181,10 @@ namespace BaseAdminTemplate.Web.Controllers
             if (response.IsSucceed)
             {
                 _context.Clients.All.SendAsync("refresh");
-                return RedirectToAction("DeactivatedList", new { successMassage = response.SuccessMessage });
+                return RedirectToAction("DeactivatedList");
             }
 
-            return RedirectToAction("DeactivatedList", new { errorMessage = response.ErrorMessage });
+            return RedirectToAction("DeactivatedList");
         }
 
         [HttpGet]
@@ -219,6 +222,26 @@ namespace BaseAdminTemplate.Web.Controllers
             ViewBag.ErrorMessage = response.ErrorMessage;
             ViewBag.Roles = Mapper.Map<IEnumerable<RoleViewModel>>(RoleService.GetActiveRoles().Result.AsEnumerable());
             return View(model);
+        }
+
+        [HttpPost]
+        [DisplayName("Delete")]
+        public IActionResult Delete(string userId)
+        {
+            if (!HasPermission("User", "Delete"))
+            {
+                return RedirectToAction("PermissionError", "Home");
+            }
+
+            var id = userId.ToGuid();
+            var response = UserService.HardDelete(id);
+            if (response.IsSucceed)
+            {
+                _context.Clients.All.SendAsync("refresh");
+                return RedirectToAction("ActiveList");
+            }
+
+            return RedirectToAction("ActiveList");
         }
     }
 }

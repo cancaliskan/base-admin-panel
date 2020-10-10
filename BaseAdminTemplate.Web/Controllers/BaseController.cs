@@ -46,6 +46,11 @@ namespace BaseAdminTemplate.Web.Controllers
             }
 
             var role = UserService.GetRole(new Guid(userId)).Result;
+            if (role == null)
+            {
+                return new MenuItemsModel();
+            }
+
             var subMenuList = RoleService.GetPermissions(role.Id).Result;
             var parentMenuList = new List<MenuViewModel>();
             foreach (var subMenu in subMenuList)

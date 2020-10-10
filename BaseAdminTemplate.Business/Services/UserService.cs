@@ -301,8 +301,12 @@ namespace BaseAdminTemplate.Business.Services
                 }
 
                 var role = _unitOfWork.UserRepository.GetRole(id);
+                if (role != null)
+                {
+                    return _responseRoleHelper.SuccessResponse(role, "return successfully");
+                }
 
-                return _responseRoleHelper.SuccessResponse(role, "return successfully");
+                return _responseRoleHelper.FailResponse("role could not found");
             }
             catch (Exception e)
             {

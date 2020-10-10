@@ -5,26 +5,6 @@
 
 <div class="tableStyle">
     <div class="row">
-        @{
-            if (ViewBag.ErrorMessage != null)
-            {
-                <div class="alert alert-danger" role="alert">
-                    @ViewBag.ErrorMessage
-                </div>
-            }
-            else if (ViewBag.WarningMessage != null)
-            {
-                <div class="alert alert-warning" role="alert">
-                    @ViewBag.WarningMessage
-                </div>
-            }
-            else if (ViewBag.SuccessMessage != null)
-            {
-                <div class="alert alert-success" role="alert">
-                    @ViewBag.SuccessMessage
-                </div>
-            }
-        }
         <div class="col-xs-12">
             <div class="table-responsive">
                 <table class="display" style="width: 100%">

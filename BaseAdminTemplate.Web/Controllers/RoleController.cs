@@ -103,7 +103,17 @@ namespace BaseAdminTemplate.Web.Controllers
                 sb.Append($"'{role.Id}':'{role.Name}',");
             }
 
-            var selectedRoleId = UserService.GetRole(id.ToGuid()).Result.Id;
+            var response = UserService.GetRole(id.ToGuid());
+            Guid selectedRoleId;
+            if (response.IsSucceed)
+            {
+                selectedRoleId = response.Result.Id;
+               
+            }
+            else
+            {
+                selectedRoleId = roles.FirstOrDefault().Id;
+            }
 
             sb.Append($"'selected': '{selectedRoleId}'");
             return Content("{" + sb.ToString() + "}");
@@ -204,6 +214,11 @@ namespace BaseAdminTemplate.Web.Controllers
         [HttpPost]
         public ActionResult UpdateField(string id, string propertyName, string value)
         {
+            if (!HasPermission("Role", "Edit"))
+            {
+                return RedirectToAction("PermissionError", "Home");
+            }
+
             var status = false;
             var message = "";
 
@@ -218,7 +233,7 @@ namespace BaseAdminTemplate.Web.Controllers
             }
             else
             {
-                message = "Error!";
+                message = role.ErrorMessage;
             }
 
             var response = new { value = value, status = status, message = message };
