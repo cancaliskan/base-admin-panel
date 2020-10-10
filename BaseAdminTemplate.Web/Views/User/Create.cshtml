@@ -1,5 +1,6 @@
 ﻿@using BaseAdminTemplate.Web.Models.ViewModels
-@model BaseAdminTemplate.Web.Models.ViewModels.RoleViewModel
+@using System.Collections
+@model BaseAdminTemplate.Web.Models.ViewModels.UserViewModel
 
 @{
     ViewBag.Title = "Add";
@@ -12,7 +13,7 @@
 
     <div class="form-horizontal">
         <div class="tableStyle">
-            <h4>New Role</h4>
+            <h4>New User</h4>
             <hr />
             @{
                 if (ViewBag.ErrorMessage != null)
@@ -43,36 +44,51 @@
                 </div>
 
                 <div class="form-group">
-                    @Html.LabelFor(model => model.Description, htmlAttributes: new { @class = "control-label col-md-2" })
+                    @Html.LabelFor(model => model.Surname, htmlAttributes: new { @class = "control-label col-md-2" })
                     <div class="col-md-10">
-                        @Html.TextAreaFor(model => model.Description, new { htmlAttributes = new { @class = "form-control"}, @style = "width:100%;" })
+                        @Html.EditorFor(model => model.Surname, new { htmlAttributes = new { @class = "form-control" } })
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Email, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control" } })
                     </div>
                 </div>
 
                 <div class="form-group">
-                    <label class="control-label col-md-2">Permissions</label>
+                    @Html.LabelFor(model => model.Password, htmlAttributes: new { @class = "control-label col-md-2" })
                     <div class="col-md-10">
-                        @foreach (var permission in (List<PermissionsModel>)ViewBag.Permissions)
-                        {
-                            <div class="cbxTree">
-                                <div class="cbxTree-node">
-                                    <a href="#" class="cbxTree-swicth"></a>
-                                    <label class="cbxTree-label">
-                                        <input type="checkbox" name=@permission.Name class="cbxTree-cbx" />
-                                        <span class="cbxTree-txt">@permission.Name</span>
-                                    </label>
-                                    @foreach (var child in permission.ChildList)
-                                    {
-                                        <div class="cbxTree-node">
-                                            <label class="cbxTree-label">
-                                                <input type="checkbox" name="permissions" class="cbxTree-cbx" value=@child.Id />
-                                                <span class="cbxTree-txt">@child.Name</span>
-                                            </label>
-                                        </div>
-                                    }
-                                </div>
-                            </div>
-                        }
+                        @Html.EditorFor(model => model.Password, new { htmlAttributes = new { @class = "form-control", @type = "password" } })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.ConfirmPassword, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.ConfirmPassword, new { htmlAttributes = new { @class = "form-control", @type = "password" } })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Phone, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.Phone, new { htmlAttributes = new { @class = "form-control", type = "number" } })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Role, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        <select name="roleId" style="width: 100%">
+                            @{
+                                foreach (var role in (IEnumerable<RoleViewModel>)ViewBag.Roles)
+                                {
+                                    <option value=@role.Id>@role.Name</option>
+                                }
+                            }
+                        </select>
                     </div>
                 </div>
 
@@ -87,6 +103,3 @@
         </div>
     </div>
 }
-
-<script src="~/vendors/flot.orderbars/examples/js/vendor/jquery-1.9.1.min.js"></script>
-<script src="~/build/js/checkboxTree.js"></script>

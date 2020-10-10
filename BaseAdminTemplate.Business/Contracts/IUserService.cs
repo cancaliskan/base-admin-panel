@@ -25,5 +25,6 @@ namespace BaseAdminTemplate.Business.Contracts
         Response<IQueryable<Permission>> GetPermissions(Guid id);
         Response<bool> AddRoleToUser(Guid userId, Guid roleId);
         Response<bool> RemoveRoleFromUser(Guid userId, Guid roleId);
+        Response<bool> UpdateRole(Guid userId, Guid roleId);
     }
 }

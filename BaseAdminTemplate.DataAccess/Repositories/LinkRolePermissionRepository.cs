@@ -52,7 +52,7 @@ namespace BaseAdminTemplate.DataAccess.Repositories
 
         public bool RemoveAllPermissionFromRole(Guid roleId)
         {
-            var isExist = ApplicationContext.Roles.Any(x => x.Id == roleId && x.IsActive);
+            var isExist = ApplicationContext.Roles.AsNoTracking().Any(x => x.Id == roleId && x.IsActive);
             if (isExist)
             {
                 var permissions = GetByCondition(x => x.RoleId == roleId);
@@ -65,8 +65,8 @@ namespace BaseAdminTemplate.DataAccess.Repositories
 
         private bool IsNotExistRoleAndPermission(Guid roleId, Guid permissionId)
         {
-            return ApplicationContext.Roles.Any(x => x.Id == roleId && x.IsActive)
-                   && ApplicationContext.Permissions.Any(x => x.Id == permissionId && x.IsActive);
+            return ApplicationContext.Roles.AsNoTracking().Any(x => x.Id == roleId && x.IsActive)
+                   && ApplicationContext.Permissions.AsNoTracking().Any(x => x.Id == permissionId && x.IsActive);
         }
     }
 }

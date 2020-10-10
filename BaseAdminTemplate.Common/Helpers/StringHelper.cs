@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Net.Mail;
 using System.Text.RegularExpressions;
 
@@ -83,6 +84,16 @@ namespace BaseAdminTemplate.Common.Helpers
         public static string CleanWhitespaces(this string text)
         {
             return Regex.Replace(text, @"\s+", "");
+        }
+
+        public static bool IsPhoneNumber(this string number)
+        {
+            return Regex.Match(number, @"^([0-9]{11})$").Success;
+        }
+        
+        public static bool IsNotPhoneNumber(this string number)
+        {
+            return !IsPhoneNumber(number);
         }
     }
 }

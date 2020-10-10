@@ -3,7 +3,7 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<div id="dataModel">@Html.Partial("_UserData", Model)</div>
+<div id="dataModel">@Html.Partial("_ActiveUserData", Model)</div>
 
 @section scripts {
     <script type="text/javascript">
@@ -22,7 +22,7 @@
             function loadData() {
                 var model = $('#dataModel');
                 $.ajax({
-                    url: '/User/RefreshData',
+                    url: '/User/RefreshActiveUserData',
                     contentType: 'application/html ; charset:utf-8',
                     type: 'GET',
                     dataType: 'html',

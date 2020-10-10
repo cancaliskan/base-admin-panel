@@ -214,12 +214,13 @@ namespace BaseAdminTemplate.Business.Services
         {
             try
             {
-                if (IsNotExistRole(id))
+                var existRole = _unitOfWork.RoleRepository.GetById(id);
+                if (existRole == null)
                 {
                     return _booleanResponseHelper.FailResponse("could not found");
                 }
 
-                _unitOfWork.RoleRepository.Restore(id);
+                _unitOfWork.RoleRepository.Restore(existRole);
                 _unitOfWork.Complete();
 
                 return _booleanResponseHelper.SuccessResponse("restored successful");

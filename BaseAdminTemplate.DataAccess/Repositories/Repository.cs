@@ -89,9 +89,8 @@ namespace BaseAdminTemplate.DataAccess.Repositories
             _dbSet.RemoveRange(GetAll());
         }
 
-        public void Restore(Guid id)
+        public void Restore(T entity)
         {
-            var entity = GetById(id);
             entity.IsActive = true;
             Update(entity);
         }

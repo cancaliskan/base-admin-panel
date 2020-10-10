@@ -5,16 +5,37 @@
 
 <div class="tableStyle">
     <div class="row">
+        @{
+            if (ViewBag.ErrorMessage != null)
+            {
+                <div class="alert alert-danger" role="alert">
+                    @ViewBag.ErrorMessage
+                </div>
+            }
+            else if (ViewBag.WarningMessage != null)
+            {
+                <div class="alert alert-warning" role="alert">
+                    @ViewBag.WarningMessage
+                </div>
+            }
+            else if (ViewBag.SuccessMessage != null)
+            {
+                <div class="alert alert-success" role="alert">
+                    @ViewBag.SuccessMessage
+                </div>
+            }
+        }
         <div class="col-xs-12">
             <div class="table-responsive">
-                <table class="display" style="width:100%">
+                <table class="display" style="width: 100%">
                     <thead>
                         <tr>
                             <th>Name</th>
-                            <th>Last Name</th>
+                            <th>Surname</th>
                             <th>Email</th>
                             <th>Phone</th>
                             <th>Role</th>
+                            <th>Last Login Date</th>
                             <th></th>
                         </tr>
                     </thead>
@@ -23,12 +44,13 @@
                         {
                             <tr>
                                 <td class="edit" data-record_id="@user.Id" data-propertyname="Name">@user.Name</td>
-                                <td class="edit" data-record_id="@user.Id" data-propertyname="LastName">@user.LastName</td>
+                                <td class="edit" data-record_id="@user.Id" data-propertyname="Surname">@user.Surname</td>
                                 <td class="edit" data-record_id="@user.Id" data-propertyname="Email">@user.Email</td>
                                 <td class="edit" data-record_id="@user.Id" data-propertyname="Phone">@user.Phone</td>
-                                <td class="editSelect" data-record_id="@user.Id" data-propertyname="Role"></td>
+                                <td class="editSelect" data-record_id="@user.Id" data-propertyname="Role">@user.Role.Name</td>
+                                <td>@user.LastLoginDateTime</td>
                                 <td style="text-align: center; width: 10%">
-                                    <a data-id=@user.Id class="open-AddBookDialog btn btn-round btn-danger" href="#addBookDialog">Delete</a>
+                                    <a data-id=@user.Id class="open-AddBookDialog btn btn-round btn-danger" href="#addBookDialog">Deactivate</a>
                                 </td>
                             </tr>
                         }
@@ -44,14 +66,14 @@
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                <h4 class="modal-title" id="myModalLabel">Confirm to delete</h4>
+                <h4 class="modal-title" id="myModalLabel">Confirm to deactivate</h4>
             </div>
-            @using (Html.BeginForm("Delete", "User", FormMethod.Post))
+            @using (Html.BeginForm("Deactivate", "User", FormMethod.Post))
             {
-                <input type="hidden" name="roleId" id="roleId" value="" />
+                <input type="hidden" name="userId" id="roleId" value="" />
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                    <button type="submit" class="btn btn-danger">Delete</button>
+                    <button type="submit" class="btn btn-danger">Deactivate</button>
                 </div>
             }
         </div>
@@ -59,11 +81,11 @@
 </div>
 
 @section scripts{
-   
+
     <script>
         $(document).on("click",
             ".open-AddBookDialog",
-            function (e) {
+            function(e) {
                 e.preventDefault();
                 var _self = $(this);
                 var roleId = _self.data('id');
@@ -73,9 +95,9 @@
     </script>
 
     <script>
-        $(document).ready(function () {
+        $(document).ready(function() {
             var oldValue = '';
-            $('.edit').editable('/User/UpdateField',
+            $('.edit').editable('/User/Edit',
                 {
                     cssclass: 'jeditForm',
                     tooltip: 'click to edit me...',
@@ -83,21 +105,22 @@
                     height: 'none',
                     submit: 'Ok',
                     cancel: 'Cancel',
-                    onsubmit: function (settings, original) {
+                    onsubmit: function(settings, original) {
                         oldValue = original.revert;
                     },
-                    submitdata: function () {
+                    submitdata: function() {
                         return {
                             id: $(this).data('record_id'),
                             PropertyName: $(this).data('propertyname')
                         }
                     },
-                    callback: function (value, settings) {
+                    callback: function(value, settings) {
                         var jsonData = $.parseJSON(value);
                         if (jsonData.status) {
                             $(this).text(jsonData.value);
                         } else {
                             $(this).text(oldValue);
+                            alert(jsonData.message);
                         }
                     }
                 });
@@ -105,9 +128,9 @@
     </script>
 
     <script>
-        $(document).ready(function () {
+        $(document).ready(function() {
             var oldValue = '';
-            $('.editSelect').editable('/User/UpdateField',
+            $('.editSelect').editable('/User/Edit',
                 {
                     cssclass: 'jeditForm',
                     tooltip: 'click to edit me...',
@@ -117,19 +140,19 @@
                     submit: 'Ok',
                     cancel: 'Cancel',
                     loadurl: '/Role/GetRolesWithUserId',
-                    loaddata: function () {
+                    loaddata: function() {
                         return { id: $(this).data('record_id') }
                     },
-                    onsubmit: function (settings, original) {
+                    onsubmit: function(settings, original) {
                         oldValue = original.revert;
                     },
-                    submitdata: function () {
+                    submitdata: function() {
                         return {
                             id: $(this).data('record_id'),
                             PropertyName: $(this).data('propertyname')
                         }
                     },
-                    callback: function (value, settings) {
+                    callback: function(value, settings) {
                         var jsonData = $.parseJSON(value);
                         if (jsonData.status) {
                             $(this).text(jsonData.value);
@@ -142,16 +165,15 @@
     </script>
 
     <script>
-        $(document).ready(function () {
-            $('.editSelect').click(function () {
+        $(document).ready(function() {
+            $('.editSelect').click(function() {
                 $('select', this).addClass('form-control pull-left w100');
                 $('button', this).addClass('btn btn-sm btn-success');
             });
 
-            $('.edit').click(function () {
+            $('.edit').click(function() {
                 $('button', this).addClass('btn btn-sm btn-success');
             });
         })
     </script>
-    
 }

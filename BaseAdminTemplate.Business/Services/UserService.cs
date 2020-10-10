@@ -141,30 +141,25 @@ namespace BaseAdminTemplate.Business.Services
             }
         }
 
-        public Response<User> Update(User role)
+        public Response<User> Update(User entity)
         {
             try
             {
-                var existUser = _unitOfWork.UserRepository.GetById(role.Id);
-                if (existUser == null)
+                var user = _unitOfWork.UserRepository.GetById(entity.Id);
+                if (user == null)
                 {
                     return _responseHelper.FailResponse("could not found");
                 }
 
-                if (ModelValidation(role, out var response))
+                if (ModelValidation(entity, out var response))
                 {
                     return response;
                 }
 
-                existUser.Name = role.Name;
-                existUser.Surname = role.Surname;
-                existUser.Email = role.Password;
-
-                _unitOfWork.UserRepository.Update(existUser);
+                _unitOfWork.UserRepository.Update(entity);
                 _unitOfWork.Complete();
 
-                response.Result = existUser;
-                return response;
+                return _responseHelper.SuccessResponse(entity, "updated successfully");
             }
             catch (Exception e)
             {
@@ -219,13 +214,13 @@ namespace BaseAdminTemplate.Business.Services
         {
             try
             {
-                var inactiveUser = _unitOfWork.UserRepository.GetByCondition(x => x.Id == id && x.IsActive == false);
+                var inactiveUser = _unitOfWork.UserRepository.GetByCondition(x => x.Id == id && x.IsActive == false).FirstOrDefault();
                 if (inactiveUser == null)
                 {
                     return _booleanResponseHelper.FailResponse("could not found");
                 }
 
-                _unitOfWork.UserRepository.Restore(id);
+                _unitOfWork.UserRepository.Restore(inactiveUser);
                 _unitOfWork.Complete();
 
                 return _booleanResponseHelper.SuccessResponse("restore successful");
@@ -397,6 +392,28 @@ namespace BaseAdminTemplate.Business.Services
             }
         }
 
+        public Response<bool> UpdateRole(Guid userId, Guid roleId)
+        {
+            try
+            {
+                var linkUserRole = _unitOfWork.LinkUserRoleRepository.GetByCondition(x => x.UserId == userId).FirstOrDefault();
+                if (linkUserRole == null)
+                {
+                    return _booleanResponseHelper.FailResponse("something went wrong");
+                }
+
+                linkUserRole.RoleId = roleId;
+                _unitOfWork.LinkUserRoleRepository.Update(linkUserRole);
+                _unitOfWork.Complete();
+                return _booleanResponseHelper.SuccessResponse("role updated to user");
+            }
+            catch (Exception e)
+            {
+                LogHelper.AddLog(_unitOfWork, e, GetType().Name, MethodBase.GetCurrentMethod()?.Name);
+                return _booleanResponseHelper.FailResponse(e.ToString());
+            }
+        }
+
         private bool ModelValidation(User entity, out Response<User> response)
         {
             if (entity.Name.IsEmpty())
@@ -420,6 +437,12 @@ namespace BaseAdminTemplate.Business.Services
             if (entity.Email.IsNotEmail())
             {
                 response = _responseHelper.FailResponse("Email must be valid");
+                return true;
+            }
+
+            if (entity.Phone.IsNotEmpty() && entity.Phone.IsNotPhoneNumber())
+            {
+                response = _responseHelper.FailResponse("Phone must have 11 character and must be number");
                 return true;
             }
 

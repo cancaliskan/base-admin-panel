@@ -19,7 +19,7 @@ namespace BaseAdminTemplate.DataAccess.Repositories
         public Menu GetParent(Guid permissionId)
         {
             var menuId = GetByCondition(x => x.PermissionId == permissionId).FirstOrDefault().MenuId;
-            return ApplicationContext.Menus.FirstOrDefault(x => x.Id == menuId);
+            return ApplicationContext.Menus.AsNoTracking().FirstOrDefault(x => x.Id == menuId);
         }
     }
 }

@@ -19,21 +19,21 @@ namespace BaseAdminTemplate.DataAccess.Repositories
 
         public Role GetRole(Guid id)
         {
-            var linkUserRole = ApplicationContext.LinkUsersRoles.FirstOrDefault(x => x.UserId == id)?.RoleId;
-            var role = ApplicationContext.Roles.FirstOrDefault(x => x.Id == linkUserRole);
+            var linkUserRole = ApplicationContext.LinkUsersRoles.AsNoTracking().FirstOrDefault(x => x.UserId == id)?.RoleId;
+            var role = ApplicationContext.Roles.AsNoTracking().FirstOrDefault(x => x.Id == linkUserRole);
             return role;
         }
 
         public IQueryable<Permission> GetPermissions(Guid id)
         {
-            var linkUserRole = ApplicationContext.LinkUsersRoles.FirstOrDefault(x => x.UserId == id)?.RoleId;
-            var role = ApplicationContext.Roles.FirstOrDefault(x => x.Id == linkUserRole);
-            var linkRolePermissionList = ApplicationContext.LinkRolesPermissions.Where(x => x.RoleId == role.Id);
+            var linkUserRole = ApplicationContext.LinkUsersRoles.AsNoTracking().FirstOrDefault(x => x.UserId == id)?.RoleId;
+            var role = ApplicationContext.Roles.AsNoTracking().FirstOrDefault(x => x.Id == linkUserRole);
+            var linkRolePermissionList = ApplicationContext.LinkRolesPermissions.AsNoTracking().Where(x => x.RoleId == role.Id);
 
             var permissionList = new List<Permission>();
             foreach (var linkRolePermission in linkRolePermissionList)
             {
-                permissionList.Add(ApplicationContext.Permissions.FirstOrDefault(x => x.Id == linkRolePermission.PermissionId));
+                permissionList.Add(ApplicationContext.Permissions.AsNoTracking().FirstOrDefault(x => x.Id == linkRolePermission.PermissionId));
             }
 
             return permissionList.AsQueryable();

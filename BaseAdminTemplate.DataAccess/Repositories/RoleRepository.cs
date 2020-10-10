@@ -19,8 +19,8 @@ namespace BaseAdminTemplate.DataAccess.Repositories
 
         public IQueryable<Permission> GetPermissions(Guid id)
         {
-            var linkRolePermissionIdList = ApplicationContext.LinkRolesPermissions.Where(x => x.RoleId == id).ToList();
-            var permissionList = linkRolePermissionIdList.Select(linkRolePermission => ApplicationContext.Permissions.FirstOrDefault(x => x.Id == linkRolePermission.PermissionId)).ToList();
+            var linkRolePermissionIdList = ApplicationContext.LinkRolesPermissions.AsNoTracking().Where(x => x.RoleId == id).ToList();
+            var permissionList = linkRolePermissionIdList.Select(linkRolePermission => ApplicationContext.Permissions.AsNoTracking().FirstOrDefault(x => x.Id == linkRolePermission.PermissionId)).ToList();
             return permissionList.AsQueryable();
         }
     }

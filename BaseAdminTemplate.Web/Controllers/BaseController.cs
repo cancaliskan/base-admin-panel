@@ -85,7 +85,7 @@ namespace BaseAdminTemplate.Web.Controllers
 
             var menu = new MenuItemsModel()
             {
-                MenuItems = parentItemList
+                MenuItems = parentItemList.OrderBy(x=>x.DisplayName).ToList()
             };
 
             var userName = User.FindFirstValue(ClaimTypes.Name);
@@ -112,6 +112,7 @@ namespace BaseAdminTemplate.Web.Controllers
                     && permission.MethodName == methodName)
                 {
                     hasPermission = true;
+                    break;
                 }
             }
 
