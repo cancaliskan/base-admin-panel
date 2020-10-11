@@ -4,29 +4,30 @@
 }
 
 <div class="tableStyle">
+    <div class="pull-left"> <button id="exporttable" class="btn pull-left btn-round btn-primary">Export</button> </div>
     <div class="row">
         <div class="col-xs-12">
             <div class="table-responsive">
-                <table class="display" style="width:100%">
+                <table class="display" style="width: 100%">
                     <thead>
-                        <tr>
-                            <th>Name</th>
-                            <th>Description</th>
-                            <th></th>
-                        </tr>
+                    <tr>
+                        <th>Name</th>
+                        <th>Description</th>
+                        <th></th>
+                    </tr>
                     </thead>
                     <tbody>
-                        @foreach (var role in Model)
-                        {
-                            <tr>
-                                <td class="edit" data-record_id="@role.Id" data-propertyname="Name">@role.Name</td>
-                                <td class="edit" data-record_id="@role.Id" data-propertyname="Description">@role.Description</td>
-                                <td style="text-align: center; width: 10%">
-                                    @Html.ActionLink("Edit", "Edit", new { roleId = role.Id }, new { @class = "btn btn-round btn-dark" })
-                                    <a data-id=@role.Id class="open-AddBookDialog btn btn-round btn-danger" href="#addBookDialog">Delete</a>
-                                </td>
-                            </tr>
-                        }
+                    @foreach (var role in Model)
+                    {
+                        <tr>
+                            <td class="edit" data-record_id="@role.Id" data-propertyname="Name">@role.Name</td>
+                            <td class="edit" data-record_id="@role.Id" data-propertyname="Description">@role.Description</td>
+                            <td style="text-align: center; width: 10%">
+                                @Html.ActionLink("Edit", "Edit", new {roleId = role.Id}, new {@class = "btn btn-round btn-dark"})
+                                <a data-id=@role.Id class="open-AddBookDialog btn btn-round btn-danger" href="#addBookDialog">Delete</a>
+                            </td>
+                        </tr>
+                    }
                     </tbody>
                 </table>
             </div>

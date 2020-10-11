@@ -4,37 +4,38 @@
 }
 
 <div class="tableStyle">
+    <div class="pull-left"> <button id="exporttable" class="btn pull-left btn-round btn-primary">Export</button> </div>
     <div class="row">
         <div class="col-xs-12">
             <div class="table-responsive">
                 <table class="display" style="width: 100%">
                     <thead>
-                        <tr>
-                            <th>Name</th>
-                            <th>Surname</th>
-                            <th>Email</th>
-                            <th>Phone</th>
-                            <th>Role</th>
-                            <th>Last Login Date</th>
-                            <th></th>
-                        </tr>
+                    <tr>
+                        <th>Name</th>
+                        <th>Surname</th>
+                        <th>Email</th>
+                        <th>Phone</th>
+                        <th>Role</th>
+                        <th>Last Login Date</th>
+                        <th></th>
+                    </tr>
                     </thead>
                     <tbody>
-                        @foreach (var user in Model)
-                        {
-                            <tr>
-                                <td class="edit" data-record_id="@user.Id" data-propertyname="Name">@user.Name</td>
-                                <td class="edit" data-record_id="@user.Id" data-propertyname="Surname">@user.Surname</td>
-                                <td class="edit" data-record_id="@user.Id" data-propertyname="Email">@user.Email</td>
-                                <td class="edit" data-record_id="@user.Id" data-propertyname="Phone">@user.Phone</td>
-                                <td class="editSelect" data-record_id="@user.Id" data-propertyname="Role">@user.Role?.Name</td>
-                                <td>@user.LastLoginDateTime</td>
-                                <td style="text-align: center; width: 10%">
-                                    <a data-id=@user.Id class="open-AddBookDialog btn btn-round btn-danger" href="#addBookDialog">Deactivate</a>
-                                    <a data-id=@user.Id class="open-deleteDialog btn btn-round btn-danger" href="#delete">Delete</a>
-                                </td>
-                            </tr>
-                        }
+                    @foreach (var user in Model)
+                    {
+                        <tr>
+                            <td class="edit" data-record_id="@user.Id" data-propertyname="Name">@user.Name</td>
+                            <td class="edit" data-record_id="@user.Id" data-propertyname="Surname">@user.Surname</td>
+                            <td class="edit" data-record_id="@user.Id" data-propertyname="Email">@user.Email</td>
+                            <td class="edit" data-record_id="@user.Id" data-propertyname="Phone">@user.Phone</td>
+                            <td class="editSelect" data-record_id="@user.Id" data-propertyname="Role">@user.Role?.Name</td>
+                            <td>@user.LastLoginDateTime</td>
+                            <td style="text-align: center; width: 10%">
+                                <a data-id=@user.Id class="open-AddBookDialog btn btn-round btn-danger" href="#addBookDialog">Deactivate</a>
+                                <a data-id=@user.Id class="open-deleteDialog btn btn-round btn-danger" href="#delete">Delete</a>
+                            </td>
+                        </tr>
+                    }
                     </tbody>
                 </table>
             </div>

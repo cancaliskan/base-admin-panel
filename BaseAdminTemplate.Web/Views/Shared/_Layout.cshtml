@@ -101,6 +101,8 @@
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery.inputmask/3.3.4/css/inputmask.min.css" />
 
+    <script src="https://res.cloudinary.com/dxfq3iotg/raw/upload/v1569818907/jquery.table2excel.min.js"></script>
+
     <script src="~/vendors/bootstrap/dist/js/bootstrap.min.js"></script>
 
     <script src="~/vendors/fastclick/lib/fastclick.js"></script>
@@ -178,6 +180,27 @@
     <script>
         $(function () {
             $("select").select2();
+        });
+    </script>
+
+    <script>
+        $(function () {
+            $("#exporttable").click(function (e) {
+                var table = $("table");
+                if (table && table.length) {
+                    $(table).table2excel({
+                        exclude: ".noExl",
+                        name: "Download",
+                        filename: new Date().toISOString().replace(/[\-\:\.]/g, "") + ".xlsx",
+                        fileext: ".xlsx",
+                        exclude_img: true,
+                        exclude_links: true,
+                        exclude_inputs: true,
+                        preserveColors: false
+                    });
+                }
+            });
+
         });
     </script>
 
