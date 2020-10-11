@@ -11,15 +11,18 @@ namespace BaseAdminTemplate.Web.Helpers
         {
             CreateMap<Menu, MenuViewModel>();
             CreateMap<MenuViewModel, Menu>();
-            
+
             CreateMap<Role, RoleViewModel>();
             CreateMap<RoleViewModel, Role>();
-            
+
             CreateMap<User, UserViewModel>();
             CreateMap<UserViewModel, User>();
 
             CreateMap<Permission, PermissionViewModel>();
             CreateMap<PermissionViewModel, Permission>();
+
+            CreateMap<ExceptionLog, ExceptionLogViewModel>();
+            CreateMap<ExceptionLogViewModel, ExceptionLog>();
         }
     }
 }

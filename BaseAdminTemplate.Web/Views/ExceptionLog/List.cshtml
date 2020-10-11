@@ -1,0 +1,81 @@
+﻿@model IEnumerable<BaseAdminTemplate.Web.Models.ViewModels.ExceptionLogViewModel>
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+</head>
+<body>
+    <div>
+        <div>
+            <button type="button" class="open-deleteDialog  btn pull-right btn-round btn-danger" data-toggle="modal" data-target="#deleteAll">
+                Delete All
+            </button>
+            <!-- Modal -->
+            <div class="modal fade" id="deleteAll" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                            <h4 class="modal-title" id="myModalLabel">Confirm to delete all</h4>
+                        </div>
+                        @using (Html.BeginForm("DeleteAll", "ExceptionLog", FormMethod.Post))
+                        {
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                <button type="submit" class="btn btn-danger">Delete All</button>
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="dataModel">
+        </div>
+        <div class="tableStyle">
+            <div class="row">
+                <div class="col-xs-12">
+                    <div class="table-responsive">
+                        <table class="display" style="width: 100%">
+                            <thead>
+                                <tr>
+                                    <th>Created Date</th>
+                                    <th>Class Name</th>
+                                    <th>Method Name</th>
+                                    <th>Message</th>
+                                    <th>StackTrace</th>
+                                    <th>Exception</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var exceptionLog in Model)
+                                {
+                                    <tr>
+                                        <td>@exceptionLog.CreatedDate</td>
+                                        <td>@exceptionLog.ClassName</td>
+                                        <td>@exceptionLog.MethodName</td>
+                                        <td>@exceptionLog.Message</td>
+                                        <td>@exceptionLog.StackTrace</td>
+                                        <td>@exceptionLog.Exception</td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('table.display').DataTable();
+        });
+    </script>
+</body>
+</html>

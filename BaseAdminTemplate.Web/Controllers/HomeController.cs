@@ -27,5 +27,11 @@ namespace BaseAdminTemplate.Web.Controllers
         {
             return View();
         }
+        
+        [HttpGet]
+        public IActionResult Error()
+        {
+            return View();
+        }
     }
 }
