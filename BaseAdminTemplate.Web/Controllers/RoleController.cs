@@ -108,7 +108,7 @@ namespace BaseAdminTemplate.Web.Controllers
             if (response.IsSucceed)
             {
                 selectedRoleId = response.Result.Id;
-               
+
             }
             else
             {
@@ -214,26 +214,27 @@ namespace BaseAdminTemplate.Web.Controllers
         [HttpPost]
         public ActionResult UpdateField(string id, string propertyName, string value)
         {
-            if (!HasPermission("Role", "Edit"))
-            {
-                return RedirectToAction("PermissionError", "Home");
-            }
-
             var status = false;
             var message = "";
-
-            var role = RoleService.GetById(id.ToGuid());
-            if (role.IsSucceed)
+            if (!HasPermission("Role", "Edit"))
             {
-                object instance = role.Result;
-                role.Result.GetType().GetProperty(propertyName)?.SetValue(instance, value);
-                RoleService.Update(role.Result);
-                _context.Clients.All.SendAsync("refresh");
-                status = true;
+                message = "You do not have permission";
             }
             else
             {
-                message = role.ErrorMessage;
+                var role = RoleService.GetById(id.ToGuid());
+                if (role.IsSucceed)
+                {
+                    object instance = role.Result;
+                    role.Result.GetType().GetProperty(propertyName)?.SetValue(instance, value);
+                    RoleService.Update(role.Result);
+                    _context.Clients.All.SendAsync("refresh");
+                    status = true;
+                }
+                else
+                {
+                    message = role.ErrorMessage;
+                }
             }
 
             var response = new { value = value, status = status, message = message };

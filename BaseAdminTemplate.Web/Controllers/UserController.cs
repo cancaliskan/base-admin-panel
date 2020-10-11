@@ -107,41 +107,44 @@ namespace BaseAdminTemplate.Web.Controllers
         [DisplayName(Constants.DisplayInPermissionTree + "Edit")]
         public IActionResult Edit(string id, string propertyName, string value)
         {
-            if (!HasPermission("User", "Edit"))
-            {
-                return RedirectToAction("PermissionError", "Home");
-            }
-
             var status = false;
             var message = "";
-            var serviceResponse = UserService.GetById(id.ToGuid());
-            if (serviceResponse.IsSucceed)
+
+            if (!HasPermission("User", "Edit"))
             {
-                if (propertyName.Equals("Role"))
+                message = "You do not have permission";
+            }
+            else
+            {
+                var serviceResponse = UserService.GetById(id.ToGuid());
+                if (serviceResponse.IsSucceed)
                 {
-                    UserService.UpdateRole(serviceResponse.Result.Id, value.ToGuid());
-                    _context.Clients.All.SendAsync("refresh");
-                    status = true;
-                }
-                else
-                {
-                    object instance = serviceResponse.Result;
-                    serviceResponse.Result.GetType().GetProperty(propertyName)?.SetValue(instance, value);
-                    var result = UserService.Update(serviceResponse.Result);
-                    if (result.IsSucceed)
+                    if (propertyName.Equals("Role"))
                     {
+                        UserService.UpdateRole(serviceResponse.Result.Id, value.ToGuid());
                         _context.Clients.All.SendAsync("refresh");
                         status = true;
                     }
                     else
                     {
-                        message = result.ErrorMessage;
+                        object instance = serviceResponse.Result;
+                        serviceResponse.Result.GetType().GetProperty(propertyName)?.SetValue(instance, value);
+                        var result = UserService.Update(serviceResponse.Result);
+                        if (result.IsSucceed)
+                        {
+                            _context.Clients.All.SendAsync("refresh");
+                            status = true;
+                        }
+                        else
+                        {
+                            message = result.ErrorMessage;
+                        }
                     }
                 }
-            }
-            else
-            {
-                message = serviceResponse.ErrorMessage;
+                else
+                {
+                    message = serviceResponse.ErrorMessage;
+                }
             }
 
             var response = new { value = value, status = status, message = message };
