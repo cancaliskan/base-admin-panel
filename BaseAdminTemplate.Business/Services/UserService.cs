@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Linq;
 using System.Linq.Expressions;
-using System.Net.Mail;
 using System.Reflection;
 
 using BaseAdminTemplate.Business.Contracts;
@@ -11,9 +10,6 @@ using BaseAdminTemplate.Common.Helpers;
 using BaseAdminTemplate.DataAccess.Helpers;
 using BaseAdminTemplate.DataAccess.UnitOfWork;
 using BaseAdminTemplate.Domain.Entities;
-using MailKit.Security;
-using MimeKit;
-using MimeKit.Text;
 
 namespace BaseAdminTemplate.Business.Services
 {
@@ -44,16 +40,16 @@ namespace BaseAdminTemplate.Business.Services
             {
                 if (id.IsEmptyGuid())
                 {
-                    return _responseHelper.FailResponse("Invalid Id");
+                    return _responseHelper.FailResponse("Invalid user Id");
                 }
 
                 var user = _unitOfWork.UserRepository.GetById(id);
                 if (user == null)
                 {
-                    return _responseHelper.FailResponse("could not found");
+                    return _responseHelper.FailResponse("User could not found");
                 }
 
-                return _responseHelper.SuccessResponse(user, "returned successfully");
+                return _responseHelper.SuccessResponse(user, "User returned successfully");
             }
             catch (Exception e)
             {
@@ -67,7 +63,7 @@ namespace BaseAdminTemplate.Business.Services
             try
             {
                 var users = _unitOfWork.UserRepository.GetAll();
-                return _listResponseHelper.SuccessResponse(users, "returned successfully");
+                return _listResponseHelper.SuccessResponse(users, "Users returned successfully");
             }
             catch (Exception e)
             {
@@ -83,10 +79,10 @@ namespace BaseAdminTemplate.Business.Services
                 var users = _unitOfWork.UserRepository.GetByCondition(expression);
                 if (users == null || !users.Any())
                 {
-                    return _listResponseHelper.FailResponse("could not found");
+                    return _listResponseHelper.FailResponse("Users could not found");
                 }
 
-                return _listResponseHelper.SuccessResponse(users, "returned successfully");
+                return _listResponseHelper.SuccessResponse(users, "Users returned successfully");
             }
             catch (Exception e)
             {
@@ -100,7 +96,7 @@ namespace BaseAdminTemplate.Business.Services
             try
             {
                 var activeUsers = _unitOfWork.UserRepository.GetActiveEntities();
-                return _listResponseHelper.SuccessResponse(activeUsers, "returned successfully");
+                return _listResponseHelper.SuccessResponse(activeUsers, "Users returned successfully");
             }
             catch (Exception e)
             {
@@ -114,7 +110,7 @@ namespace BaseAdminTemplate.Business.Services
             try
             {
                 var activeUsers = _unitOfWork.UserRepository.GetInActiveEntities();
-                return _listResponseHelper.SuccessResponse(activeUsers, "returned successfully");
+                return _listResponseHelper.SuccessResponse(activeUsers, "Users returned successfully");
             }
             catch (Exception e)
             {
@@ -137,7 +133,7 @@ namespace BaseAdminTemplate.Business.Services
                 _unitOfWork.UserRepository.Create(entity);
                 _unitOfWork.Complete();
 
-                return _responseHelper.SuccessResponse(entity, "created successfully");
+                return _responseHelper.SuccessResponse(entity, "User created successfully");
             }
             catch (Exception e)
             {
@@ -153,7 +149,7 @@ namespace BaseAdminTemplate.Business.Services
                 var user = _unitOfWork.UserRepository.GetById(entity.Id);
                 if (user == null)
                 {
-                    return _responseHelper.FailResponse("could not found");
+                    return _responseHelper.FailResponse("User could not found");
                 }
 
                 if (ModelValidation(entity, out var response))
@@ -164,7 +160,7 @@ namespace BaseAdminTemplate.Business.Services
                 _unitOfWork.UserRepository.Update(entity);
                 _unitOfWork.Complete();
 
-                return _responseHelper.SuccessResponse(entity, "updated successfully");
+                return _responseHelper.SuccessResponse(entity, "User updated successfully");
             }
             catch (Exception e)
             {
@@ -179,13 +175,13 @@ namespace BaseAdminTemplate.Business.Services
             {
                 if (IsNotExistUser(id))
                 {
-                    return _booleanResponseHelper.FailResponse("could not found");
+                    return _booleanResponseHelper.FailResponse("User could not found");
                 }
 
                 _unitOfWork.UserRepository.SoftDelete(id);
                 _unitOfWork.Complete();
 
-                return _booleanResponseHelper.SuccessResponse("soft delete successful");
+                return _booleanResponseHelper.SuccessResponse("User soft delete successful");
             }
             catch (Exception e)
             {
@@ -200,13 +196,13 @@ namespace BaseAdminTemplate.Business.Services
             {
                 if (IsNotExistUser(id))
                 {
-                    return _booleanResponseHelper.FailResponse("could not found");
+                    return _booleanResponseHelper.FailResponse("User could not found");
                 }
 
                 _unitOfWork.UserRepository.HardDelete(id);
                 _unitOfWork.Complete();
 
-                return _booleanResponseHelper.SuccessResponse("soft delete successful");
+                return _booleanResponseHelper.SuccessResponse("User hard delete successful");
             }
             catch (Exception e)
             {
@@ -222,13 +218,13 @@ namespace BaseAdminTemplate.Business.Services
                 var inactiveUser = _unitOfWork.UserRepository.GetByCondition(x => x.Id == id && x.IsActive == false).FirstOrDefault();
                 if (inactiveUser == null)
                 {
-                    return _booleanResponseHelper.FailResponse("could not found");
+                    return _booleanResponseHelper.FailResponse("User could not found");
                 }
 
                 _unitOfWork.UserRepository.Restore(inactiveUser);
                 _unitOfWork.Complete();
 
-                return _booleanResponseHelper.SuccessResponse("restore successful");
+                return _booleanResponseHelper.SuccessResponse("User restored successful");
             }
             catch (Exception e)
             {
@@ -244,7 +240,7 @@ namespace BaseAdminTemplate.Business.Services
                 var user = _unitOfWork.UserRepository.GetByCondition(x => x.Email == email)?.FirstOrDefault();
                 if (user == null)
                 {
-                    return _responseHelper.FailResponse("could not found");
+                    return _responseHelper.FailResponse("User could not found");
                 }
 
                 if (password != CryptoHelper.Decrypt(user.Password))
@@ -255,7 +251,7 @@ namespace BaseAdminTemplate.Business.Services
                 _unitOfWork.UserRepository.Login(user);
                 _unitOfWork.Complete();
 
-                return _responseHelper.SuccessResponse(user, "returned successfully");
+                return _responseHelper.SuccessResponse(user, "User returned successfully");
             }
             catch (Exception e)
             {
@@ -271,23 +267,23 @@ namespace BaseAdminTemplate.Business.Services
                 var user = _unitOfWork.UserRepository.GetById(id);
                 if (user == null)
                 {
-                    return _responseHelper.FailResponse("could not found");
+                    return _responseHelper.FailResponse("User could not found");
                 }
 
                 if (oldPassword != CryptoHelper.Decrypt(user.Password))
                 {
-                    return _responseHelper.FailResponse("invalid old password. ");
+                    return _responseHelper.FailResponse("Invalid old password. ");
                 }
 
                 if (newPassword.IsNotValidPassword())
                 {
-                    return _responseHelper.FailResponse("new password is not valid. Password must have 1 big, 1 small, 1 number and be minimum 8 character");
+                    return _responseHelper.FailResponse("New password is not valid. Password must have 1 big, 1 small, 1 number and be minimum 8 character");
                 }
 
                 _unitOfWork.UserRepository.ChangePassword(user, newPassword);
                 _unitOfWork.Complete();
 
-                return _responseHelper.SuccessResponse(user, "password changed successfully");
+                return _responseHelper.SuccessResponse(user, "Password changed successfully");
             }
             catch (Exception e)
             {
@@ -302,16 +298,16 @@ namespace BaseAdminTemplate.Business.Services
             {
                 if (IsNotExistUser(id))
                 {
-                    return _responseRoleHelper.FailResponse("user could not found");
+                    return _responseRoleHelper.FailResponse("User could not found");
                 }
 
                 var role = _unitOfWork.UserRepository.GetRole(id);
                 if (role != null)
                 {
-                    return _responseRoleHelper.SuccessResponse(role, "return successfully");
+                    return _responseRoleHelper.SuccessResponse(role, "User role return successfully");
                 }
 
-                return _responseRoleHelper.FailResponse("role could not found");
+                return _responseRoleHelper.FailResponse("User role could not found");
             }
             catch (Exception e)
             {
@@ -330,7 +326,7 @@ namespace BaseAdminTemplate.Business.Services
                 }
 
                 var permissions = _unitOfWork.UserRepository.GetPermissions(id);
-                return _listPermissionResponseHelper.SuccessResponse(permissions, "permissions returned successfully");
+                return _listPermissionResponseHelper.SuccessResponse(permissions, "User permissions returned successfully");
             }
             catch (Exception e)
             {
@@ -345,7 +341,7 @@ namespace BaseAdminTemplate.Business.Services
             {
                 if (IsNotExistUser(userId))
                 {
-                    return _booleanResponseHelper.FailResponse("user could not found");
+                    return _booleanResponseHelper.FailResponse("User user could not found");
                 }
 
                 var role = _unitOfWork.RoleRepository.GetById(roleId);
@@ -358,10 +354,10 @@ namespace BaseAdminTemplate.Business.Services
                 if (isSuccess)
                 {
                     _unitOfWork.Complete();
-                    return _booleanResponseHelper.SuccessResponse("role added to user");
+                    return _booleanResponseHelper.SuccessResponse("Role added to user");
                 }
 
-                return _booleanResponseHelper.FailResponse("role can not added to user");
+                return _booleanResponseHelper.FailResponse("Role can not added to user");
             }
             catch (Exception e)
             {
@@ -376,23 +372,23 @@ namespace BaseAdminTemplate.Business.Services
             {
                 if (IsNotExistUser(userId))
                 {
-                    return _booleanResponseHelper.FailResponse("user could not found");
+                    return _booleanResponseHelper.FailResponse("User could not found");
                 }
 
                 var role = _unitOfWork.RoleRepository.GetById(roleId);
                 if (role == null)
                 {
-                    return _booleanResponseHelper.FailResponse("role could not found");
+                    return _booleanResponseHelper.FailResponse("Role could not found");
                 }
 
                 var isSuccess = _unitOfWork.LinkUserRoleRepository.RemoveRoleFromUser(userId, roleId);
                 if (isSuccess)
                 {
                     _unitOfWork.Complete();
-                    return _booleanResponseHelper.SuccessResponse("role added to user");
+                    return _booleanResponseHelper.SuccessResponse("Role added to user");
                 }
 
-                return _booleanResponseHelper.FailResponse("role can not removed from user");
+                return _booleanResponseHelper.FailResponse("Role can not removed from user");
             }
             catch (Exception e)
             {
@@ -408,13 +404,13 @@ namespace BaseAdminTemplate.Business.Services
                 var linkUserRole = _unitOfWork.LinkUserRoleRepository.GetByCondition(x => x.UserId == userId).FirstOrDefault();
                 if (linkUserRole == null)
                 {
-                    return _booleanResponseHelper.FailResponse("something went wrong");
+                    return _booleanResponseHelper.FailResponse("Something went wrong");
                 }
 
                 linkUserRole.RoleId = roleId;
                 _unitOfWork.LinkUserRoleRepository.Update(linkUserRole);
                 _unitOfWork.Complete();
-                return _booleanResponseHelper.SuccessResponse("role updated to user");
+                return _booleanResponseHelper.SuccessResponse("Role updated to user");
             }
             catch (Exception e)
             {
@@ -430,20 +426,20 @@ namespace BaseAdminTemplate.Business.Services
                 var user = _unitOfWork.UserRepository.GetByCondition(x => x.Email == eMail).FirstOrDefault();
                 if (user == null)
                 {
-                    return _booleanResponseHelper.FailResponse("email is not registered");
+                    return _booleanResponseHelper.FailResponse("Email is not registered");
                 }
 
                 var key = CryptoHelper.Encrypt(eMail);
                 var resetUrl = "<a href=" + ConfigurationParameterHelper.GetConfigurationParameter("BaseURL") +
                                     "/Account/ResetPassword?key=" +
-                                    key + "> Click to reset </a>";
+                                    key + "> Click to reset password </a>";
 
                 _unitOfWork.PasswordResetRepository.Create(new PasswordReset() { Key = key, UserId = user.Id });
                 _unitOfWork.Complete();
 
                 var eMailService = new EmailService();
                 eMailService.Send(user.Email, "Reset Password", resetUrl);
-                return _booleanResponseHelper.SuccessResponse("mail sent successfully");
+                return _booleanResponseHelper.SuccessResponse("Mail sent successfully");
             }
             catch (Exception e)
             {
@@ -475,7 +471,7 @@ namespace BaseAdminTemplate.Business.Services
                 _unitOfWork.PasswordResetRepository.Update(passwordResetEntity);
                 _unitOfWork.Complete();
 
-                return _booleanResponseHelper.SuccessResponse("password updated successfully");
+                return _booleanResponseHelper.SuccessResponse("Password updated successfully");
             }
             catch (Exception e)
             {

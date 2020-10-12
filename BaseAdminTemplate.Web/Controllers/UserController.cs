@@ -12,7 +12,6 @@ using BaseAdminTemplate.Business.Contracts;
 using BaseAdminTemplate.Common.Helpers;
 using BaseAdminTemplate.Domain.Entities;
 using BaseAdminTemplate.Web.Hubs;
-using BaseAdminTemplate.Web.Models;
 using BaseAdminTemplate.Web.Models.ViewModels;
 
 namespace BaseAdminTemplate.Web.Controllers
