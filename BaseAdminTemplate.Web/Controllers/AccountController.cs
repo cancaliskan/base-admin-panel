@@ -150,7 +150,7 @@ namespace BaseAdminTemplate.Web.Controllers
             if (isKeyUsedResponse.IsSucceed == false)
             {
                 ViewBag.ErrorMessage = isKeyUsedResponse.ErrorMessage;
-                return View();
+                return View(new UserViewModel());
             }
 
             var response = UserService.GetByCondition(x=>x.Email == CryptoHelper.Decrypt(key));
@@ -169,6 +169,11 @@ namespace BaseAdminTemplate.Web.Controllers
         [AllowAnonymous]
         public IActionResult ResetPassword(UserViewModel model)
         {
+            if (model.Id.IsEmptyGuid())
+            {
+                return View(new UserViewModel());
+            }
+
             if (model.Password != model.ConfirmPassword)
             {
                 ViewBag.ErrorMessage = "password and password confirm are not equal";
