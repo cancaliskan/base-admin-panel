@@ -17,6 +17,7 @@ namespace BaseAdminTemplate.Business.Helpers
                 StackTrace = e.StackTrace,
                 Exception = e.ToString()
             });
+            unitOfWork.Complete();
         }
     }
 }

@@ -19,7 +19,7 @@
             <div class="row">
                 <div class="col-xs-12">
                     <div class="table-responsive">
-                        <table id="table" class="display" style="width: 100%">
+                        <table class="display" style="width: 100%">
                             <thead>
                                 <tr>
                                     <th>Created Date</th>
@@ -71,10 +71,13 @@
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 
-    <script>
-        $(document).ready(function () {
-            $('table.display').DataTable();
+<script>
+    $(document)
+        .ready(function () {
+            $('table').dataTable({
+                "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]]
+            });
         });
-    </script>
+</script>
 </body>
 </html>

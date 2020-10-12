@@ -279,7 +279,7 @@ namespace BaseAdminTemplate.Business.Services
                     return _responseHelper.FailResponse("new password is not valid. Password must have 1 big, 1 small, 1 number and be minimum 8 character");
                 }
 
-                _unitOfWork.UserRepository.ChangePassword(user,newPassword);
+                _unitOfWork.UserRepository.ChangePassword(user, newPassword);
                 _unitOfWork.Complete();
 
                 return _responseHelper.SuccessResponse(user, "password changed successfully");
@@ -420,6 +420,20 @@ namespace BaseAdminTemplate.Business.Services
 
         private bool ModelValidation(User entity, out Response<User> response)
         {
+            var existUserResponse = GetByCondition(x => x.Email == entity.Email && x.IsActive);
+            if (existUserResponse.IsSucceed)
+            {
+                response = _responseHelper.FailResponse("Email already exist");
+                return true;
+            }
+
+            existUserResponse = GetByCondition(x => x.Email == entity.Email && !x.IsActive);
+            if (existUserResponse.IsSucceed)
+            {
+                response = _responseHelper.FailResponse("Email already exist but user deactivated");
+                return true;
+            }
+
             if (entity.Name.IsEmpty())
             {
                 response = _responseHelper.FailResponse("Name is mandatory");

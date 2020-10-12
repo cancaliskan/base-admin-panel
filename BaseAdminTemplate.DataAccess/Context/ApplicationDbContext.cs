@@ -57,7 +57,7 @@ namespace BaseAdminTemplate.DataAccess.Context
                 Password = CryptoHelper.Encrypt(ConfigurationParameterHelper.GetConfigurationParameter("AdminUserPassword")),
                 Name = ConfigurationParameterHelper.GetConfigurationParameter("AdminUserName"),
                 Surname = ConfigurationParameterHelper.GetConfigurationParameter("AdminUserSurname"),
-                DeletedDate = DateTime.Now,
+                CreatedDate = DateTime.Now,
                 IsActive = true
             };
 

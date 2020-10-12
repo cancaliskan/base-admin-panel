@@ -10,24 +10,24 @@
             <div class="table-responsive">
                 <table class="display" style="width: 100%">
                     <thead>
-                    <tr>
-                        <th>Name</th>
-                        <th>Description</th>
-                        <th></th>
-                    </tr>
+                        <tr>
+                            <th>Name</th>
+                            <th>Description</th>
+                            <th></th>
+                        </tr>
                     </thead>
                     <tbody>
-                    @foreach (var role in Model)
-                    {
-                        <tr>
-                            <td class="edit" data-record_id="@role.Id" data-propertyname="Name">@role.Name</td>
-                            <td class="edit" data-record_id="@role.Id" data-propertyname="Description">@role.Description</td>
-                            <td style="text-align: center; width: 10%">
-                                @Html.ActionLink("Edit", "Edit", new {roleId = role.Id}, new {@class = "btn btn-round btn-dark"})
-                                <a data-id=@role.Id class="open-AddBookDialog btn btn-round btn-danger" href="#addBookDialog">Delete</a>
-                            </td>
-                        </tr>
-                    }
+                        @foreach (var role in Model)
+                        {
+                            <tr>
+                                <td class="edit" data-record_id="@role.Id" data-propertyname="Name">@role.Name</td>
+                                <td class="edit" data-record_id="@role.Id" data-propertyname="Description">@role.Description</td>
+                                <td class="noExl" style="text-align: center; width: 10%">
+                                    @Html.ActionLink("Edit", "Edit", new { roleId = role.Id }, new { @class = "btn btn-round btn-dark" })
+                                    <a data-id=@role.Id class="open-AddBookDialog btn btn-round btn-danger" href="#addBookDialog">Delete</a>
+                                </td>
+                            </tr>
+                        }
                     </tbody>
                 </table>
             </div>
@@ -66,39 +66,41 @@
     </script>
 
     <script>
-        $(document).ready(function () {
-            var oldValue = '';
-            $('.edit').editable('/Role/UpdateField',
-                {
-                    cssclass: 'jeditForm',
-                    tooltip: 'click to edit me...',
-                    width: 'none',
-                    height: 'none',
-                    submit: 'Ok',
-                    cancel: 'Cancel',
-                    onsubmit: function (settings, original) {
-                        oldValue = original.revert;
-                    },
-                    submitdata: function () {
-                        return {
-                            id: $(this).data('record_id'),
-                            PropertyName: $(this).data('propertyname')
+        $('tbody').on('click', 'tr', function () {
+            $(document).ready(function() {
+                var oldValue = '';
+                $('.edit').editable('/Role/UpdateField',
+                    {
+                        cssclass: 'jeditForm',
+                        tooltip: 'click to edit me...',
+                        width: 'none',
+                        height: 'none',
+                        submit: 'Ok',
+                        cancel: 'Cancel',
+                        onsubmit: function(settings, original) {
+                            oldValue = original.revert;
+                        },
+                        submitdata: function() {
+                            return {
+                                id: $(this).data('record_id'),
+                                PropertyName: $(this).data('propertyname')
+                            }
+                        },
+                        callback: function(value, settings) {
+                            var jsonData = $.parseJSON(value);
+                            if (jsonData.status) {
+                                $(this).text(jsonData.value);
+                            } else {
+                                $(this).text(oldValue);
+                                alert(jsonData.message);
+                            }
                         }
-                    },
-                    callback: function (value, settings) {
-                        var jsonData = $.parseJSON(value);
-                        if (jsonData.status) {
-                            $(this).text(jsonData.value);
-                        } else {
-                            $(this).text(oldValue);
-                            alert(jsonData.message);
-                        }
-                    }
-                });
+                    });
 
-            $('.edit').click(function () {
-                $('button', this).addClass('btn btn-sm btn-success');
+                $('.edit').click(function() {
+                    $('button', this).addClass('btn btn-sm btn-success');
+                });
             });
-        })
+        });
     </script>
 }
