@@ -3,7 +3,7 @@ using Microsoft.Extensions.Configuration;
 
 namespace BaseAdminTemplate.DataAccess.Helpers
 {
-    public class ConfigurationParameterHelper
+    public static class ConfigurationParameterHelper
     {
         public static string GetConfigurationParameter(string key)
         {

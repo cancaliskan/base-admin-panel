@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
@@ -101,7 +102,7 @@ namespace BaseAdminTemplate.Web.Controllers
                 return View(userViewModel);
             }
 
-            return RedirectToAction("Index","Home");
+            return RedirectToAction("Index", "Home");
         }
 
         [HttpPost]
@@ -117,6 +118,73 @@ namespace BaseAdminTemplate.Web.Controllers
 
             ViewBag.ErrorMessage = response.ErrorMessage;
             return View(model);
+        }
+
+        [HttpGet]
+        [AllowAnonymous]
+        public IActionResult ForgetPassword()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        [AllowAnonymous]
+        public IActionResult ForgetPassword(ResetPasswordViewModel model)
+        {
+            var response = UserService.ForgetPassword(model.Email);
+            if (response.IsSucceed)
+            {
+                ViewBag.SuccessMessage = response.SuccessMessage;
+                return View();
+            }
+
+            ViewBag.ErrorMessage = response.ErrorMessage;
+            return View();
+        }
+
+        [HttpGet]
+        [AllowAnonymous]
+        public IActionResult ResetPassword(string key)
+        {
+            var isKeyUsedResponse = UserService.IsUsedKey(key);
+            if (isKeyUsedResponse.IsSucceed == false)
+            {
+                ViewBag.ErrorMessage = isKeyUsedResponse.ErrorMessage;
+                return View();
+            }
+
+            var response = UserService.GetByCondition(x=>x.Email == CryptoHelper.Decrypt(key));
+            if (response.IsSucceed)
+            {
+                var user = Mapper.Map<UserViewModel>(response.Result.FirstOrDefault());
+                user.Password = string.Empty;
+                return View(user);
+            }
+
+            ViewBag.ErrorMessage = response.ErrorMessage;
+            return View();
+        }
+
+        [HttpPost]
+        [AllowAnonymous]
+        public IActionResult ResetPassword(UserViewModel model)
+        {
+            if (model.Password != model.ConfirmPassword)
+            {
+                ViewBag.ErrorMessage = "password and password confirm are not equal";
+                return View(model);
+            }
+
+            var user  = UserService.GetById(model.Id).Result;
+            user.Password = CryptoHelper.Encrypt(model.Password);
+            var response = UserService.ResetPassword(user);
+            if (response.IsSucceed)
+            {
+                return RedirectToAction("Login");
+            }
+
+            ViewBag.ErrorMessage = response.ErrorMessage;
+            return View();
         }
     }
 }

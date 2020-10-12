@@ -15,7 +15,8 @@ namespace BaseAdminTemplate.DataAccess.UnitOfWork
         public IPermissionRepository PermissionRepository { get; }
         public IExceptionLogRepository ExceptionLogRepository { get; }
         public ILinkMenuPermissionRepository LinkMenuPermissionRepository { get; }
-        public IMenuRepository MenuRepository{ get; }
+        public IMenuRepository MenuRepository { get; }
+        public IPasswordResetRepository PasswordResetRepository { get; }
 
         public UnitOfWork(ApplicationDbContext applicationDbContext)
         {
@@ -29,6 +30,7 @@ namespace BaseAdminTemplate.DataAccess.UnitOfWork
             ExceptionLogRepository = new ExceptionLogRepository(_applicationDbContext);
             LinkMenuPermissionRepository = new LinkMenuPermissionRepository(_applicationDbContext);
             MenuRepository = new MenuRepository(_applicationDbContext);
+            PasswordResetRepository = new PasswordResetRepository(_applicationDbContext);
         }
 
         public int Complete()

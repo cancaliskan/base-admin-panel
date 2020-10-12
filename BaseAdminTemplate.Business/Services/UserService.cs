@@ -1,14 +1,19 @@
 ﻿using System;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Net.Mail;
 using System.Reflection;
 
 using BaseAdminTemplate.Business.Contracts;
 using BaseAdminTemplate.Business.Helpers;
 using BaseAdminTemplate.Common.Contracts;
 using BaseAdminTemplate.Common.Helpers;
+using BaseAdminTemplate.DataAccess.Helpers;
 using BaseAdminTemplate.DataAccess.UnitOfWork;
 using BaseAdminTemplate.Domain.Entities;
+using MailKit.Security;
+using MimeKit;
+using MimeKit.Text;
 
 namespace BaseAdminTemplate.Business.Services
 {
@@ -410,6 +415,91 @@ namespace BaseAdminTemplate.Business.Services
                 _unitOfWork.LinkUserRoleRepository.Update(linkUserRole);
                 _unitOfWork.Complete();
                 return _booleanResponseHelper.SuccessResponse("role updated to user");
+            }
+            catch (Exception e)
+            {
+                LogHelper.AddLog(_unitOfWork, e, GetType().Name, MethodBase.GetCurrentMethod()?.Name);
+                return _booleanResponseHelper.FailResponse(e.ToString());
+            }
+        }
+
+        public Response<bool> ForgetPassword(string eMail)
+        {
+            try
+            {
+                var user = _unitOfWork.UserRepository.GetByCondition(x => x.Email == eMail).FirstOrDefault();
+                if (user == null)
+                {
+                    return _booleanResponseHelper.FailResponse("email is not registered");
+                }
+
+                var key = CryptoHelper.Encrypt(eMail);
+                var resetUrl = "<a href=" + ConfigurationParameterHelper.GetConfigurationParameter("BaseURL") +
+                                    "/Account/ResetPassword?key=" +
+                                    key + "> Click to reset </a>";
+
+                _unitOfWork.PasswordResetRepository.Create(new PasswordReset() { Key = key, UserId = user.Id });
+                _unitOfWork.Complete();
+
+                var eMailService = new EmailService();
+                eMailService.Send(user.Email, "Reset Password", resetUrl);
+                return _booleanResponseHelper.SuccessResponse("mail sent successfully");
+            }
+            catch (Exception e)
+            {
+                LogHelper.AddLog(_unitOfWork, e, GetType().Name, MethodBase.GetCurrentMethod()?.Name);
+                return _booleanResponseHelper.FailResponse(e.ToString());
+            }
+        }
+
+        public Response<bool> ResetPassword(User entity)
+        {
+            try
+            {
+                if (entity.Password.IsNotValidPassword())
+                {
+                    return _booleanResponseHelper.FailResponse("Password must have 1 big, 1 small, 1 number and be minimum 8 character");
+                }
+
+                _unitOfWork.UserRepository.Update(entity);
+
+                var passwordResetEntity = _unitOfWork.PasswordResetRepository
+                                                     .GetByCondition(x => x.UserId == entity.Id 
+                                                                          && x.IsActive).FirstOrDefault();
+                if (passwordResetEntity == null)
+                {
+                    return _booleanResponseHelper.FailResponse("Link used before");
+                }
+
+                passwordResetEntity.IsActive = false;
+                _unitOfWork.PasswordResetRepository.Update(passwordResetEntity);
+                _unitOfWork.Complete();
+
+                return _booleanResponseHelper.SuccessResponse("password updated successfully");
+            }
+            catch (Exception e)
+            {
+                LogHelper.AddLog(_unitOfWork, e, GetType().Name, MethodBase.GetCurrentMethod()?.Name);
+                return _booleanResponseHelper.FailResponse(e.ToString());
+            }
+        }
+
+        public Response<bool> IsUsedKey(string key)
+        {
+            try
+            {
+                var entity = _unitOfWork.PasswordResetRepository.GetByCondition(x => x.Key == key).FirstOrDefault();
+                if (entity == null)
+                {
+                    return _booleanResponseHelper.FailResponse("Link is not valid");
+                }
+
+                if (entity.IsActive == false)
+                {
+                    return _booleanResponseHelper.FailResponse("Link used before");
+                }
+
+                return _booleanResponseHelper.SuccessResponse("Link is valid");
             }
             catch (Exception e)
             {

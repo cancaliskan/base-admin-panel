@@ -5,6 +5,11 @@
     "AdminUserEmail": "admin",
     "AdminUserPassword": "Admin+-2020*",
     "AdminUserName": "admin",
-    "AdminUserSurname": "admin"
+    "AdminUserSurname": "admin",
+    "BaseURL": "https://localhost:44306",
+    "Host": "smtp.live.com",
+    "Port": "587",
+    "SenderEmail": "cancaliskan@windowslive.com",
+    "SenderEmailPassword": "****"
   }
 }

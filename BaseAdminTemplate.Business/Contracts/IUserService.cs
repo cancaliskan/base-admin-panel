@@ -26,5 +26,8 @@ namespace BaseAdminTemplate.Business.Contracts
         Response<bool> AddRoleToUser(Guid userId, Guid roleId);
         Response<bool> RemoveRoleFromUser(Guid userId, Guid roleId);
         Response<bool> UpdateRole(Guid userId, Guid roleId);
+        Response<bool> ForgetPassword(string eMail);
+        Response<bool> ResetPassword(User entity);
+        Response<bool> IsUsedKey(string key);
     }
 }

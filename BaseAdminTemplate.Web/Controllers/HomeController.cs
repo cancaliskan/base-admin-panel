@@ -10,9 +10,10 @@ namespace BaseAdminTemplate.Web.Controllers
     [Authorize]
     public class HomeController : BaseController
     {
-        public HomeController(IUserService userService, IPermissionService permissionService, IRoleService roleService,
-               IMenuService menuService, IExceptionLogService exceptionLogService, IMapper mapper)
-               : base(userService, permissionService, roleService, menuService, exceptionLogService, mapper)
+        public HomeController(IUserService userService, IPermissionService permissionService,
+            IRoleService roleService, IMenuService menuService, IExceptionLogService exceptionLogService,
+            IMapper mapper)
+            : base(userService, permissionService, roleService, menuService, exceptionLogService, mapper)
         {
         }
 

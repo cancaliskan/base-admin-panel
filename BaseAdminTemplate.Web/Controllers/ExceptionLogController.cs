@@ -14,9 +14,10 @@ namespace BaseAdminTemplate.Web.Controllers
     [DisplayName(Constants.DisplayInMenu + "Exception Log")]
     public class ExceptionLogController : BaseController
     {
-        public ExceptionLogController(IUserService userService, IPermissionService permissionService, IRoleService roleService,
-                                      IMenuService menuService, IExceptionLogService exceptionLogService, IMapper mapper)
-                                      : base(userService, permissionService, roleService, menuService, exceptionLogService, mapper)
+        public ExceptionLogController(IUserService userService, IPermissionService permissionService,
+            IRoleService roleService, IMenuService menuService, IExceptionLogService exceptionLogService,
+            IMapper mapper)
+            : base(userService, permissionService, roleService, menuService, exceptionLogService, mapper)
         {
         }
 

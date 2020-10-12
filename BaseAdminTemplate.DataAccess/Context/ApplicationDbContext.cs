@@ -23,6 +23,7 @@ namespace BaseAdminTemplate.DataAccess.Context
         public DbSet<LinkMenuPermission> LinkMenusPermissions { get; set; }
         public DbSet<LinkRolePermission> LinkRolesPermissions { get; set; }
         public DbSet<LinkUserRole> LinkUsersRoles { get; set; }
+        public DbSet<PasswordReset> PasswordResets { get; set; }
 
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
         {
@@ -134,7 +135,7 @@ namespace BaseAdminTemplate.DataAccess.Context
                         permission.DisplayName = permission.DisplayName.Replace(Constants.DisplayInMenu, string.Empty);
                         permission.DisplayInMenu = true;
                     }
-                    
+
                     if (methodDisplayName.Contains(Constants.DisplayInPermissionTree))
                     {
                         permission.DisplayName = permission.DisplayName.Replace(Constants.DisplayInPermissionTree, string.Empty);

@@ -54,6 +54,7 @@ namespace BaseAdminTemplate.Web
             services.AddTransient<IMenuService, MenuService>();
             services.AddTransient<IPermissionService, PermissionService>();
             services.AddTransient<IRoleService, RoleService>();
+            services.AddTransient<IEmailService, EmailService>();
             #endregion
 
             #region UnitOfWork
