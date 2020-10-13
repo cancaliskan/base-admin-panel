@@ -2,10 +2,12 @@
   "ConnectionStrings": {
     "DefaultConnection": "Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=BaseAdminTemplate;Integrated Security=True;MultipleActiveResultSets=True",
     "WebProjectPath": "D:\\Projects\\base-admin-template\\BaseAdminTemplate.Web\\bin\\Debug\\netcoreapp3.1\\\\BaseAdminTemplate.Web.dll",
+    "AdminUserId": "23a92a78-1077-4913-ac2d-666c6836406c",
     "AdminUserEmail": "admin",
     "AdminUserPassword": "Admin+-2020*",
     "AdminUserName": "admin",
     "AdminUserSurname": "admin",
+    "AdminRoleId": "3e9113cb-a2e5-4083-90f3-7aa6a26670e9",
     "BaseURL": "https://localhost:44306",
     "Host": "smtp.live.com",
     "Port": "587",

@@ -10,45 +10,47 @@
     <meta name="viewport" content="width=device-width" />
 </head>
 <body>
-    <div>
-        <div class="tableStyle">
-            <div class="pull-left"> <button id="exporttable" class="btn pull-left btn-round btn-primary">Excele Aktar</button> </div>
-            <button type="button" class="open-deleteDialog  btn pull-right btn-round btn-danger" data-toggle="modal" data-target="#deleteAll">
-                Tümünü Sil
-            </button>
-            <div class="row">
-                <div class="col-xs-12">
-                    <div class="table-responsive">
-                        <table class="display" style="width: 100%">
-                            <thead>
-                                <tr>
-                                    <th>Created Date</th>
-                                    <th>Class Name</th>
-                                    <th>Method Name</th>
-                                    <th>Message</th>
-                                    <th>StackTrace</th>
-                                    <th>Exception</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @foreach (var exceptionLog in Model)
-                                {
-                                    <tr>
-                                        <td>@exceptionLog.CreatedDate</td>
-                                        <td>@exceptionLog.ClassName</td>
-                                        <td>@exceptionLog.MethodName</td>
-                                        <td>@exceptionLog.Message</td>
-                                        <td>@exceptionLog.StackTrace</td>
-                                        <td>@exceptionLog.Exception</td>
-                                    </tr>
-                                }
-                            </tbody>
-                        </table>
-                    </div>
+<div>
+    <h3>Hata Kayıtları Listesi</h3>
+    <hr/>
+    <div class="tableStyle">
+        <div class="pull-left"> <button id="exporttable" class="btn pull-left btn-round btn-primary">Excele Aktar</button> </div>
+        <button type="button" class="open-deleteDialog  btn pull-right btn-round btn-danger" data-toggle="modal" data-target="#deleteAll">
+            Tümünü Sil
+        </button>
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="table-responsive">
+                    <table class="display" style="width: 100%">
+                        <thead>
+                        <tr>
+                            <th>Created Date</th>
+                            <th>Class Name</th>
+                            <th>Method Name</th>
+                            <th>Message</th>
+                            <th>StackTrace</th>
+                            <th>Exception</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        @foreach (var exceptionLog in Model)
+                        {
+                            <tr>
+                                <td>@exceptionLog.CreatedDate</td>
+                                <td>@exceptionLog.ClassName</td>
+                                <td>@exceptionLog.MethodName</td>
+                                <td>@exceptionLog.Message</td>
+                                <td>@exceptionLog.StackTrace</td>
+                                <td>@exceptionLog.Exception</td>
+                            </tr>
+                        }
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </div>
     </div>
+</div>
 
     <!-- Modal -->
     <div class="modal fade" id="deleteAll" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">

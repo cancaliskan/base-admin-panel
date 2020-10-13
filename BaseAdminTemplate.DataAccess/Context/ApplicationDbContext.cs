@@ -38,7 +38,7 @@ namespace BaseAdminTemplate.DataAccess.Context
 
             var adminRole = new Role()
             {
-                Id = Guid.NewGuid(),
+                Id = new Guid(ConfigurationParameterHelper.GetConfigurationParameter("AdminRoleId")),
                 Name = "Admin",
                 CreatedDate = DateTime.Now,
                 IsActive = true,
@@ -53,7 +53,7 @@ namespace BaseAdminTemplate.DataAccess.Context
 
             var adminUser = new User()
             {
-                Id = Guid.NewGuid(),
+                Id = new Guid(ConfigurationParameterHelper.GetConfigurationParameter("AdminUserId")),
                 Email = ConfigurationParameterHelper.GetConfigurationParameter("AdminUserEmail"),
                 Password = CryptoHelper.Encrypt(ConfigurationParameterHelper.GetConfigurationParameter("AdminUserPassword")),
                 Name = ConfigurationParameterHelper.GetConfigurationParameter("AdminUserName"),

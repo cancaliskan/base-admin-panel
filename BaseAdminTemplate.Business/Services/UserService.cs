@@ -157,6 +157,11 @@ namespace BaseAdminTemplate.Business.Services
                     return response;
                 }
 
+                if (IsAdminUser(entity.Id))
+                {
+                    return _responseHelper.FailResponse("Admin kullanıcısını güncelleyemezsiniz");
+                }
+
                 _unitOfWork.UserRepository.Update(entity);
                 _unitOfWork.Complete();
 
@@ -178,6 +183,11 @@ namespace BaseAdminTemplate.Business.Services
                     return _booleanResponseHelper.FailResponse("Kullanıcı bulunamadı");
                 }
 
+                if (IsAdminUser(id))
+                {
+                    return _booleanResponseHelper.FailResponse("Admin kullanıcısını deaktif edemezsiniz");
+                }
+
                 _unitOfWork.UserRepository.SoftDelete(id);
                 _unitOfWork.Complete();
 
@@ -197,6 +207,11 @@ namespace BaseAdminTemplate.Business.Services
                 if (IsNotExistUser(id))
                 {
                     return _booleanResponseHelper.FailResponse("Kullanıcı bulunamadı");
+                }
+
+                if (IsAdminUser(id))
+                {
+                    return _booleanResponseHelper.FailResponse("Admin kullanıcısını silemezsiniz");
                 }
 
                 _unitOfWork.UserRepository.HardDelete(id);
@@ -264,6 +279,11 @@ namespace BaseAdminTemplate.Business.Services
         {
             try
             {
+                if (IsAdminUser(id))
+                {
+                    return _responseHelper.FailResponse("Admin kullanıcısını güncelleyemezsiniz");
+                }
+
                 var user = _unitOfWork.UserRepository.GetById(id);
                 if (user == null)
                 {
@@ -401,6 +421,11 @@ namespace BaseAdminTemplate.Business.Services
         {
             try
             {
+                if (IsAdminUser(userId))
+                {
+                    return _booleanResponseHelper.FailResponse("Admin kullanıcısını güncelleyemezsiniz");
+                }
+
                 var linkUserRole = _unitOfWork.LinkUserRoleRepository.GetByCondition(x => x.UserId == userId).FirstOrDefault();
                 if (linkUserRole == null)
                 {
@@ -460,7 +485,7 @@ namespace BaseAdminTemplate.Business.Services
                 _unitOfWork.UserRepository.Update(entity);
 
                 var passwordResetEntity = _unitOfWork.PasswordResetRepository
-                                                     .GetByCondition(x => x.UserId == entity.Id 
+                                                     .GetByCondition(x => x.UserId == entity.Id
                                                                           && x.IsActive).FirstOrDefault();
                 if (passwordResetEntity == null)
                 {
@@ -506,7 +531,7 @@ namespace BaseAdminTemplate.Business.Services
 
         private bool ModelValidation(User entity, out Response<User> response)
         {
-            var existUserResponse = GetByCondition(x => x.Email == entity.Email && x.IsActive);
+            var existUserResponse = GetByCondition(x => x.Email == entity.Email && x.IsActive && x.Id != entity.Id);
             if (existUserResponse.IsSucceed)
             {
                 response = _responseHelper.FailResponse("Email sistemde kayıtlı");
@@ -558,6 +583,11 @@ namespace BaseAdminTemplate.Business.Services
         {
             var existUser = _unitOfWork.UserRepository.GetById(id);
             return existUser == null;
+        }
+
+        private bool IsAdminUser(Guid id)
+        {
+            return id == ConfigurationParameterHelper.GetConfigurationParameter("AdminUserId").ToGuid();
         }
     }
 }

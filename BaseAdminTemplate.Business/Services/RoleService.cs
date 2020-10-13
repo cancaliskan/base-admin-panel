@@ -7,6 +7,7 @@ using BaseAdminTemplate.Business.Contracts;
 using BaseAdminTemplate.Business.Helpers;
 using BaseAdminTemplate.Common.Contracts;
 using BaseAdminTemplate.Common.Helpers;
+using BaseAdminTemplate.DataAccess.Helpers;
 using BaseAdminTemplate.DataAccess.UnitOfWork;
 using BaseAdminTemplate.Domain.Entities;
 
@@ -145,7 +146,12 @@ namespace BaseAdminTemplate.Business.Services
                 var existRole = _unitOfWork.RoleRepository.GetById(role.Id);
                 if (existRole == null)
                 {
-                    return _responseHelper.FailResponse("Role bulunamadı");
+                    return _responseHelper.FailResponse("Rol bulunamadı");
+                }
+
+                if (IsAdminRole(role.Id))
+                {
+                    return _responseHelper.FailResponse("Admin rölünü update edemezsiniz");
                 }
 
                 var result = ModelValidations(role);
@@ -177,6 +183,11 @@ namespace BaseAdminTemplate.Business.Services
                     return _booleanResponseHelper.FailResponse("Role bulunamadı");
                 }
 
+                if (IsAdminRole(id))
+                {
+                    return _booleanResponseHelper.FailResponse("Admin rölünü deaktif edemezsiniz");
+                }
+
                 _unitOfWork.RoleRepository.SoftDelete(id);
                 _unitOfWork.Complete();
 
@@ -196,6 +207,11 @@ namespace BaseAdminTemplate.Business.Services
                 if (IsNotExistRole(id))
                 {
                     return _booleanResponseHelper.FailResponse("Role bulunamadı");
+                }
+
+                if (IsAdminRole(id))
+                {
+                    return _booleanResponseHelper.FailResponse("Admin rölünü silemezsiniz");
                 }
 
                 _unitOfWork.RoleRepository.HardDelete(id);
@@ -353,6 +369,11 @@ namespace BaseAdminTemplate.Business.Services
             }
 
             return _responseHelper.SuccessResponse("");
+        }
+
+        private bool IsAdminRole(Guid roleId)
+        {
+            return roleId == new Guid(ConfigurationParameterHelper.GetConfigurationParameter("AdminRoleId"));
         }
     }
 }

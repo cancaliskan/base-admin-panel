@@ -227,9 +227,16 @@ namespace BaseAdminTemplate.Web.Controllers
                 {
                     object instance = role.Result;
                     role.Result.GetType().GetProperty(propertyName)?.SetValue(instance, value);
-                    RoleService.Update(role.Result);
-                    _context.Clients.All.SendAsync("refresh");
-                    status = true;
+                    var updateResponse = RoleService.Update(role.Result);
+                    if (updateResponse.IsSucceed)
+                    {
+                        _context.Clients.All.SendAsync("refresh");
+                        status = true;
+                    }
+                    else
+                    {
+                        message = updateResponse.ErrorMessage;
+                    }
                 }
                 else
                 {

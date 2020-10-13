@@ -120,9 +120,16 @@ namespace BaseAdminTemplate.Web.Controllers
                 {
                     if (propertyName.Equals("Role"))
                     {
-                        UserService.UpdateRole(serviceResponse.Result.Id, value.ToGuid());
-                        _context.Clients.All.SendAsync("refresh");
-                        status = true;
+                        var updateRoleResponse =UserService.UpdateRole(serviceResponse.Result.Id, value.ToGuid());
+                        if (updateRoleResponse.IsSucceed)
+                        {
+                            _context.Clients.All.SendAsync("refresh");
+                            status = true;
+                        }
+                        else
+                        {
+                            message = updateRoleResponse.ErrorMessage;
+                        }
                     }
                     else
                     {
