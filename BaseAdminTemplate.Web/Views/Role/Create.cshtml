@@ -1,0 +1,92 @@
+﻿@using BaseAdminTemplate.Web.Models.ViewModels
+@model BaseAdminTemplate.Web.Models.ViewModels.RoleViewModel
+
+@{
+    ViewBag.Title = "Add";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <div class="tableStyle">
+            <h4>New Role</h4>
+            <hr />
+            @{
+                if (ViewBag.ErrorMessage != null)
+                {
+                    <div class="alert alert-danger" role="alert">
+                        @ViewBag.ErrorMessage
+                    </div>
+                }
+                else if (ViewBag.WarningMessage != null)
+                {
+                    <div class="alert alert-warning" role="alert">
+                        @ViewBag.WarningMessage
+                    </div>
+                }
+                else if (ViewBag.SuccessMessage != null)
+                {
+                    <div class="alert alert-success" role="alert">
+                        @ViewBag.SuccessMessage
+                    </div>
+                }
+            }
+            <div style="width: 50%;">
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" } })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Description, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.TextAreaFor(model => model.Description, new { htmlAttributes = new { @class = "form-control"}, @style = "width:100%;" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="control-label col-md-2">Permissions</label>
+                    <div class="col-md-10">
+                        @foreach (var permission in (List<PermissionsModel>)ViewBag.Permissions)
+                        {
+                            <div class="cbxTree">
+                                <div class="cbxTree-node">
+                                    <a href="#" class="cbxTree-swicth"></a>
+                                    <label class="cbxTree-label">
+                                        <input type="checkbox" name=@permission.Name class="cbxTree-cbx" />
+                                        <span class="cbxTree-txt">@permission.Name</span>
+                                    </label>
+                                    @foreach (var child in permission.ChildList)
+                                    {
+                                        <div class="cbxTree-node">
+                                            <label class="cbxTree-label">
+                                                <input type="checkbox" name="permissions" class="cbxTree-cbx" value=@child.Id />
+                                                <span class="cbxTree-txt">@child.Name</span>
+                                            </label>
+                                        </div>
+                                    }
+                                </div>
+                            </div>
+                        }
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-10">
+                        <div class="bottom-button">
+                            <input type="submit" value="Save" class="btn btn-success" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+<script src="~/vendors/flot.orderbars/examples/js/vendor/jquery-1.9.1.min.js"></script>
+<script src="~/build/js/checkboxTree.js"></script>

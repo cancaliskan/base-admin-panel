@@ -1,13 +1,19 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+
+using AutoMapper;
+
+using BaseAdminTemplate.Business.Contracts;
+using BaseAdminTemplate.Business.Services;
+using BaseAdminTemplate.DataAccess.Context;
+using BaseAdminTemplate.DataAccess.UnitOfWork;
+using BaseAdminTemplate.Web.Helpers;
+using BaseAdminTemplate.Web.Hubs;
 
 namespace BaseAdminTemplate.Web
 {
@@ -24,6 +30,42 @@ namespace BaseAdminTemplate.Web
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews();
+
+            services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+
+            services.AddMvc().AddMvcOptions(option => option.Filters.Add(new ActionFilter()));
+
+            services.AddSignalR();
+
+            #region Authentication
+
+            services.AddAuthentication("CookieAuthentication")
+                .AddCookie("CookieAuthentication", config =>
+                {
+                    config.Cookie.Name = "UserLoginCookie";
+                    config.LoginPath = "/Account/Login";
+                });
+
+            #endregion
+
+            #region Services
+            services.AddTransient<IUserService, UserService>();
+            services.AddTransient<IExceptionLogService, ExceptionLogService>();
+            services.AddTransient<IMenuService, MenuService>();
+            services.AddTransient<IPermissionService, PermissionService>();
+            services.AddTransient<IRoleService, RoleService>();
+            services.AddTransient<IEmailService, EmailService>();
+            #endregion
+
+            #region UnitOfWork
+            services.AddTransient<IUnitOfWork, UnitOfWork>();
+            #endregion
+
+            #region AutoMapper
+
+            services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+
+            #endregion
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -44,6 +86,8 @@ namespace BaseAdminTemplate.Web
 
             app.UseRouting();
 
+            app.UseAuthentication();
+
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
@@ -51,6 +95,9 @@ namespace BaseAdminTemplate.Web
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
+
+                endpoints.MapHub<RoleHub>("/roleHub");
+                endpoints.MapHub<UserHub>("/userHub");
             });
         }
     }

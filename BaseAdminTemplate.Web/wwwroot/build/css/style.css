@@ -1,0 +1,54 @@
+﻿﻿.tableStyle {
+     border-radius: 10px;
+     margin-top: 10%;
+     margin-bottom: 10%;
+     background-color: white;
+     padding: 2%;
+ }
+
+.bottom-button {
+    margin-top: 20px;
+}
+
+.cbxTree {
+    font: 12px/1.5em Arial, "Helvetica CY", "Nimbus Sans L", sans-serif;
+}
+
+.cbxTree > .cbxTree-node {
+    padding-left: 0;
+}
+
+.cbxTree-node {
+    padding-left: 15px;
+}
+
+.cbxTree-swicth {
+    width: 10px;
+    height: 18px;
+    font-size: 16px;
+    color: #000;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    margin-right: -13px;
+}
+
+.cbxTree-swicth:before {
+    content: "+";
+}
+
+.cbxTree-swicth.open:before {
+    content: "-";
+}
+
+.cbxTree-label {
+    margin-left: 15px;
+}
+
+.cbxTree-swicth ~ .cbxTree-node {
+    display: none;
+}
+
+.cbxTree-swicth.open ~ .cbxTree-node {
+    display: block;
+}

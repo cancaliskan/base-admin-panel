@@ -1,0 +1,106 @@
+﻿@model IEnumerable<BaseAdminTemplate.Web.Models.ViewModels.RoleViewModel>
+@{
+    Layout = "~/Views/Shared/_TableLayout.cshtml";
+}
+
+<div class="tableStyle">
+    <div class="pull-left"> <button id="exporttable" class="btn pull-left btn-round btn-primary">Export</button> </div>
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="table-responsive">
+                <table class="display" style="width: 100%">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Description</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var role in Model)
+                        {
+                            <tr>
+                                <td class="edit" data-record_id="@role.Id" data-propertyname="Name">@role.Name</td>
+                                <td class="edit" data-record_id="@role.Id" data-propertyname="Description">@role.Description</td>
+                                <td class="noExl" style="text-align: center; width: 10%">
+                                    @Html.ActionLink("Edit", "Edit", new { roleId = role.Id }, new { @class = "btn btn-round btn-dark" })
+                                    <a data-id=@role.Id class="open-AddBookDialog btn btn-round btn-danger" href="#addBookDialog">Delete</a>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="addBookDialog" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title" id="myModalLabel">Confirm to delete</h4>
+            </div>
+            @using (Html.BeginForm("Delete", "Role", FormMethod.Post))
+            {
+                <input type="hidden" name="roleId" id="roleId" value="" />
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-danger">Delete</button>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+
+@section scripts{
+    <script>
+        $(document).on("click", ".open-AddBookDialog", function (e) {
+            e.preventDefault();
+            var _self = $(this);
+            var roleId = _self.data('id');
+            $("#roleId").val(roleId);
+            $(_self.attr('href')).modal('show');
+        });
+    </script>
+
+    <script>
+        $('tbody').on('click', 'tr', function () {
+            $(document).ready(function() {
+                var oldValue = '';
+                $('.edit').editable('/Role/UpdateField',
+                    {
+                        cssclass: 'jeditForm',
+                        tooltip: 'click to edit me...',
+                        width: 'none',
+                        height: 'none',
+                        submit: 'Ok',
+                        cancel: 'Cancel',
+                        onsubmit: function(settings, original) {
+                            oldValue = original.revert;
+                        },
+                        submitdata: function() {
+                            return {
+                                id: $(this).data('record_id'),
+                                PropertyName: $(this).data('propertyname')
+                            }
+                        },
+                        callback: function(value, settings) {
+                            var jsonData = $.parseJSON(value);
+                            if (jsonData.status) {
+                                $(this).text(jsonData.value);
+                            } else {
+                                $(this).text(oldValue);
+                                alert(jsonData.message);
+                            }
+                        }
+                    });
+
+                $('.edit').click(function() {
+                    $('button', this).addClass('btn btn-sm btn-success');
+                });
+            });
+        });
+    </script>
+}

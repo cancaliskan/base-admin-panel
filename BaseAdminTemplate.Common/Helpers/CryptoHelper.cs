@@ -8,66 +8,70 @@ namespace BaseAdminTemplate.Common.Helpers
     public static class CryptoHelper
     {
         private static readonly string key = "E546C8DF278CD5931069B522E695D4F2";
-        public static string Encrypt(string text)
+
+        public static string Encrypt(string data)
         {
-            var _key = Encoding.UTF8.GetBytes(key);
-
-            using (var aes = Aes.Create())
+            using (MemoryStream Memory = new MemoryStream())
             {
-                using (var encryptor = aes.CreateEncryptor(_key, aes.IV))
+                using (Aes aes = Aes.Create())
                 {
-                    using (var ms = new MemoryStream())
+                    byte[] plainBytes = Encoding.UTF8.GetBytes(data);
+                    byte[] bKey = new byte[32];
+                    Array.Copy(Encoding.UTF8.GetBytes(key.PadRight(bKey.Length)), bKey, bKey.Length);
+
+                    aes.Mode = CipherMode.ECB;
+                    aes.Padding = PaddingMode.PKCS7;
+                    aes.KeySize = 128;
+                    aes.Key = bKey;
+
+                    using (CryptoStream cryptoStream = new CryptoStream(Memory, aes.CreateEncryptor(), CryptoStreamMode.Write))
                     {
-                        using (var cs = new CryptoStream(ms, encryptor, CryptoStreamMode.Write))
+                        try
                         {
-                            using (var sw = new StreamWriter(cs))
-                            {
-                                sw.Write(text);
-                            }
+                            cryptoStream.Write(plainBytes, 0, plainBytes.Length);
+                            cryptoStream.FlushFinalBlock();
+                            return Convert.ToBase64String(Memory.ToArray());
                         }
-
-                        var iv = aes.IV;
-                        var encrypted = ms.ToArray();
-                        var result = new byte[iv.Length + encrypted.Length];
-
-                        Buffer.BlockCopy(iv, 0, result, 0, iv.Length);
-                        Buffer.BlockCopy(encrypted, 0, result, iv.Length, encrypted.Length);
-
-                        return Convert.ToBase64String(result);
+                        catch (Exception ex)
+                        {
+                            return null;
+                        }
                     }
                 }
             }
         }
 
-        public static string Decrypt(string encrypted)
+        public static string Decrypt(string data)
         {
-            var b = Convert.FromBase64String(encrypted);
+            byte[] encryptedBytes = Convert.FromBase64String(data);
+            byte[] bKey = new byte[32];
+            Array.Copy(Encoding.UTF8.GetBytes(key.PadRight(bKey.Length)), bKey, bKey.Length);
 
-            var iv = new byte[16];
-            var cipher = new byte[16];
-
-            Buffer.BlockCopy(b, 0, iv, 0, iv.Length);
-            Buffer.BlockCopy(b, iv.Length, cipher, 0, iv.Length);
-
-            var _key = Encoding.UTF8.GetBytes(key);
-
-            using (var aes = Aes.Create())
+            using (MemoryStream Memory = new MemoryStream(encryptedBytes))
             {
-                using (var decryptor = aes.CreateDecryptor(_key, iv))
+                using (Aes aes = Aes.Create())
                 {
-                    var result = string.Empty;
-                    using (var ms = new MemoryStream(cipher))
+                    aes.Mode = CipherMode.ECB;
+                    aes.Padding = PaddingMode.PKCS7;
+                    aes.KeySize = 128;
+                    aes.Key = bKey;
+
+                    using (CryptoStream cryptoStream = new CryptoStream(Memory, aes.CreateDecryptor(), CryptoStreamMode.Read))
                     {
-                        using (var cs = new CryptoStream(ms, decryptor, CryptoStreamMode.Read))
+                        try
                         {
-                            using (var sr = new StreamReader(cs))
-                            {
-                                result = sr.ReadToEnd();
-                            }
+                            byte[] tmp = new byte[encryptedBytes.Length];
+                            int len = cryptoStream.Read(tmp, 0, encryptedBytes.Length);
+                            byte[] ret = new byte[len];
+                            Array.Copy(tmp, 0, ret, 0, len);
+
+                            return Encoding.UTF8.GetString(ret, 0, len);
+                        }
+                        catch (Exception ex)
+                        {
+                            return null;
                         }
                     }
-
-                    return result;
                 }
             }
         }

@@ -1,7 +1,7 @@
-﻿using System.IO;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Design;
-using Microsoft.Extensions.Configuration;
+
+using BaseAdminTemplate.DataAccess.Helpers;
 
 namespace BaseAdminTemplate.DataAccess.Context
 {
@@ -9,13 +9,8 @@ namespace BaseAdminTemplate.DataAccess.Context
     {
         public ApplicationDbContext CreateDbContext(string[] args)
         {
-            IConfigurationRoot configuration = new ConfigurationBuilder()
-                .SetBasePath(Directory.GetParent(Directory.GetCurrentDirectory().ToString()).ToString() + "\\BaseAdminTemplate.Web")
-                .AddJsonFile("appsettings.json")
-                .Build();
+            var connectionString = ConfigurationParameterHelper.GetConfigurationParameter("DefaultConnection");
             var builder = new DbContextOptionsBuilder<ApplicationDbContext>();
-
-            var connectionString = configuration.GetConnectionString("DefaultConnection");
             builder.UseSqlServer(connectionString);
             return new ApplicationDbContext(builder.Options);
         }

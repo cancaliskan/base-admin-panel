@@ -5,14 +5,13 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Contracts\" />
-    <Folder Include="Services\" />
+    <PackageReference Include="MailKit" Version="2.9.0" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\BaseAdminTemplate.Common\BaseAdminTemplate.Common\BaseAdminTemplate.Common.csproj" />
-    <ProjectReference Include="..\BaseAdminTemplate.DataAccess\BaseAdminTemplate.DataAccess\BaseAdminTemplate.DataAccess.csproj" />
-    <ProjectReference Include="..\BaseAdminTemplate.Domain\BaseAdminTemplate.Domain\BaseAdminTemplate.Domain.csproj" />
+    <ProjectReference Include="..\BaseAdminTemplate.Common\BaseAdminTemplate.Common.csproj" />
+    <ProjectReference Include="..\BaseAdminTemplate.DataAccess\BaseAdminTemplate.DataAccess.csproj" />
+    <ProjectReference Include="..\BaseAdminTemplate.Domain\BaseAdminTemplate.Domain.csproj" />
   </ItemGroup>
 
 </Project>

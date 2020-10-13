@@ -84,5 +84,15 @@ namespace BaseAdminTemplate.Common.Helpers
         {
             return Regex.Replace(text, @"\s+", "");
         }
+
+        public static bool IsPhoneNumber(this string number)
+        {
+            return Regex.Match(number, @"^([0-9]{11})$").Success;
+        }
+        
+        public static bool IsNotPhoneNumber(this string number)
+        {
+            return !IsPhoneNumber(number);
+        }
     }
 }
