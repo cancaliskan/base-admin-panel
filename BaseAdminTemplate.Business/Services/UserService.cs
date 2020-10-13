@@ -40,16 +40,16 @@ namespace BaseAdminTemplate.Business.Services
             {
                 if (id.IsEmptyGuid())
                 {
-                    return _responseHelper.FailResponse("Invalid user Id");
+                    return _responseHelper.FailResponse("Geçersiz kullanıcı kimliği");
                 }
 
                 var user = _unitOfWork.UserRepository.GetById(id);
                 if (user == null)
                 {
-                    return _responseHelper.FailResponse("User could not found");
+                    return _responseHelper.FailResponse("Kullanıcı bulunamadı");
                 }
 
-                return _responseHelper.SuccessResponse(user, "User returned successfully");
+                return _responseHelper.SuccessResponse(user, "Kullanıcı başarılı bir şekilde döndü");
             }
             catch (Exception e)
             {
@@ -63,7 +63,7 @@ namespace BaseAdminTemplate.Business.Services
             try
             {
                 var users = _unitOfWork.UserRepository.GetAll();
-                return _listResponseHelper.SuccessResponse(users, "Users returned successfully");
+                return _listResponseHelper.SuccessResponse(users, "Kullanıcılar başarılı bir şekilde döndü");
             }
             catch (Exception e)
             {
@@ -79,10 +79,10 @@ namespace BaseAdminTemplate.Business.Services
                 var users = _unitOfWork.UserRepository.GetByCondition(expression);
                 if (users == null || !users.Any())
                 {
-                    return _listResponseHelper.FailResponse("Users could not found");
+                    return _listResponseHelper.FailResponse("Kullanıcılar bulunamadı");
                 }
 
-                return _listResponseHelper.SuccessResponse(users, "Users returned successfully");
+                return _listResponseHelper.SuccessResponse(users, "Kullanıcılar başarılı bir şekilde döndü");
             }
             catch (Exception e)
             {
@@ -96,7 +96,7 @@ namespace BaseAdminTemplate.Business.Services
             try
             {
                 var activeUsers = _unitOfWork.UserRepository.GetActiveEntities();
-                return _listResponseHelper.SuccessResponse(activeUsers, "Users returned successfully");
+                return _listResponseHelper.SuccessResponse(activeUsers, "Aktif kullanıcılar başarılı bir şekilde döndü");
             }
             catch (Exception e)
             {
@@ -110,7 +110,7 @@ namespace BaseAdminTemplate.Business.Services
             try
             {
                 var activeUsers = _unitOfWork.UserRepository.GetInActiveEntities();
-                return _listResponseHelper.SuccessResponse(activeUsers, "Users returned successfully");
+                return _listResponseHelper.SuccessResponse(activeUsers, "Deaktif kullanıcılar başarılı bir şekilde döndü");
             }
             catch (Exception e)
             {
@@ -133,7 +133,7 @@ namespace BaseAdminTemplate.Business.Services
                 _unitOfWork.UserRepository.Create(entity);
                 _unitOfWork.Complete();
 
-                return _responseHelper.SuccessResponse(entity, "User created successfully");
+                return _responseHelper.SuccessResponse(entity, "Kullanıcı başarılı bir şekilde oluşturuldu");
             }
             catch (Exception e)
             {
@@ -149,7 +149,7 @@ namespace BaseAdminTemplate.Business.Services
                 var user = _unitOfWork.UserRepository.GetById(entity.Id);
                 if (user == null)
                 {
-                    return _responseHelper.FailResponse("User could not found");
+                    return _responseHelper.FailResponse("Kullanıcı bulunamadı");
                 }
 
                 if (ModelValidation(entity, out var response))
@@ -160,7 +160,7 @@ namespace BaseAdminTemplate.Business.Services
                 _unitOfWork.UserRepository.Update(entity);
                 _unitOfWork.Complete();
 
-                return _responseHelper.SuccessResponse(entity, "User updated successfully");
+                return _responseHelper.SuccessResponse(entity, "Kullanıcı başarılı bir şekilde güncellendi");
             }
             catch (Exception e)
             {
@@ -175,13 +175,13 @@ namespace BaseAdminTemplate.Business.Services
             {
                 if (IsNotExistUser(id))
                 {
-                    return _booleanResponseHelper.FailResponse("User could not found");
+                    return _booleanResponseHelper.FailResponse("Kullanıcı bulunamadı");
                 }
 
                 _unitOfWork.UserRepository.SoftDelete(id);
                 _unitOfWork.Complete();
 
-                return _booleanResponseHelper.SuccessResponse("User soft delete successful");
+                return _booleanResponseHelper.SuccessResponse("Kullanıcı geçici olarak silindi");
             }
             catch (Exception e)
             {
@@ -196,13 +196,13 @@ namespace BaseAdminTemplate.Business.Services
             {
                 if (IsNotExistUser(id))
                 {
-                    return _booleanResponseHelper.FailResponse("User could not found");
+                    return _booleanResponseHelper.FailResponse("Kullanıcı bulunamadı");
                 }
 
                 _unitOfWork.UserRepository.HardDelete(id);
                 _unitOfWork.Complete();
 
-                return _booleanResponseHelper.SuccessResponse("User hard delete successful");
+                return _booleanResponseHelper.SuccessResponse("Kullanıcı kalıcı olarak silindi");
             }
             catch (Exception e)
             {
@@ -218,13 +218,13 @@ namespace BaseAdminTemplate.Business.Services
                 var inactiveUser = _unitOfWork.UserRepository.GetByCondition(x => x.Id == id && x.IsActive == false).FirstOrDefault();
                 if (inactiveUser == null)
                 {
-                    return _booleanResponseHelper.FailResponse("User could not found");
+                    return _booleanResponseHelper.FailResponse("Kullanıcı bulunamadı");
                 }
 
                 _unitOfWork.UserRepository.Restore(inactiveUser);
                 _unitOfWork.Complete();
 
-                return _booleanResponseHelper.SuccessResponse("User restored successful");
+                return _booleanResponseHelper.SuccessResponse("Kullanıcı başarılı bir şekilde geri yüklendi");
             }
             catch (Exception e)
             {
@@ -240,18 +240,18 @@ namespace BaseAdminTemplate.Business.Services
                 var user = _unitOfWork.UserRepository.GetByCondition(x => x.Email == email)?.FirstOrDefault();
                 if (user == null)
                 {
-                    return _responseHelper.FailResponse("User could not found");
+                    return _responseHelper.FailResponse("Kullanıcı bulunamadı");
                 }
 
                 if (password != CryptoHelper.Decrypt(user.Password))
                 {
-                    return _responseHelper.FailResponse("Wrong password");
+                    return _responseHelper.FailResponse("Yanlış parola");
                 }
 
                 _unitOfWork.UserRepository.Login(user);
                 _unitOfWork.Complete();
 
-                return _responseHelper.SuccessResponse(user, "User returned successfully");
+                return _responseHelper.SuccessResponse(user, "Kullanıcı başarılı olarak döndü");
             }
             catch (Exception e)
             {
@@ -267,23 +267,23 @@ namespace BaseAdminTemplate.Business.Services
                 var user = _unitOfWork.UserRepository.GetById(id);
                 if (user == null)
                 {
-                    return _responseHelper.FailResponse("User could not found");
+                    return _responseHelper.FailResponse("Kullanıcı bulunamadı");
                 }
 
                 if (oldPassword != CryptoHelper.Decrypt(user.Password))
                 {
-                    return _responseHelper.FailResponse("Invalid old password. ");
+                    return _responseHelper.FailResponse("Parola yanlış");
                 }
 
                 if (newPassword.IsNotValidPassword())
                 {
-                    return _responseHelper.FailResponse("New password is not valid. Password must have 1 big, 1 small, 1 number and be minimum 8 character");
+                    return _responseHelper.FailResponse("Yeni parola 1 rakam, 1 büyük karakter, 1 küçük karakter içermeli ve minimum 8 karakter olmalıdır");
                 }
 
                 _unitOfWork.UserRepository.ChangePassword(user, newPassword);
                 _unitOfWork.Complete();
 
-                return _responseHelper.SuccessResponse(user, "Password changed successfully");
+                return _responseHelper.SuccessResponse(user, "Parola başarılı bir şekilde değiştirildi");
             }
             catch (Exception e)
             {
@@ -298,16 +298,16 @@ namespace BaseAdminTemplate.Business.Services
             {
                 if (IsNotExistUser(id))
                 {
-                    return _responseRoleHelper.FailResponse("User could not found");
+                    return _responseRoleHelper.FailResponse("Kullanıcı bulunamadı");
                 }
 
                 var role = _unitOfWork.UserRepository.GetRole(id);
                 if (role != null)
                 {
-                    return _responseRoleHelper.SuccessResponse(role, "User role return successfully");
+                    return _responseRoleHelper.SuccessResponse(role, "Kullanıcı rolü döndü");
                 }
 
-                return _responseRoleHelper.FailResponse("User role could not found");
+                return _responseRoleHelper.FailResponse("Kullanıcı rolü bulunamadı");
             }
             catch (Exception e)
             {
@@ -322,11 +322,11 @@ namespace BaseAdminTemplate.Business.Services
             {
                 if (IsNotExistUser(id))
                 {
-                    return _listPermissionResponseHelper.FailResponse("user could not found");
+                    return _listPermissionResponseHelper.FailResponse("Kullanıcı bulunamadı");
                 }
 
                 var permissions = _unitOfWork.UserRepository.GetPermissions(id);
-                return _listPermissionResponseHelper.SuccessResponse(permissions, "User permissions returned successfully");
+                return _listPermissionResponseHelper.SuccessResponse(permissions, "Kullanıcı yetkileri döndü");
             }
             catch (Exception e)
             {
@@ -341,23 +341,23 @@ namespace BaseAdminTemplate.Business.Services
             {
                 if (IsNotExistUser(userId))
                 {
-                    return _booleanResponseHelper.FailResponse("User user could not found");
+                    return _booleanResponseHelper.FailResponse("Kullanıcı bulunamadı");
                 }
 
                 var role = _unitOfWork.RoleRepository.GetById(roleId);
                 if (role == null)
                 {
-                    return _booleanResponseHelper.FailResponse("role could not found");
+                    return _booleanResponseHelper.FailResponse("Rol bulunamadı");
                 }
 
                 var isSuccess = _unitOfWork.LinkUserRoleRepository.AddRoleToUser(userId, roleId);
                 if (isSuccess)
                 {
                     _unitOfWork.Complete();
-                    return _booleanResponseHelper.SuccessResponse("Role added to user");
+                    return _booleanResponseHelper.SuccessResponse("Kullanıcıya rol atandı");
                 }
 
-                return _booleanResponseHelper.FailResponse("Role can not added to user");
+                return _booleanResponseHelper.FailResponse("Kullanıcıya rol atanamadı");
             }
             catch (Exception e)
             {
@@ -372,23 +372,23 @@ namespace BaseAdminTemplate.Business.Services
             {
                 if (IsNotExistUser(userId))
                 {
-                    return _booleanResponseHelper.FailResponse("User could not found");
+                    return _booleanResponseHelper.FailResponse("Kullanıcı bulunamadı");
                 }
 
                 var role = _unitOfWork.RoleRepository.GetById(roleId);
                 if (role == null)
                 {
-                    return _booleanResponseHelper.FailResponse("Role could not found");
+                    return _booleanResponseHelper.FailResponse("Rol bulunamadı");
                 }
 
                 var isSuccess = _unitOfWork.LinkUserRoleRepository.RemoveRoleFromUser(userId, roleId);
                 if (isSuccess)
                 {
                     _unitOfWork.Complete();
-                    return _booleanResponseHelper.SuccessResponse("Role added to user");
+                    return _booleanResponseHelper.SuccessResponse("Kullanıcı rolü kaldırıldı");
                 }
 
-                return _booleanResponseHelper.FailResponse("Role can not removed from user");
+                return _booleanResponseHelper.FailResponse("Kullanıcı rolü kaldırılamadı");
             }
             catch (Exception e)
             {
@@ -404,13 +404,13 @@ namespace BaseAdminTemplate.Business.Services
                 var linkUserRole = _unitOfWork.LinkUserRoleRepository.GetByCondition(x => x.UserId == userId).FirstOrDefault();
                 if (linkUserRole == null)
                 {
-                    return _booleanResponseHelper.FailResponse("Something went wrong");
+                    return _booleanResponseHelper.FailResponse("Bir hata yaşandı");
                 }
 
                 linkUserRole.RoleId = roleId;
                 _unitOfWork.LinkUserRoleRepository.Update(linkUserRole);
                 _unitOfWork.Complete();
-                return _booleanResponseHelper.SuccessResponse("Role updated to user");
+                return _booleanResponseHelper.SuccessResponse("Kullanıcı rolü güncellendi");
             }
             catch (Exception e)
             {
@@ -426,20 +426,20 @@ namespace BaseAdminTemplate.Business.Services
                 var user = _unitOfWork.UserRepository.GetByCondition(x => x.Email == eMail).FirstOrDefault();
                 if (user == null)
                 {
-                    return _booleanResponseHelper.FailResponse("Email is not registered");
+                    return _booleanResponseHelper.FailResponse("Eposta kayıtlı değil");
                 }
 
                 var key = CryptoHelper.Encrypt(eMail);
                 var resetUrl = "<a href=" + ConfigurationParameterHelper.GetConfigurationParameter("BaseURL") +
                                     "/Account/ResetPassword?key=" +
-                                    key + "> Click to reset password </a>";
+                                    key + "> Parola sıfırlamak için tıklayın</a>";
 
                 _unitOfWork.PasswordResetRepository.Create(new PasswordReset() { Key = key, UserId = user.Id });
                 _unitOfWork.Complete();
 
                 var eMailService = new EmailService();
-                eMailService.Send(user.Email, "Reset Password", resetUrl);
-                return _booleanResponseHelper.SuccessResponse("Mail sent successfully");
+                eMailService.Send(user.Email, "Parola Sıfırlama", resetUrl);
+                return _booleanResponseHelper.SuccessResponse("Paralo sıfırlamak için mail gönderildi. Mail kutunuzu kontrol edin");
             }
             catch (Exception e)
             {
@@ -454,7 +454,7 @@ namespace BaseAdminTemplate.Business.Services
             {
                 if (entity.Password.IsNotValidPassword())
                 {
-                    return _booleanResponseHelper.FailResponse("Password must have 1 big, 1 small, 1 number and be minimum 8 character");
+                    return _booleanResponseHelper.FailResponse("Parola 1 rakam, 1 büyük karakter, 1 küçük karakter içermeli ve minimum 8 karakter olmalıdır");
                 }
 
                 _unitOfWork.UserRepository.Update(entity);
@@ -464,14 +464,14 @@ namespace BaseAdminTemplate.Business.Services
                                                                           && x.IsActive).FirstOrDefault();
                 if (passwordResetEntity == null)
                 {
-                    return _booleanResponseHelper.FailResponse("Link used before");
+                    return _booleanResponseHelper.FailResponse("Link daha önce kullanıldı");
                 }
 
                 passwordResetEntity.IsActive = false;
                 _unitOfWork.PasswordResetRepository.Update(passwordResetEntity);
                 _unitOfWork.Complete();
 
-                return _booleanResponseHelper.SuccessResponse("Password updated successfully");
+                return _booleanResponseHelper.SuccessResponse("Parola güncellendi");
             }
             catch (Exception e)
             {
@@ -487,15 +487,15 @@ namespace BaseAdminTemplate.Business.Services
                 var entity = _unitOfWork.PasswordResetRepository.GetByCondition(x => x.Key == key).FirstOrDefault();
                 if (entity == null)
                 {
-                    return _booleanResponseHelper.FailResponse("Link is not valid");
+                    return _booleanResponseHelper.FailResponse("Geçersiz link");
                 }
 
                 if (entity.IsActive == false)
                 {
-                    return _booleanResponseHelper.FailResponse("Link used before");
+                    return _booleanResponseHelper.FailResponse("Link daha önce kullanıldı");
                 }
 
-                return _booleanResponseHelper.SuccessResponse("Link is valid");
+                return _booleanResponseHelper.SuccessResponse("Geçersiz link");
             }
             catch (Exception e)
             {
@@ -509,44 +509,44 @@ namespace BaseAdminTemplate.Business.Services
             var existUserResponse = GetByCondition(x => x.Email == entity.Email && x.IsActive);
             if (existUserResponse.IsSucceed)
             {
-                response = _responseHelper.FailResponse("Email already exist");
+                response = _responseHelper.FailResponse("Email sistemde kayıtlı");
                 return true;
             }
 
             existUserResponse = GetByCondition(x => x.Email == entity.Email && !x.IsActive);
             if (existUserResponse.IsSucceed)
             {
-                response = _responseHelper.FailResponse("Email already exist but user deactivated");
+                response = _responseHelper.FailResponse("Email sistemde kayıtlı fakat kullanıcı deaktif");
                 return true;
             }
 
             if (entity.Name.IsEmpty())
             {
-                response = _responseHelper.FailResponse("Name is mandatory");
+                response = _responseHelper.FailResponse("Isim zorunlu alan");
                 return true;
             }
 
             if (entity.Surname.IsEmpty())
             {
-                response = _responseHelper.FailResponse("Last Name is mandatory");
+                response = _responseHelper.FailResponse("Soyisim zorunlu alan");
                 return true;
             }
 
             if (entity.Password.IsNotValidPassword())
             {
-                response = _responseHelper.FailResponse("Password must have 1 big, 1 small, 1 number and be minimum 8 character");
+                response = _responseHelper.FailResponse("Parola 1 rakam, 1 büyük karakter, 1 küçük karakter içermeli ve minimum 8 karakter olmalıdır");
                 return true;
             }
 
             if (entity.Email.IsNotEmail())
             {
-                response = _responseHelper.FailResponse("Email must be valid");
+                response = _responseHelper.FailResponse("Geçersiz email adresi");
                 return true;
             }
 
             if (entity.Phone.IsNotEmpty() && entity.Phone.IsNotPhoneNumber())
             {
-                response = _responseHelper.FailResponse("Phone must have 11 character and must be number");
+                response = _responseHelper.FailResponse("Telefon numarası 11 karakter olmalı ve sadece sayı içermelidir. (Örn: 05321234567)");
                 return true;
             }
 

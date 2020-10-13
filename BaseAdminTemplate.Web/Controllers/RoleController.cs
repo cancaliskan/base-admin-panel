@@ -20,7 +20,7 @@ using BaseAdminTemplate.Web.Models.ViewModels;
 namespace BaseAdminTemplate.Web.Controllers
 {
     [Authorize]
-    [DisplayName(Constants.DisplayInMenu + "Role Management")]
+    [DisplayName(Constants.DisplayInMenu + "Rol Yönetimi")]
     public class RoleController : BaseController
     {
         private readonly IHubContext<RoleHub> _context;
@@ -34,7 +34,7 @@ namespace BaseAdminTemplate.Web.Controllers
         }
 
         [HttpGet]
-        [DisplayName(Constants.DisplayInMenu + Constants.DisplayInPermissionTree + "List")]
+        [DisplayName(Constants.DisplayInMenu + Constants.DisplayInPermissionTree + "Listele")]
         public IActionResult List()
         {
             if (!HasPermission("Role", "List"))
@@ -54,7 +54,7 @@ namespace BaseAdminTemplate.Web.Controllers
         }
 
         [HttpGet]
-        [DisplayName(Constants.DisplayInMenu + Constants.DisplayInPermissionTree + "New")]
+        [DisplayName(Constants.DisplayInMenu + Constants.DisplayInPermissionTree + "Ekle")]
         public IActionResult Create()
         {
             if (!HasPermission("Role", "Create"))
@@ -147,7 +147,7 @@ namespace BaseAdminTemplate.Web.Controllers
         }
 
         [HttpPost]
-        [DisplayName("Delete")]
+        [DisplayName("Sil")]
         public IActionResult Delete(string roleId)
         {
             if (!HasPermission("Role", "Delete"))
@@ -167,7 +167,7 @@ namespace BaseAdminTemplate.Web.Controllers
         }
 
         [HttpGet]
-        [DisplayName(Constants.DisplayInPermissionTree + "Edit")]
+        [DisplayName(Constants.DisplayInPermissionTree + "Güncelle")]
         public IActionResult Edit(string roleId)
         {
             if (!HasPermission("Role", "Edit"))
@@ -218,7 +218,7 @@ namespace BaseAdminTemplate.Web.Controllers
             var message = "";
             if (!HasPermission("Role", "Edit"))
             {
-                message = "You do not have permission";
+                message = "Yetkiniz bulunmuyor";
             }
             else
             {

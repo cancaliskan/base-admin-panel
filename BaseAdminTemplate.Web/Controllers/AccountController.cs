@@ -74,7 +74,7 @@ namespace BaseAdminTemplate.Web.Controllers
         {
             if (model.NewPassword != model.NewPasswordConfirm)
             {
-                ViewBag.ErrorMessage = "new password and new password confirm are not equal";
+                ViewBag.ErrorMessage = "Yeni parola ve yeni parola doğrulaması uyuşmuyor";
                 return View();
             }
 
@@ -176,7 +176,7 @@ namespace BaseAdminTemplate.Web.Controllers
 
             if (model.Password != model.ConfirmPassword)
             {
-                ViewBag.ErrorMessage = "password and password confirm are not equal";
+                ViewBag.ErrorMessage = "Parola ve doğrulama parolası uğuşmuyor";
                 return View(model);
             }
 

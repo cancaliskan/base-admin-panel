@@ -17,7 +17,7 @@ using BaseAdminTemplate.Web.Models.ViewModels;
 namespace BaseAdminTemplate.Web.Controllers
 {
     [Authorize]
-    [DisplayName(Constants.DisplayInMenu + "User Management")]
+    [DisplayName(Constants.DisplayInMenu + "Kullanıcı Yönetimi")]
     public class UserController : BaseController
     {
         private readonly IHubContext<UserHub> _context;
@@ -31,7 +31,7 @@ namespace BaseAdminTemplate.Web.Controllers
         }
 
         [HttpGet]
-        [DisplayName(Constants.DisplayInMenu + Constants.DisplayInPermissionTree + "Active User List")]
+        [DisplayName(Constants.DisplayInMenu + Constants.DisplayInPermissionTree + "Aktif Kullanıcı Listesi")]
         public IActionResult ActiveList()
         {
             if (!HasPermission("User", "ActiveList"))
@@ -44,7 +44,7 @@ namespace BaseAdminTemplate.Web.Controllers
         }
 
         [HttpGet]
-        [DisplayName(Constants.DisplayInMenu + Constants.DisplayInPermissionTree + "Deactivated User List")]
+        [DisplayName(Constants.DisplayInMenu + Constants.DisplayInPermissionTree + "Deaktif Kullanıcı Listesi")]
         public IActionResult DeactivatedList()
         {
             if (!HasPermission("User", "DeactivatedList"))
@@ -103,7 +103,7 @@ namespace BaseAdminTemplate.Web.Controllers
         }
 
         [HttpPost]
-        [DisplayName(Constants.DisplayInPermissionTree + "Edit")]
+        [DisplayName(Constants.DisplayInPermissionTree + "Güncelle")]
         public IActionResult Edit(string id, string propertyName, string value)
         {
             var status = false;
@@ -111,7 +111,7 @@ namespace BaseAdminTemplate.Web.Controllers
 
             if (!HasPermission("User", "Edit"))
             {
-                message = "You do not have permission";
+                message = "Yetkiniz bulunmuyor";
             }
             else
             {
@@ -152,7 +152,7 @@ namespace BaseAdminTemplate.Web.Controllers
         }
 
         [HttpPost]
-        [DisplayName(Constants.DisplayInPermissionTree + "Deactivate")]
+        [DisplayName(Constants.DisplayInPermissionTree + "Deaktif Yap")]
         public IActionResult Deactivate(string userId)
         {
             if (!HasPermission("User", "Deactivate"))
@@ -171,7 +171,7 @@ namespace BaseAdminTemplate.Web.Controllers
         }
 
         [HttpPost]
-        [DisplayName(Constants.DisplayInPermissionTree + "Restore")]
+        [DisplayName(Constants.DisplayInPermissionTree + "Kurtar")]
         public IActionResult Restore(string userId)
         {
             if (!HasPermission("User", "Restore"))
@@ -190,7 +190,7 @@ namespace BaseAdminTemplate.Web.Controllers
         }
 
         [HttpGet]
-        [DisplayName(Constants.DisplayInMenu + Constants.DisplayInPermissionTree + "New")]
+        [DisplayName(Constants.DisplayInMenu + Constants.DisplayInPermissionTree + "Ekle")]
         public IActionResult Create()
         {
             if (!HasPermission("User", "Create"))
@@ -207,7 +207,7 @@ namespace BaseAdminTemplate.Web.Controllers
         {
             if (model.Password != model.ConfirmPassword)
             {
-                ViewBag.ErrorMessage = "Password and Confirm password are not equal";
+                ViewBag.ErrorMessage = "Parola ve parola onayı uyuşmuyor";
                 return View(model);
             }
 
@@ -227,7 +227,7 @@ namespace BaseAdminTemplate.Web.Controllers
         }
 
         [HttpPost]
-        [DisplayName("Delete")]
+        [DisplayName("Sil")]
         public IActionResult Delete(string userId)
         {
             if (!HasPermission("User", "Delete"))

@@ -44,7 +44,7 @@ namespace BaseAdminTemplate.Business.Services
                     }
                 }
 
-                return _childListResponseHelper.SuccessResponse(childList.AsQueryable(), "returned successfully");
+                return _childListResponseHelper.SuccessResponse(childList.AsQueryable(), "Alt menüler döndü");
             }
             catch (Exception e)
             {
@@ -70,7 +70,7 @@ namespace BaseAdminTemplate.Business.Services
                     }
                 }
 
-                return _childListResponseHelper.SuccessResponse(childList.AsQueryable(), "returned successfully");
+                return _childListResponseHelper.SuccessResponse(childList.AsQueryable(), "Alt menüler döndü");
             }
             catch (Exception e)
             {
@@ -84,7 +84,7 @@ namespace BaseAdminTemplate.Business.Services
             try
             {
                 var menus = _unitOfWork.MenuRepository.GetActiveEntities();
-                return _listResponseHelper.SuccessResponse(menus.AsQueryable(), "returned successfully");
+                return _listResponseHelper.SuccessResponse(menus.AsQueryable(), "Aktif menüler döndü");
             }
             catch (Exception e)
             {

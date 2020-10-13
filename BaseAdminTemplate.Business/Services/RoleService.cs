@@ -37,16 +37,16 @@ namespace BaseAdminTemplate.Business.Services
             {
                 if (id.IsEmptyGuid())
                 {
-                    return _responseHelper.FailResponse("Invalid Id");
+                    return _responseHelper.FailResponse("Geçersiz Id");
                 }
 
                 var role = _unitOfWork.RoleRepository.GetById(id);
                 if (role == null)
                 {
-                    return _responseHelper.FailResponse("could not found");
+                    return _responseHelper.FailResponse("Role bulunamadı");
                 }
 
-                return _responseHelper.SuccessResponse(role, "returned successfully");
+                return _responseHelper.SuccessResponse(role, "Rol başarılı olarak döndü");
             }
             catch (Exception e)
             {
@@ -60,7 +60,7 @@ namespace BaseAdminTemplate.Business.Services
             try
             {
                 var roles = _unitOfWork.RoleRepository.GetAll();
-                return _listResponseHelper.SuccessResponse(roles, "returned successfully");
+                return _listResponseHelper.SuccessResponse(roles, "Roller başarılı olarak döndü");
             }
             catch (Exception e)
             {
@@ -76,10 +76,10 @@ namespace BaseAdminTemplate.Business.Services
                 var roles = _unitOfWork.RoleRepository.GetByCondition(expression);
                 if (roles == null || !roles.Any())
                 {
-                    return _listResponseHelper.FailResponse("could not found");
+                    return _listResponseHelper.FailResponse("Role bulunamadı");
                 }
 
-                return _listResponseHelper.SuccessResponse(roles, "returned successfully");
+                return _listResponseHelper.SuccessResponse(roles, "Roller başarılı olarak döndü");
             }
             catch (Exception e)
             {
@@ -93,7 +93,7 @@ namespace BaseAdminTemplate.Business.Services
             try
             {
                 var activeRoles = _unitOfWork.RoleRepository.GetActiveEntities();
-                return _listResponseHelper.SuccessResponse(activeRoles, "returned successfully");
+                return _listResponseHelper.SuccessResponse(activeRoles, "Aktif roller başarılı olarak döndü");
             }
             catch (Exception e)
             {
@@ -107,7 +107,7 @@ namespace BaseAdminTemplate.Business.Services
             try
             {
                 var inactiveRoles = _unitOfWork.RoleRepository.GetInActiveEntities();
-                return _listResponseHelper.SuccessResponse(inactiveRoles, "returned successfully");
+                return _listResponseHelper.SuccessResponse(inactiveRoles, "Deaktif roller başarılı olarak döndü");
             }
             catch (Exception e)
             {
@@ -145,7 +145,7 @@ namespace BaseAdminTemplate.Business.Services
                 var existRole = _unitOfWork.RoleRepository.GetById(role.Id);
                 if (existRole == null)
                 {
-                    return _responseHelper.FailResponse("could not found");
+                    return _responseHelper.FailResponse("Role bulunamadı");
                 }
 
                 var result = ModelValidations(role);
@@ -174,13 +174,13 @@ namespace BaseAdminTemplate.Business.Services
             {
                 if (IsNotExistRole(id))
                 {
-                    return _booleanResponseHelper.FailResponse("could not found");
+                    return _booleanResponseHelper.FailResponse("Role bulunamadı");
                 }
 
                 _unitOfWork.RoleRepository.SoftDelete(id);
                 _unitOfWork.Complete();
 
-                return _booleanResponseHelper.SuccessResponse("soft delete successful");
+                return _booleanResponseHelper.SuccessResponse("Role geçici olarak silindi");
             }
             catch (Exception e)
             {
@@ -195,13 +195,13 @@ namespace BaseAdminTemplate.Business.Services
             {
                 if (IsNotExistRole(id))
                 {
-                    return _booleanResponseHelper.FailResponse("could not found");
+                    return _booleanResponseHelper.FailResponse("Role bulunamadı");
                 }
 
                 _unitOfWork.RoleRepository.HardDelete(id);
                 _unitOfWork.Complete();
 
-                return _booleanResponseHelper.SuccessResponse("hard delete successful");
+                return _booleanResponseHelper.SuccessResponse("Rol kalıcı olarak silindi");
             }
             catch (Exception e)
             {
@@ -217,13 +217,13 @@ namespace BaseAdminTemplate.Business.Services
                 var existRole = _unitOfWork.RoleRepository.GetById(id);
                 if (existRole == null)
                 {
-                    return _booleanResponseHelper.FailResponse("could not found");
+                    return _booleanResponseHelper.FailResponse("Rol bulunamadı");
                 }
 
                 _unitOfWork.RoleRepository.Restore(existRole);
                 _unitOfWork.Complete();
 
-                return _booleanResponseHelper.SuccessResponse("restored successful");
+                return _booleanResponseHelper.SuccessResponse("Rol kurtarıldı");
             }
             catch (Exception e)
             {
@@ -238,12 +238,12 @@ namespace BaseAdminTemplate.Business.Services
             {
                 if (IsNotExistRole(id))
                 {
-                    return _listPermissionResponseHelper.FailResponse("could not found");
+                    return _listPermissionResponseHelper.FailResponse("Rol bulunamadı");
                 }
 
                 var permissions = _unitOfWork.RoleRepository.GetPermissions(id);
 
-                return _listPermissionResponseHelper.SuccessResponse(permissions, "permissions returned successfully");
+                return _listPermissionResponseHelper.SuccessResponse(permissions, "Rol yetkileri başarılı olarak döndü");
             }
             catch (Exception e)
             {
@@ -258,23 +258,23 @@ namespace BaseAdminTemplate.Business.Services
             {
                 if (IsNotExistRole(roleId))
                 {
-                    return _booleanResponseHelper.FailResponse("role could not found");
+                    return _booleanResponseHelper.FailResponse("Rol bulunamadı");
                 }
 
                 var permission = _unitOfWork.PermissionRepository.GetById(permissionId);
                 if (permission == null)
                 {
-                    return _booleanResponseHelper.FailResponse("permission could not found");
+                    return _booleanResponseHelper.FailResponse("Yetki bulunamadı");
                 }
 
                 var isSuccess = _unitOfWork.LinkRolePermissionRepository.AddPermissionToRole(roleId, permissionId);
                 if (isSuccess)
                 {
                     _unitOfWork.Complete();
-                    return _booleanResponseHelper.SuccessResponse("permission added to role");
+                    return _booleanResponseHelper.SuccessResponse("Role yetki atandı");
                 }
 
-                return _booleanResponseHelper.FailResponse("permission can not added to role");
+                return _booleanResponseHelper.FailResponse("Role yetki atanamadı");
             }
             catch (Exception e)
             {
@@ -289,23 +289,23 @@ namespace BaseAdminTemplate.Business.Services
             {
                 if (IsNotExistRole(roleId))
                 {
-                    return _booleanResponseHelper.FailResponse("role could not found");
+                    return _booleanResponseHelper.FailResponse("Rol bulunamadı");
                 }
 
                 var permission = _unitOfWork.PermissionRepository.GetById(permissionId);
                 if (permission == null)
                 {
-                    return _booleanResponseHelper.FailResponse("permission could not found");
+                    return _booleanResponseHelper.FailResponse("Yetki bulunamadı");
                 }
 
                 var isSuccess = _unitOfWork.LinkRolePermissionRepository.RemovePermissionToRole(roleId, permissionId);
                 if (isSuccess)
                 {
                     _unitOfWork.Complete();
-                    return _booleanResponseHelper.SuccessResponse("permission removed from role");
+                    return _booleanResponseHelper.SuccessResponse("Yetki rolden kaldırıldı");
                 }
 
-                return _booleanResponseHelper.FailResponse("permission can not removed from role");
+                return _booleanResponseHelper.FailResponse("Yetki rolden kaldırılamadı");
             }
             catch (Exception e)
             {
@@ -320,17 +320,17 @@ namespace BaseAdminTemplate.Business.Services
             {
                 if (IsNotExistRole(roleId))
                 {
-                    return _booleanResponseHelper.FailResponse("role could not found");
+                    return _booleanResponseHelper.FailResponse("rol bulunamadı");
                 }
 
                 var isSuccess = _unitOfWork.LinkRolePermissionRepository.RemoveAllPermissionFromRole(roleId);
                 if (isSuccess)
                 {
                     _unitOfWork.Complete();
-                    return _booleanResponseHelper.SuccessResponse("all permission removed from role");
+                    return _booleanResponseHelper.SuccessResponse("Rolden tüm yetkiler kaldırıldı");
                 }
 
-                return _booleanResponseHelper.FailResponse("all permission can not removed from role");
+                return _booleanResponseHelper.FailResponse("Rolden tüm yetkiler kaldırılamadı");
             }
             catch (Exception e)
             {
@@ -349,7 +349,7 @@ namespace BaseAdminTemplate.Business.Services
         {
             if (role.Name.IsEmpty())
             {
-                return _responseHelper.FailResponse("Role name is mandatory");
+                return _responseHelper.FailResponse("Rol ismi zorunlu");
             }
 
             return _responseHelper.SuccessResponse("");

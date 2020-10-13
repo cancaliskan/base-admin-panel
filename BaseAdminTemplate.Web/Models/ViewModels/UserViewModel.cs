@@ -5,21 +5,21 @@ namespace BaseAdminTemplate.Web.Models.ViewModels
 {
     public sealed class UserViewModel : BaseViewModel
     {
-        [DisplayName("Name")]
+        [DisplayName("İsim")]
         public string Name { get; set; }
-        [DisplayName("Surname")]
+        [DisplayName("Soyisim")]
         public string Surname { get; set; }
         [DisplayName("Email")]
         public string Email { get; set; }
-        [DisplayName("Password")]
+        [DisplayName("Parola")]
         public string Password { get; set; }
-        [DisplayName("Confirm Password")]
+        [DisplayName("Parola Onayı")]
         public string ConfirmPassword { get; set; }
-        [DisplayName("Phone Number")]
+        [DisplayName("Telefon Numarası")]
         public string Phone { get; set; }
-        [DisplayName("Last Login Datetime")]
+        [DisplayName("Son Giriş Tarihi")]
         public DateTime? LastLoginDateTime { get; set; }
-        [DisplayName("Role")]
+        [DisplayName("Rol")]
         public RoleViewModel Role { get; set; }
     }
 }

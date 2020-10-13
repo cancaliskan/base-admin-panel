@@ -11,12 +11,12 @@
                 <table class="display" style="width: 100%">
                     <thead>
                         <tr>
-                            <th>Name</th>
-                            <th>Surname</th>
+                            <th>İsim</th>
+                            <th>Soyisim</th>
                             <th>Email</th>
-                            <th>Phone</th>
-                            <th>Role</th>
-                            <th>Last Login Date</th>
+                            <th>Telefon</th>
+                            <th>Rol</th>
+                            <th>Son Giriş Tarihi</th>
                             <th></th>
                         </tr>
                     </thead>
@@ -31,8 +31,8 @@
                                 <td class="editSelect" data-record_id="@user.Id" data-propertyname="Role">@user.Role?.Name</td>
                                 <td>@user.LastLoginDateTime</td>
                                 <td class="noExl" style="text-align: center; width: 10%">
-                                    <a data-id=@user.Id class="open-AddBookDialog btn btn-round btn-danger" href="#addBookDialog">Deactivate</a>
-                                    <a data-id=@user.Id class="open-deleteDialog btn btn-round btn-danger" href="#delete">Delete</a>
+                                    <a data-id=@user.Id class="open-AddBookDialog btn btn-round btn-danger" href="#addBookDialog">Deaktif</a>
+                                    <a data-id=@user.Id class="open-deleteDialog btn btn-round btn-danger" href="#delete">Sil</a>
                                 </td>
                             </tr>
                         }
@@ -48,14 +48,14 @@
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                <h4 class="modal-title" id="myModalLabel">Confirm to deactivate</h4>
+                <h4 class="modal-title" id="myModalLabel">Onaylıyor Musun?</h4>
             </div>
             @using (Html.BeginForm("Deactivate", "User", FormMethod.Post))
             {
                 <input type="hidden" name="userId" id="roleId" value="" />
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                    <button type="submit" class="btn btn-danger">Deactivate</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">İptal</button>
+                    <button type="submit" class="btn btn-danger">Tamam</button>
                 </div>
             }
         </div>
@@ -67,14 +67,14 @@
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                <h4 class="modal-title" id="myModalLabel">Confirm to delete</h4>
+                <h4 class="modal-title" id="myModalLabel">Onaylıyor Musun?</h4>
             </div>
             @using (Html.BeginForm("Delete", "User", FormMethod.Post))
             {
                 <input type="hidden" name="userId" id="roleIdForDelete" value="" />
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                    <button type="submit" class="btn btn-danger">Delete</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">İptal</button>
+                    <button type="submit" class="btn btn-danger">Tamam</button>
                 </div>
             }
         </div>
@@ -112,11 +112,11 @@
                 $('.edit').editable('/User/Edit',
                     {
                         cssclass: 'jeditForm',
-                        tooltip: 'click to edit me...',
+                        tooltip: 'Düzenlemek için tıkla..',
                         width: 'none',
                         height: 'none',
-                        submit: 'Ok',
-                        cancel: 'Cancel',
+                        submit: 'Kaydet',
+                        cancel: 'İptal',
                         onsubmit: function (settings, original) {
                             oldValue = original.revert;
                         },
@@ -143,12 +143,12 @@
                 $('.editSelect').editable('/User/Edit',
                     {
                         cssclass: 'jeditForm',
-                        tooltip: 'click to edit me...',
+                        tooltip: 'Düzenlemek için tıkla..',
                         width: 'none',
                         height: 'none',
                         type: 'select',
-                        submit: 'Ok',
-                        cancel: 'Cancel',
+                        submit: 'Kaydet',
+                        cancel: 'İptal',
                         loadurl: '/Role/GetRolesWithUserId',
                         loaddata: function () {
                             return { id: $(this).data('record_id') }

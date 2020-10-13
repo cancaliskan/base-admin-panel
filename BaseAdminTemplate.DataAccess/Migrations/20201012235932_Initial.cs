@@ -175,18 +175,18 @@ namespace BaseAdminTemplate.DataAccess.Migrations
                 columns: new[] { "Id", "CreatedDate", "DeletedDate", "IsActive", "MenuId", "PermissionId", "UpdateDate" },
                 values: new object[,]
                 {
-                    { new Guid("d48e8c84-05fb-4817-99aa-458b2e5f097c"), new DateTime(2020, 10, 13, 0, 49, 34, 705, DateTimeKind.Local).AddTicks(4374), null, true, new Guid("58a89202-d09f-4d17-bf6e-f22d5aaa8ed7"), new Guid("930a7eb7-3483-498d-b9d3-680f1763f245"), null },
-                    { new Guid("28d17d54-4355-4ca5-9fbb-abacf86d1a63"), new DateTime(2020, 10, 13, 0, 49, 34, 709, DateTimeKind.Local).AddTicks(1618), null, true, new Guid("644c7ce5-7aa4-4ac6-b7b0-354de647dda2"), new Guid("44b0151d-5680-4eb4-a68d-b1a67670a5c7"), null },
-                    { new Guid("a7458340-23ae-4acc-8609-c98f7d9ca149"), new DateTime(2020, 10, 13, 0, 49, 34, 709, DateTimeKind.Local).AddTicks(1473), null, true, new Guid("644c7ce5-7aa4-4ac6-b7b0-354de647dda2"), new Guid("c3d55dc6-2d84-4da9-8842-50395832e12a"), null },
-                    { new Guid("8663137a-6f62-46fa-aab4-191401fa3c11"), new DateTime(2020, 10, 13, 0, 49, 34, 709, DateTimeKind.Local).AddTicks(1339), null, true, new Guid("644c7ce5-7aa4-4ac6-b7b0-354de647dda2"), new Guid("c6bd3bef-b40e-4011-87e7-d2653a14ee84"), null },
-                    { new Guid("c384c5e9-3eea-4872-9f90-48abd1f541a7"), new DateTime(2020, 10, 13, 0, 49, 34, 709, DateTimeKind.Local).AddTicks(1002), null, true, new Guid("644c7ce5-7aa4-4ac6-b7b0-354de647dda2"), new Guid("148b78f5-ac2e-482b-aed1-513a7e28e687"), null },
-                    { new Guid("49015186-444f-41d1-9d21-624345f01472"), new DateTime(2020, 10, 13, 0, 49, 34, 709, DateTimeKind.Local).AddTicks(743), null, true, new Guid("644c7ce5-7aa4-4ac6-b7b0-354de647dda2"), new Guid("1929c157-9e31-42da-af8a-f0c3b27d0c96"), null },
-                    { new Guid("f4dbed84-b5c1-4d0b-a54a-a1a5f5964483"), new DateTime(2020, 10, 13, 0, 49, 34, 709, DateTimeKind.Local).AddTicks(1141), null, true, new Guid("644c7ce5-7aa4-4ac6-b7b0-354de647dda2"), new Guid("9e993916-5805-4631-9a3a-5a06967e3ce9"), null },
-                    { new Guid("453bab10-ef8e-4b26-a428-40e13da04281"), new DateTime(2020, 10, 13, 0, 49, 34, 708, DateTimeKind.Local).AddTicks(7447), null, true, new Guid("e5d70c31-13b7-4d81-8667-cc66d1db74f2"), new Guid("e081d3e6-974d-45e9-8776-c6c8a4d943a6"), null },
-                    { new Guid("dae85a4a-afac-4374-bc0a-a08e4655fa86"), new DateTime(2020, 10, 13, 0, 49, 34, 708, DateTimeKind.Local).AddTicks(7260), null, true, new Guid("e5d70c31-13b7-4d81-8667-cc66d1db74f2"), new Guid("8d560935-a636-4795-8520-1b58ca0100fd"), null },
-                    { new Guid("db163ad8-9890-43c4-b262-e830cd282387"), new DateTime(2020, 10, 13, 0, 49, 34, 708, DateTimeKind.Local).AddTicks(6000), null, true, new Guid("e5d70c31-13b7-4d81-8667-cc66d1db74f2"), new Guid("2d6ef6d4-ae00-4231-beea-7089e6a07f34"), null },
-                    { new Guid("fd8d33f3-45a5-484b-907b-edef83529eba"), new DateTime(2020, 10, 13, 0, 49, 34, 708, DateTimeKind.Local).AddTicks(5768), null, true, new Guid("e5d70c31-13b7-4d81-8667-cc66d1db74f2"), new Guid("6fccfd9c-43d3-4fb4-8717-5d34999b781c"), null },
-                    { new Guid("b43c9c56-1e23-419c-9722-ddebcd923a26"), new DateTime(2020, 10, 13, 0, 49, 34, 709, DateTimeKind.Local).AddTicks(593), null, true, new Guid("644c7ce5-7aa4-4ac6-b7b0-354de647dda2"), new Guid("403232fa-852c-41cc-bcb1-aff5e0749d9e"), null }
+                    { new Guid("6dd7107d-9765-4e52-b00d-a80aef132f70"), new DateTime(2020, 10, 13, 2, 59, 32, 109, DateTimeKind.Local).AddTicks(1018), null, true, new Guid("3da28c59-0674-48a8-a9d5-b049ccf34041"), new Guid("3c9eb0c7-963c-4860-b543-cd60737688c5"), null },
+                    { new Guid("2eb2a6d8-da65-48f5-9ee0-1ca5858eb3b6"), new DateTime(2020, 10, 13, 2, 59, 32, 114, DateTimeKind.Local).AddTicks(3941), null, true, new Guid("9ad20195-5cac-41b7-8436-ea4237a42cd2"), new Guid("92628df5-0c29-482b-baa2-02992ba67742"), null },
+                    { new Guid("0e13c03a-5fc8-40b4-8f84-55fdcbf261da"), new DateTime(2020, 10, 13, 2, 59, 32, 114, DateTimeKind.Local).AddTicks(3638), null, true, new Guid("9ad20195-5cac-41b7-8436-ea4237a42cd2"), new Guid("062308e0-f82b-48fb-aa1e-8fd64a1077f6"), null },
+                    { new Guid("a6a342d5-5f56-4d66-9e50-27c02750413c"), new DateTime(2020, 10, 13, 2, 59, 32, 114, DateTimeKind.Local).AddTicks(3383), null, true, new Guid("9ad20195-5cac-41b7-8436-ea4237a42cd2"), new Guid("715a2eac-7bd6-48da-b9a6-62f933052100"), null },
+                    { new Guid("e674010a-f7b5-4e31-8374-e0a8a1fb5646"), new DateTime(2020, 10, 13, 2, 59, 32, 114, DateTimeKind.Local).AddTicks(2550), null, true, new Guid("9ad20195-5cac-41b7-8436-ea4237a42cd2"), new Guid("46c434e2-145c-48e7-a740-62cd0a6dabe4"), null },
+                    { new Guid("9134537d-103c-4432-a939-c9217fdeca93"), new DateTime(2020, 10, 13, 2, 59, 32, 114, DateTimeKind.Local).AddTicks(1952), null, true, new Guid("9ad20195-5cac-41b7-8436-ea4237a42cd2"), new Guid("039bd732-bfd0-4ff8-be9c-e43d842afab7"), null },
+                    { new Guid("7719d471-def1-446a-8567-b407a31608f1"), new DateTime(2020, 10, 13, 2, 59, 32, 114, DateTimeKind.Local).AddTicks(2846), null, true, new Guid("9ad20195-5cac-41b7-8436-ea4237a42cd2"), new Guid("9833008c-fc4d-4eb3-a939-ab1c53676f5f"), null },
+                    { new Guid("a4de9ac9-fd27-4462-a460-d9bcb4c3d308"), new DateTime(2020, 10, 13, 2, 59, 32, 113, DateTimeKind.Local).AddTicks(5001), null, true, new Guid("f0c0b6e4-df49-4a3a-99b2-6e8a68ae4f87"), new Guid("689fb0c7-583d-4ece-b1fe-4c6e861ce8b1"), null },
+                    { new Guid("0b145c94-830a-4b32-b451-f345544cc5e7"), new DateTime(2020, 10, 13, 2, 59, 32, 113, DateTimeKind.Local).AddTicks(4580), null, true, new Guid("f0c0b6e4-df49-4a3a-99b2-6e8a68ae4f87"), new Guid("55e7ac34-fee4-460a-8f04-e32bcb1b365a"), null },
+                    { new Guid("52f91d25-a4ad-4f3f-b63e-8f8348a3e9db"), new DateTime(2020, 10, 13, 2, 59, 32, 113, DateTimeKind.Local).AddTicks(1198), null, true, new Guid("f0c0b6e4-df49-4a3a-99b2-6e8a68ae4f87"), new Guid("1150c590-9510-44fb-b983-8384625c9eba"), null },
+                    { new Guid("3f53d768-7f50-4b37-8d9e-e0b5418afe94"), new DateTime(2020, 10, 13, 2, 59, 32, 113, DateTimeKind.Local).AddTicks(703), null, true, new Guid("f0c0b6e4-df49-4a3a-99b2-6e8a68ae4f87"), new Guid("c0fdd95d-6070-4801-99ff-1c0d450d4443"), null },
+                    { new Guid("eb57e394-e3c3-459f-8670-44856bdd1485"), new DateTime(2020, 10, 13, 2, 59, 32, 114, DateTimeKind.Local).AddTicks(1654), null, true, new Guid("9ad20195-5cac-41b7-8436-ea4237a42cd2"), new Guid("281f7f51-bd43-407b-82ac-a54a2839dbd6"), null }
                 });
 
             migrationBuilder.InsertData(
@@ -194,33 +194,33 @@ namespace BaseAdminTemplate.DataAccess.Migrations
                 columns: new[] { "Id", "CreatedDate", "DeletedDate", "IsActive", "PermissionId", "RoleId", "UpdateDate" },
                 values: new object[,]
                 {
-                    { new Guid("d9e08963-763e-4e0d-8c84-54a922acb4ce"), new DateTime(2020, 10, 13, 0, 49, 34, 709, DateTimeKind.Local).AddTicks(1025), null, true, new Guid("148b78f5-ac2e-482b-aed1-513a7e28e687"), new Guid("db8f768e-a9ee-4242-97e3-bb260491e9d4"), null },
-                    { new Guid("cc0585ab-1d9a-4382-be4a-89feeb806614"), new DateTime(2020, 10, 13, 0, 49, 34, 709, DateTimeKind.Local).AddTicks(1644), null, true, new Guid("44b0151d-5680-4eb4-a68d-b1a67670a5c7"), new Guid("db8f768e-a9ee-4242-97e3-bb260491e9d4"), null },
-                    { new Guid("b12b98d3-9889-4598-bcb9-25b5b14fc755"), new DateTime(2020, 10, 13, 0, 49, 34, 709, DateTimeKind.Local).AddTicks(1496), null, true, new Guid("c3d55dc6-2d84-4da9-8842-50395832e12a"), new Guid("db8f768e-a9ee-4242-97e3-bb260491e9d4"), null },
-                    { new Guid("4b679c9e-1cfc-40c0-a66e-e3591bc19807"), new DateTime(2020, 10, 13, 0, 49, 34, 709, DateTimeKind.Local).AddTicks(1362), null, true, new Guid("c6bd3bef-b40e-4011-87e7-d2653a14ee84"), new Guid("db8f768e-a9ee-4242-97e3-bb260491e9d4"), null },
-                    { new Guid("3a9a663a-04df-46a4-8e06-a33dd8fd9cb8"), new DateTime(2020, 10, 13, 0, 49, 34, 709, DateTimeKind.Local).AddTicks(766), null, true, new Guid("1929c157-9e31-42da-af8a-f0c3b27d0c96"), new Guid("db8f768e-a9ee-4242-97e3-bb260491e9d4"), null },
-                    { new Guid("65cdb58e-8f1f-4a42-8d12-ce470b187dc5"), new DateTime(2020, 10, 13, 0, 49, 34, 709, DateTimeKind.Local).AddTicks(1165), null, true, new Guid("9e993916-5805-4631-9a3a-5a06967e3ce9"), new Guid("db8f768e-a9ee-4242-97e3-bb260491e9d4"), null },
-                    { new Guid("c469943c-1996-487e-8d14-fdb67a0007af"), new DateTime(2020, 10, 13, 0, 49, 34, 708, DateTimeKind.Local).AddTicks(7472), null, true, new Guid("e081d3e6-974d-45e9-8776-c6c8a4d943a6"), new Guid("db8f768e-a9ee-4242-97e3-bb260491e9d4"), null },
-                    { new Guid("9c16de85-673e-4e28-9eb6-13a8e418480a"), new DateTime(2020, 10, 13, 0, 49, 34, 708, DateTimeKind.Local).AddTicks(7285), null, true, new Guid("8d560935-a636-4795-8520-1b58ca0100fd"), new Guid("db8f768e-a9ee-4242-97e3-bb260491e9d4"), null },
-                    { new Guid("b662eee4-1204-4e85-9319-deef8745d02d"), new DateTime(2020, 10, 13, 0, 49, 34, 708, DateTimeKind.Local).AddTicks(6023), null, true, new Guid("2d6ef6d4-ae00-4231-beea-7089e6a07f34"), new Guid("db8f768e-a9ee-4242-97e3-bb260491e9d4"), null },
-                    { new Guid("1690f59d-8667-448d-b0c8-d647e64e305e"), new DateTime(2020, 10, 13, 0, 49, 34, 708, DateTimeKind.Local).AddTicks(5830), null, true, new Guid("6fccfd9c-43d3-4fb4-8717-5d34999b781c"), new Guid("db8f768e-a9ee-4242-97e3-bb260491e9d4"), null },
-                    { new Guid("1dc39abd-39b0-43f6-9253-78f0f2582d50"), new DateTime(2020, 10, 13, 0, 49, 34, 705, DateTimeKind.Local).AddTicks(6434), null, true, new Guid("930a7eb7-3483-498d-b9d3-680f1763f245"), new Guid("db8f768e-a9ee-4242-97e3-bb260491e9d4"), null },
-                    { new Guid("5e5de17b-3449-4002-a349-b82217512918"), new DateTime(2020, 10, 13, 0, 49, 34, 709, DateTimeKind.Local).AddTicks(619), null, true, new Guid("403232fa-852c-41cc-bcb1-aff5e0749d9e"), new Guid("db8f768e-a9ee-4242-97e3-bb260491e9d4"), null }
+                    { new Guid("85fc675a-374d-4224-b77a-9f23780aa0ee"), new DateTime(2020, 10, 13, 2, 59, 32, 114, DateTimeKind.Local).AddTicks(2595), null, true, new Guid("46c434e2-145c-48e7-a740-62cd0a6dabe4"), new Guid("ae65f69f-f797-44c2-bbbb-70f7896cface"), null },
+                    { new Guid("3805f014-c2ee-4827-9003-bbd0245fe297"), new DateTime(2020, 10, 13, 2, 59, 32, 114, DateTimeKind.Local).AddTicks(3983), null, true, new Guid("92628df5-0c29-482b-baa2-02992ba67742"), new Guid("ae65f69f-f797-44c2-bbbb-70f7896cface"), null },
+                    { new Guid("0f9021c0-a621-48cc-80f8-983463ae3703"), new DateTime(2020, 10, 13, 2, 59, 32, 114, DateTimeKind.Local).AddTicks(3684), null, true, new Guid("062308e0-f82b-48fb-aa1e-8fd64a1077f6"), new Guid("ae65f69f-f797-44c2-bbbb-70f7896cface"), null },
+                    { new Guid("f7372f2d-57d6-417e-ac8f-8e4fd6ff9da5"), new DateTime(2020, 10, 13, 2, 59, 32, 114, DateTimeKind.Local).AddTicks(3427), null, true, new Guid("715a2eac-7bd6-48da-b9a6-62f933052100"), new Guid("ae65f69f-f797-44c2-bbbb-70f7896cface"), null },
+                    { new Guid("2be4c772-37a4-487c-8d6f-5b0369d3b8f6"), new DateTime(2020, 10, 13, 2, 59, 32, 114, DateTimeKind.Local).AddTicks(1995), null, true, new Guid("039bd732-bfd0-4ff8-be9c-e43d842afab7"), new Guid("ae65f69f-f797-44c2-bbbb-70f7896cface"), null },
+                    { new Guid("4392cd70-3722-478e-89ec-a072e6053c4d"), new DateTime(2020, 10, 13, 2, 59, 32, 114, DateTimeKind.Local).AddTicks(2891), null, true, new Guid("9833008c-fc4d-4eb3-a939-ab1c53676f5f"), new Guid("ae65f69f-f797-44c2-bbbb-70f7896cface"), null },
+                    { new Guid("832826bb-8a9f-4825-9f20-be3255cd1f1c"), new DateTime(2020, 10, 13, 2, 59, 32, 113, DateTimeKind.Local).AddTicks(5054), null, true, new Guid("689fb0c7-583d-4ece-b1fe-4c6e861ce8b1"), new Guid("ae65f69f-f797-44c2-bbbb-70f7896cface"), null },
+                    { new Guid("3f8f7728-a3aa-43e7-aa49-5857620b6e87"), new DateTime(2020, 10, 13, 2, 59, 32, 113, DateTimeKind.Local).AddTicks(4658), null, true, new Guid("55e7ac34-fee4-460a-8f04-e32bcb1b365a"), new Guid("ae65f69f-f797-44c2-bbbb-70f7896cface"), null },
+                    { new Guid("5a89a23e-de5c-4f93-aca8-16c0f22652e4"), new DateTime(2020, 10, 13, 2, 59, 32, 113, DateTimeKind.Local).AddTicks(1240), null, true, new Guid("1150c590-9510-44fb-b983-8384625c9eba"), new Guid("ae65f69f-f797-44c2-bbbb-70f7896cface"), null },
+                    { new Guid("8c2aab10-e0ee-40bb-98b8-72fffa723e4d"), new DateTime(2020, 10, 13, 2, 59, 32, 113, DateTimeKind.Local).AddTicks(852), null, true, new Guid("c0fdd95d-6070-4801-99ff-1c0d450d4443"), new Guid("ae65f69f-f797-44c2-bbbb-70f7896cface"), null },
+                    { new Guid("4dd92f80-c998-49c6-bbef-2e038456cd64"), new DateTime(2020, 10, 13, 2, 59, 32, 109, DateTimeKind.Local).AddTicks(4478), null, true, new Guid("3c9eb0c7-963c-4860-b543-cd60737688c5"), new Guid("ae65f69f-f797-44c2-bbbb-70f7896cface"), null },
+                    { new Guid("3d9cd1c2-76f9-419e-98a3-e67bb6941543"), new DateTime(2020, 10, 13, 2, 59, 32, 114, DateTimeKind.Local).AddTicks(1708), null, true, new Guid("281f7f51-bd43-407b-82ac-a54a2839dbd6"), new Guid("ae65f69f-f797-44c2-bbbb-70f7896cface"), null }
                 });
 
             migrationBuilder.InsertData(
                 table: "LinkUsersRoles",
                 columns: new[] { "Id", "CreatedDate", "DeletedDate", "IsActive", "RoleId", "UpdateDate", "UserId" },
-                values: new object[] { new Guid("d19a3427-7d93-49c0-bcec-94e495f9b10e"), new DateTime(2020, 10, 13, 0, 49, 34, 701, DateTimeKind.Local).AddTicks(6601), null, true, new Guid("db8f768e-a9ee-4242-97e3-bb260491e9d4"), null, new Guid("dccc38ad-5cc2-4ad6-b7b7-4d5473504438") });
+                values: new object[] { new Guid("332166ad-966b-4c60-858a-b761c8c4f667"), new DateTime(2020, 10, 13, 2, 59, 32, 105, DateTimeKind.Local).AddTicks(5321), null, true, new Guid("ae65f69f-f797-44c2-bbbb-70f7896cface"), null, new Guid("846bbff5-9675-432a-8102-99f6e3762d5d") });
 
             migrationBuilder.InsertData(
                 table: "Menus",
                 columns: new[] { "Id", "ControllerName", "CreatedDate", "DeletedDate", "DisplayInMenu", "DisplayName", "IsActive", "UpdateDate" },
                 values: new object[,]
                 {
-                    { new Guid("58a89202-d09f-4d17-bf6e-f22d5aaa8ed7"), "ExceptionLog", new DateTime(2020, 10, 13, 0, 49, 34, 704, DateTimeKind.Local).AddTicks(869), null, true, "Exception Log", true, null },
-                    { new Guid("e5d70c31-13b7-4d81-8667-cc66d1db74f2"), "Role", new DateTime(2020, 10, 13, 0, 49, 34, 708, DateTimeKind.Local).AddTicks(4682), null, true, "Role Management", true, null },
-                    { new Guid("644c7ce5-7aa4-4ac6-b7b0-354de647dda2"), "User", new DateTime(2020, 10, 13, 0, 49, 34, 708, DateTimeKind.Local).AddTicks(9875), null, true, "User Management", true, null }
+                    { new Guid("3da28c59-0674-48a8-a9d5-b049ccf34041"), "ExceptionLog", new DateTime(2020, 10, 13, 2, 59, 32, 107, DateTimeKind.Local).AddTicks(7687), null, true, "Hata Kayıtları", true, null },
+                    { new Guid("f0c0b6e4-df49-4a3a-99b2-6e8a68ae4f87"), "Role", new DateTime(2020, 10, 13, 2, 59, 32, 112, DateTimeKind.Local).AddTicks(7701), null, true, "Rol Yönetimi", true, null },
+                    { new Guid("9ad20195-5cac-41b7-8436-ea4237a42cd2"), "User", new DateTime(2020, 10, 13, 2, 59, 32, 113, DateTimeKind.Local).AddTicks(9814), null, true, "Kullanıcı Yönetimi", true, null }
                 });
 
             migrationBuilder.InsertData(
@@ -228,29 +228,29 @@ namespace BaseAdminTemplate.DataAccess.Migrations
                 columns: new[] { "Id", "CreatedDate", "DeletedDate", "DisplayInMenu", "DisplayInPermissionTree", "DisplayName", "IsActive", "MethodName", "UpdateDate" },
                 values: new object[,]
                 {
-                    { new Guid("44b0151d-5680-4eb4-a68d-b1a67670a5c7"), new DateTime(2020, 10, 13, 0, 49, 34, 709, DateTimeKind.Local).AddTicks(1586), null, false, false, "Delete", true, "Delete", null },
-                    { new Guid("c3d55dc6-2d84-4da9-8842-50395832e12a"), new DateTime(2020, 10, 13, 0, 49, 34, 709, DateTimeKind.Local).AddTicks(1435), null, true, true, "New", true, "Create", null },
-                    { new Guid("c6bd3bef-b40e-4011-87e7-d2653a14ee84"), new DateTime(2020, 10, 13, 0, 49, 34, 709, DateTimeKind.Local).AddTicks(1299), null, false, true, "Restore", true, "Restore", null },
-                    { new Guid("9e993916-5805-4631-9a3a-5a06967e3ce9"), new DateTime(2020, 10, 13, 0, 49, 34, 709, DateTimeKind.Local).AddTicks(1100), null, false, true, "Deactivate", true, "Deactivate", null },
-                    { new Guid("148b78f5-ac2e-482b-aed1-513a7e28e687"), new DateTime(2020, 10, 13, 0, 49, 34, 709, DateTimeKind.Local).AddTicks(956), null, false, true, "Edit", true, "Edit", null },
-                    { new Guid("1929c157-9e31-42da-af8a-f0c3b27d0c96"), new DateTime(2020, 10, 13, 0, 49, 34, 709, DateTimeKind.Local).AddTicks(698), null, true, true, "Deactivated User List", true, "DeactivatedList", null },
-                    { new Guid("6fccfd9c-43d3-4fb4-8717-5d34999b781c"), new DateTime(2020, 10, 13, 0, 49, 34, 708, DateTimeKind.Local).AddTicks(5612), null, true, true, "List", true, "List", null },
-                    { new Guid("e081d3e6-974d-45e9-8776-c6c8a4d943a6"), new DateTime(2020, 10, 13, 0, 49, 34, 708, DateTimeKind.Local).AddTicks(7374), null, false, true, "Edit", true, "Edit", null },
-                    { new Guid("8d560935-a636-4795-8520-1b58ca0100fd"), new DateTime(2020, 10, 13, 0, 49, 34, 708, DateTimeKind.Local).AddTicks(7173), null, false, false, "Delete", true, "Delete", null },
-                    { new Guid("2d6ef6d4-ae00-4231-beea-7089e6a07f34"), new DateTime(2020, 10, 13, 0, 49, 34, 708, DateTimeKind.Local).AddTicks(5954), null, true, true, "New", true, "Create", null },
-                    { new Guid("930a7eb7-3483-498d-b9d3-680f1763f245"), new DateTime(2020, 10, 13, 0, 49, 34, 704, DateTimeKind.Local).AddTicks(9671), null, true, true, "List", true, "List", null },
-                    { new Guid("403232fa-852c-41cc-bcb1-aff5e0749d9e"), new DateTime(2020, 10, 13, 0, 49, 34, 709, DateTimeKind.Local).AddTicks(530), null, true, true, "Active User List", true, "ActiveList", null }
+                    { new Guid("92628df5-0c29-482b-baa2-02992ba67742"), new DateTime(2020, 10, 13, 2, 59, 32, 114, DateTimeKind.Local).AddTicks(3872), null, false, false, "Sil", true, "Delete", null },
+                    { new Guid("062308e0-f82b-48fb-aa1e-8fd64a1077f6"), new DateTime(2020, 10, 13, 2, 59, 32, 114, DateTimeKind.Local).AddTicks(3576), null, true, true, "Ekle", true, "Create", null },
+                    { new Guid("715a2eac-7bd6-48da-b9a6-62f933052100"), new DateTime(2020, 10, 13, 2, 59, 32, 114, DateTimeKind.Local).AddTicks(3291), null, false, true, "Kurtar", true, "Restore", null },
+                    { new Guid("9833008c-fc4d-4eb3-a939-ab1c53676f5f"), new DateTime(2020, 10, 13, 2, 59, 32, 114, DateTimeKind.Local).AddTicks(2760), null, false, true, "Deaktif Yap", true, "Deactivate", null },
+                    { new Guid("46c434e2-145c-48e7-a740-62cd0a6dabe4"), new DateTime(2020, 10, 13, 2, 59, 32, 114, DateTimeKind.Local).AddTicks(2435), null, false, true, "Güncelle", true, "Edit", null },
+                    { new Guid("039bd732-bfd0-4ff8-be9c-e43d842afab7"), new DateTime(2020, 10, 13, 2, 59, 32, 114, DateTimeKind.Local).AddTicks(1876), null, true, true, "Deaktif Kullanıcı Listesi", true, "DeactivatedList", null },
+                    { new Guid("c0fdd95d-6070-4801-99ff-1c0d450d4443"), new DateTime(2020, 10, 13, 2, 59, 32, 113, DateTimeKind.Local).AddTicks(318), null, true, true, "Listele", true, "List", null },
+                    { new Guid("689fb0c7-583d-4ece-b1fe-4c6e861ce8b1"), new DateTime(2020, 10, 13, 2, 59, 32, 113, DateTimeKind.Local).AddTicks(4881), null, false, true, "Güncelle", true, "Edit", null },
+                    { new Guid("55e7ac34-fee4-460a-8f04-e32bcb1b365a"), new DateTime(2020, 10, 13, 2, 59, 32, 113, DateTimeKind.Local).AddTicks(4401), null, false, false, "Sil", true, "Delete", null },
+                    { new Guid("1150c590-9510-44fb-b983-8384625c9eba"), new DateTime(2020, 10, 13, 2, 59, 32, 113, DateTimeKind.Local).AddTicks(1117), null, true, true, "Ekle", true, "Create", null },
+                    { new Guid("3c9eb0c7-963c-4860-b543-cd60737688c5"), new DateTime(2020, 10, 13, 2, 59, 32, 108, DateTimeKind.Local).AddTicks(6385), null, true, true, "Listele", true, "List", null },
+                    { new Guid("281f7f51-bd43-407b-82ac-a54a2839dbd6"), new DateTime(2020, 10, 13, 2, 59, 32, 114, DateTimeKind.Local).AddTicks(1479), null, true, true, "Aktif Kullanıcı Listesi", true, "ActiveList", null }
                 });
 
             migrationBuilder.InsertData(
                 table: "Roles",
                 columns: new[] { "Id", "CreatedDate", "DeletedDate", "Description", "IsActive", "Name", "UpdateDate" },
-                values: new object[] { new Guid("db8f768e-a9ee-4242-97e3-bb260491e9d4"), new DateTime(2020, 10, 13, 0, 49, 34, 689, DateTimeKind.Local).AddTicks(7484), null, "It has all permissions", true, "Admin", null });
+                values: new object[] { new Guid("ae65f69f-f797-44c2-bbbb-70f7896cface"), new DateTime(2020, 10, 13, 2, 59, 32, 78, DateTimeKind.Local).AddTicks(8686), null, "It has all permissions", true, "Admin", null });
 
             migrationBuilder.InsertData(
                 table: "Users",
                 columns: new[] { "Id", "CreatedDate", "DeletedDate", "Email", "IsActive", "LastLoginDateTime", "Name", "Password", "Phone", "Surname", "UpdateDate" },
-                values: new object[] { new Guid("dccc38ad-5cc2-4ad6-b7b7-4d5473504438"), new DateTime(2020, 10, 13, 0, 49, 34, 701, DateTimeKind.Local).AddTicks(4751), null, "admin", true, null, "admin", "D666+2ai9e6AyaRseO19bA==", null, "admin", null });
+                values: new object[] { new Guid("846bbff5-9675-432a-8102-99f6e3762d5d"), new DateTime(2020, 10, 13, 2, 59, 32, 105, DateTimeKind.Local).AddTicks(2836), null, "admin", true, null, "admin", "D666+2ai9e6AyaRseO19bA==", null, "admin", null });
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)

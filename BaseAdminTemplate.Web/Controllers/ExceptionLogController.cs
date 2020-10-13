@@ -11,7 +11,7 @@ using BaseAdminTemplate.Web.Models.ViewModels;
 
 namespace BaseAdminTemplate.Web.Controllers
 {
-    [DisplayName(Constants.DisplayInMenu + "Exception Log")]
+    [DisplayName(Constants.DisplayInMenu + "Hata Kayıtları")]
     public class ExceptionLogController : BaseController
     {
         public ExceptionLogController(IUserService userService, IPermissionService permissionService,
@@ -22,7 +22,7 @@ namespace BaseAdminTemplate.Web.Controllers
         }
 
         [HttpGet]
-        [DisplayName(Constants.DisplayInMenu + Constants.DisplayInPermissionTree + "List")]
+        [DisplayName(Constants.DisplayInMenu + Constants.DisplayInPermissionTree + "Listele")]
         public IActionResult List()
         {
             if (!HasPermission("ExceptionLog", "List"))

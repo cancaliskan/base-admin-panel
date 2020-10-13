@@ -4,11 +4,11 @@ namespace BaseAdminTemplate.Web.Models.ViewModels
 {
     public sealed class ChangePasswordViewModel
     {
-        [DisplayName("Old Password")]
+        [DisplayName("Eski Parola")]
         public string OldPassword { get; set; }
-        [DisplayName("New Password")]
+        [DisplayName("Yeni Parola")]
         public string NewPassword { get; set; }
-        [DisplayName("Confirm New Password")]
+        [DisplayName("Yeni Parola Onayı")]
         public string NewPasswordConfirm { get; set; }
     }
 }

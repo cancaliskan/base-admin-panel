@@ -31,7 +31,7 @@ namespace BaseAdminTemplate.Business.Services
             try
             {
                 var exceptionLogs = _unitOfWork.ExceptionLogRepository.GetAll();
-                return _listResponseHelper.SuccessResponse(exceptionLogs, "returned successfully");
+                return _listResponseHelper.SuccessResponse(exceptionLogs, "Hata kayıtları döndü");
             }
             catch (Exception e)
             {
@@ -46,7 +46,7 @@ namespace BaseAdminTemplate.Business.Services
             {
                 _unitOfWork.ExceptionLogRepository.HardDeleteAll();
                 _unitOfWork.Complete();
-                return _booleanResponseHelper.SuccessResponse("deleted all");
+                return _booleanResponseHelper.SuccessResponse("Tüm hata kayıtları silindi");
             }
             catch (Exception e)
             {

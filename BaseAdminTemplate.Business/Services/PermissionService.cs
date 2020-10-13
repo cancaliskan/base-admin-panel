@@ -37,16 +37,16 @@ namespace BaseAdminTemplate.Business.Services
             {
                 if (id.IsEmptyGuid())
                 {
-                    return _responseHelper.FailResponse("Invalid Id");
+                    return _responseHelper.FailResponse("Geçersiz Id");
                 }
 
                 var permission = _unitOfWork.PermissionRepository.GetById(id);
                 if (permission == null)
                 {
-                    return _responseHelper.FailResponse("could not found");
+                    return _responseHelper.FailResponse("Yetki bulunamadı");
                 }
 
-                return _responseHelper.SuccessResponse(permission, "returned successfully");
+                return _responseHelper.SuccessResponse(permission, "Yetki döndü");
             }
             catch (Exception e)
             {
@@ -62,10 +62,10 @@ namespace BaseAdminTemplate.Business.Services
                 var permissions = _unitOfWork.PermissionRepository.GetByCondition(expression);
                 if (permissions == null || !permissions.Any())
                 {
-                    return _listResponseHelper.FailResponse("could not found");
+                    return _listResponseHelper.FailResponse("Yetki bulunamadı");
                 }
 
-                return _listResponseHelper.SuccessResponse(permissions, "roles returned successfully");
+                return _listResponseHelper.SuccessResponse(permissions, "Yetkiler başarılı bir şekilde döndü");
             }
             catch (Exception e)
             {
@@ -79,7 +79,7 @@ namespace BaseAdminTemplate.Business.Services
             try
             {
                 var permissions = _unitOfWork.PermissionRepository.GetAll();
-                return _listResponseHelper.SuccessResponse(permissions, "returned successfully");
+                return _listResponseHelper.SuccessResponse(permissions, "Tüm yetkiler döndü");
             }
             catch (Exception e)
             {
@@ -93,7 +93,7 @@ namespace BaseAdminTemplate.Business.Services
             try
             {
                 var permissions = _unitOfWork.PermissionRepository.GetActiveEntities();
-                return _listResponseHelper.SuccessResponse(permissions, "returned successfully");
+                return _listResponseHelper.SuccessResponse(permissions, "Aktif yetkiler döndü");
             }
             catch (Exception e)
             {
@@ -107,7 +107,7 @@ namespace BaseAdminTemplate.Business.Services
             try
             {
                 var permissions = _unitOfWork.PermissionRepository.GetInActiveEntities();
-                return _listResponseHelper.SuccessResponse(permissions, "returned successfully");
+                return _listResponseHelper.SuccessResponse(permissions, "Deaktif yetkiler döndü");
             }
             catch (Exception e)
             {
@@ -121,7 +121,7 @@ namespace BaseAdminTemplate.Business.Services
             try
             {
                 var parent= _unitOfWork.LinkMenuPermissionRepository.GetParent(id);
-                return _menuResponseHelper.SuccessResponse(parent, "returned successfully");
+                return _menuResponseHelper.SuccessResponse(parent, "Yetki atası döndü");
             }
             catch (Exception e)
             {
